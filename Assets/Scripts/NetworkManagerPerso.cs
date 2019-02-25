@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Linq;
 
+
+// FAIRE UN CUSTOM PLAYER SPAWN
 public class NetworkManagerPerso : NetworkManager
 {    
     public void JoindrePartie()
