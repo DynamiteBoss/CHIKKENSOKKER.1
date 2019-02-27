@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class MouvementCaméra : MonoBehaviour
+public class MouvementCaméra : NetworkBehaviour
 {
     bool estCrée = false;
     bool vérificationBalle = true;
