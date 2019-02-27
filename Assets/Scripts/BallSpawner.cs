@@ -9,6 +9,7 @@ public class BallSpawner : NetworkBehaviour
     public bool EstCrée = false;
     public override void OnStartServer()
     {
+        //OK TAMERE
         ClientScene.RegisterPrefab(Balle);
         ServerSpawnBall();
     }
