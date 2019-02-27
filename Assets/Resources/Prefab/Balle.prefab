@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 8342423893435496483}
   - component: {fileID: 8342423893435496492}
   - component: {fileID: 8342423893435496493}
-  - component: {fileID: 4672051502806342869}
-  - component: {fileID: 3781405125669614589}
   - component: {fileID: 7179515080942253089}
+  - component: {fileID: 2808439941992317591}
+  - component: {fileID: 4888693445055092693}
   m_Layer: 0
   m_Name: Balle
   m_TagString: Untagged
@@ -111,7 +111,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!114 &4672051502806342869
+--- !u!114 &7179515080942253089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8342423893435496494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  "est\xC9quipeA": 1
+--- !u!114 &2808439941992317591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,9 +155,9 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
-  m_LocalPlayerAuthority: 0
---- !u!114 &3781405125669614589
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
+--- !u!114 &4888693445055092693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,16 +179,3 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &7179515080942253089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8342423893435496494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  "est\xC9quipeA": 1
