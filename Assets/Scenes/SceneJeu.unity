@@ -121,8 +121,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 101640349}
-  - component: {fileID: 101640348}
   - component: {fileID: 101640347}
+  - component: {fileID: 101640348}
   m_Layer: 0
   m_Name: BallSpawner
   m_TagString: Untagged
@@ -161,7 +161,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 0
+  m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
 --- !u!114 &101640348
 MonoBehaviour:

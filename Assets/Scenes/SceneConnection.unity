@@ -908,7 +908,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 838773477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1de41683f179c9e44b9fa23e1f1cb3e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 92b2b423c3e8bc846bb9a319399a2f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &850757944
@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_MaxDelay: 0.01
   m_LogLevel: 2
   m_PlayerPrefab: {fileID: 16, guid: 90f898ac78d3dde4aad31359bbe2c422, type: 3}
-  m_AutoCreatePlayer: 0
+  m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 1
   m_OfflineScene: Menu
   m_OnlineScene: SceneJeu
@@ -1319,7 +1319,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 0500000000000000
+  m_Channels: 
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1

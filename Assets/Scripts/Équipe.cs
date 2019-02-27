@@ -26,10 +26,12 @@ public class Équipe
         Joueurs = new Joueur[TAILLE];
         for(int i=0; i != TAILLE;i++)
         {
-            Joueurs[i] = new Joueur($"Joueur-{i+1}-{teamTag}", teamTag);
-            if(i == TAILLE-1)
+            Joueurs[i] = new Joueur("Joueur-" + i+1 + "-" + teamTag, teamTag);
+            //  Joueurs[i] = new Joueur($"Joueur-{i+1}-{teamTag}", teamTag);
+            if (i == TAILLE-1)
             {
-                Joueurs[i] = new Joueur($"Gardien-{teamTag}", teamTag);
+                Joueurs[i] = new Joueur("Gardien-" + teamTag, teamTag);
+                // Joueurs[i] = new Joueur($"Gardien-{teamTag}", teamTag);
             }
         }
     }

@@ -7,9 +7,9 @@ public class Joueur
     public string NomJoueur { get; private set; }
     public char Équipe { get; private set; }
 
-    public Joueur(string nom, char teamTag)
+    public Joueur(string nomJoueur, char teamTag)
     {
-        NomJoueur = nom;
+        NomJoueur = nomJoueur;
         Équipe = teamTag;
     }
 
