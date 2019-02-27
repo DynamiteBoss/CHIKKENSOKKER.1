@@ -16,7 +16,7 @@ public class NetworkManagerPerso : NetworkManager
         InstancierAddresseIP();
         InstancierPort();
         NetworkManager.singleton.StartClient();
-
+        GameObject.Find("BallSpawner").GetComponent<BallSpawner>().EstCrée = true;
     }
 
     public void CreateHost()
