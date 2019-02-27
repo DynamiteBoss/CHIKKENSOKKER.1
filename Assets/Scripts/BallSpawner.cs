@@ -7,7 +7,7 @@ public class BallSpawner : NetworkBehaviour
     public GameObject Balle;
 
     public bool EstCrée = false;
-    public override void OnStartClient()
+    public override void OnStartServer()
     {
         ClientScene.RegisterPrefab(Balle);
         ServerSpawnBall();
