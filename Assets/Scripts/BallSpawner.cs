@@ -11,12 +11,12 @@ public class BallSpawner : NetworkBehaviour
     {
         GameObject balleJeu = (GameObject)Instantiate(Balle, new Vector3(0, 1, 0), Quaternion.identity);
         balleJeu.name = "Balle";
-        CmdSpawn();
+        CmdSpawn(balleJeu);
         EstCrée = true;
     }
     [Command]
-    void CmdSpawn()
+    void CmdSpawn(GameObject objetÀSpawn)
     {
-        NetworkServer.Spawn(Balle);
+        NetworkServer.Spawn(objetÀSpawn);
     }
 }
