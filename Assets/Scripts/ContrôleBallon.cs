@@ -28,10 +28,10 @@ public class ContrôleBallon : NetworkBehaviour
             //Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
             if (Input.GetKeyDown("space") && compteur1 >= 1f)
             {
-                //GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
-                if (Balle.transform.parent = ZoneContrôle.parent)
+                GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
+                if (balle.transform.parent = ZoneContrôle.parent)
                 {
-                    TirerBallon(Balle);
+                    TirerBallon(balle);
                 }
                 compteur1 = 0;
             }
@@ -52,13 +52,26 @@ public class ContrôleBallon : NetworkBehaviour
         if (balle != null)
         {
             balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
-            StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
+            StartCoroutine(AttendrePourDistanceBallon(0.1f, balle));
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
             
         }
     }
+
+    //private void TirerBallon(GameObject balle)
+    //{
+    //    if (balle != null)
+    //    {
+    //        balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+    //        StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
+    //        balle.GetComponent<SphereCollider>().enabled = true;
+    //        balle.transform.parent = null;
+    //        balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
+
+    //    }
+    //}
     IEnumerator AttendrePourDistanceBallon(float durée,GameObject balle)
     {
         GetComponent<BoxCollider>().isTrigger = false;
