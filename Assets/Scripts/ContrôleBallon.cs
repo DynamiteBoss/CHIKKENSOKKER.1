@@ -28,12 +28,16 @@ public class ContrôleBallon : NetworkBehaviour
             //Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
             if (Input.GetKeyDown("space") && compteur1 >= 1f)
             {
-                GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
-                if (balle.transform.parent = ZoneContrôle.parent)
+                if (ZoneContrôle.parent.Find("Balle") != null)
                 {
-                    TirerBallon(balle);
+                    GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
+                    if (balle.transform.parent = ZoneContrôle.parent)
+                    {
+                        TirerBallon(balle);
+                    }
+                    compteur1 = 0;
                 }
-                compteur1 = 0;
+                
             }
             //if (Input.GetKeyDown(KeyCode.RightShift) && compteur2 >= 1f && Nom == NOM_PLAYER_2)
             //{
