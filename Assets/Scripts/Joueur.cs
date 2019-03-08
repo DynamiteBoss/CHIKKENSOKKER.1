@@ -13,9 +13,6 @@ public class Joueur
         Équipe = teamTag;
     }
 
-
-
-
     public Joueur(Joueur référenceSurUnObjetExistant)
     {
         NomJoueur = référenceSurUnObjetExistant.NomJoueur;
