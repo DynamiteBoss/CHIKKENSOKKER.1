@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
 public class ContrôleBallon : NetworkBehaviour
 {
-    GameObject Balle { get; set; }
+    [SyncVar]
+    public GameObject Balle;
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
     float compteur1 = 0;
