@@ -35,7 +35,14 @@ public class ContrôleBallon : NetworkBehaviour
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
                     if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        CmdTirerBallon(balle);
+                        if(balle.transform.parent.name == "Player (1)")
+                        {
+                            RpcTirerBallon(balle);
+                        }
+                        else
+                        {
+                            CmdTirerBallon(balle);
+                        }
                     }
                     compteur1 = 0;
                 }
@@ -64,6 +71,19 @@ public class ContrôleBallon : NetworkBehaviour
             balle.transform.parent = null;
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
             
+        }
+    }
+    [ClientRpc]
+    void RpcTirerBallon(GameObject balle)
+    {
+        if (balle != null)
+        {
+            balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+            StartCoroutine(AttendrePourDistanceBallon(0.1f, balle));
+            balle.GetComponent<SphereCollider>().enabled = true;
+            balle.transform.parent = null;
+            balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
+
         }
     }
 
