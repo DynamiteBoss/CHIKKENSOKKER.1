@@ -26,12 +26,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, 2) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, 2) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -40,12 +40,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (autreValeur)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.04f);
                 transform.Translate(new Vector3(-2, 0, 0) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.04f);
                 transform.Translate(new Vector3(-2, 0, 0) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -54,12 +54,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (autreValeur)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, -2) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, -2) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -69,12 +69,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (autreValeur)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.04f);
                 transform.Translate(new Vector3(2, 0, 0) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.04f);
                 transform.Translate(new Vector3(2, 0, 0) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -88,12 +88,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (Input.GetKey("left") || Input.GetKey("down") || Input.GetKey("right"))
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, 2) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, 2) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -102,12 +102,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (autreValeur == true)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.04f);
                 transform.Translate(new Vector3(-2, 0, 0) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.04f);
                 transform.Translate(new Vector3(-2, 0, 0) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -116,12 +116,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (autreValeur == true)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, -2) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, -2) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
@@ -131,12 +131,12 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (autreValeur == true)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.04f);
                 transform.Translate(new Vector3(2, 0, 0) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.035f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.04f);
                 transform.Translate(new Vector3(2, 0, 0) * 5.5f * Time.deltaTime, Space.World);
                 autreValeur = true;
             }
