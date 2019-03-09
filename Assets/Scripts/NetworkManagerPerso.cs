@@ -19,19 +19,37 @@ public class NetworkManagerPerso : NetworkManager
         InstancierPort();
         NetworkManager.singleton.StartClient();
     }
-
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        ClientScene.Ready(conn);
+        ClientScene.AddPlayer((short)NetworkServer.connections.Count);
+    }
     public void CreateHost()
     {
         InstancierAddresseIP();
         InstancierPort();
         NetworkManager.singleton.StartHost();
         CréerÉquipes();
-
+        AjouterJoueur();
       //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
 
         //ÉquipeA[]
     }
+    public override void OnStartHost()
+    {
+        ClientScene.AddPlayer((short)NetworkServer.connections.Count);
+    }
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
+    {
+        GameObject joueur= (GameObject)Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
 
+        NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
+    }
+    void AjouterJoueur()
+    {
+        ClientScene.AddPlayer()
+
+    }
     void CréerÉquipes()
     {
          ÉquipeA = new Équipe('A');
