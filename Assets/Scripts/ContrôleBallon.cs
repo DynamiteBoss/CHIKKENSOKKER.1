@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class ContrôleBallon : NetworkBehaviour
 {
-    [SyncVar]
-    public GameObject Balle;
+    //[SyncVar]
+     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
     float compteur1 = 0;
@@ -23,7 +23,7 @@ public class ContrôleBallon : NetworkBehaviour
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
 
-        if(Balle.transform.parent != null && isLocalPlayer)
+        if(Balle.transform.parent != null)
         {
             //Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
             if (Input.GetKeyDown("space") && compteur1 >= 1f)
