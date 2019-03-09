@@ -67,6 +67,6 @@ public class NetworkManagerPerso : NetworkManager
     void GérerBoutonsJeu()
     {
         GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
-        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => NetworkManager.singleton.StopHost());
+        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => NetworkManager.singleton.StopClient());
     }
 }
