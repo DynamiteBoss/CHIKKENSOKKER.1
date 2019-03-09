@@ -22,7 +22,7 @@ public class NetworkManagerPerso : NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         ClientScene.Ready(conn);
-        ClientScene.AddPlayer((short)NetworkServer.connections.Count);
+        ClientScene.AddPlayer(0/*(short)NetworkServer.connections.Count*/);
     }
     public void CreateHost()
     {
@@ -47,8 +47,7 @@ public class NetworkManagerPerso : NetworkManager
     }
     void AjouterJoueur()
     {
-        ClientScene.AddPlayer()
-
+        ClientScene.AddPlayer(0);
     }
     void CréerÉquipes()
     {
