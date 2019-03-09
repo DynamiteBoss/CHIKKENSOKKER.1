@@ -35,18 +35,17 @@ public class ContrôleBallon : NetworkBehaviour
                 if (ZoneContrôle.parent.Find("Balle") != null)
                 {
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
-                    CmdTirerBallon(balle);
-                    //if (balle.transform.parent = ZoneContrôle.parent)
-                    //{
-                    //    if(balle.transform.parent.name == "Player (1)")
-                    //    {
-                    //        RpcTirerBallon(balle);
-                    //    }
-                    //    else
-                    //    {
-                    //        CmdTirerBallon(balle);
-                    //    }
-                    //}
+                    if (balle.transform.parent = ZoneContrôle.parent)
+                    {
+                        if(balle.transform.parent.name == "Player (1)")
+                        {
+                            RpcTirerBallon(balle);
+                        }
+                        else
+                        {
+                            CmdTirerBallon(balle);
+                        }
+                    }
                     compteur1 = 0;
                 }
                 
