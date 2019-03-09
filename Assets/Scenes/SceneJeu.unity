@@ -933,12 +933,12 @@ PrefabInstance:
     - target: {fileID: 4147039269632750063, guid: d87c07238f9702a45bd80abd69b763dc,
         type: 3}
       propertyPath: m_Name
-      value: Gardien
+      value: Gardien (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5327506683527226346, guid: d87c07238f9702a45bd80abd69b763dc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.373526
+      value: -5.03
       objectReference: {fileID: 0}
     - target: {fileID: 5327506683527226346, guid: d87c07238f9702a45bd80abd69b763dc,
         type: 3}
