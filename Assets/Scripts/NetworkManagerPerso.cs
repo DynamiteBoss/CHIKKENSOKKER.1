@@ -14,12 +14,14 @@ public class NetworkManagerPerso : NetworkManager
     public Équipe ÉquipeA { get; set; }
     public Équipe ÉquipeB { get; set; }
     short compteurId = 0;
+
     public void JoindrePartie()
     {
         InstancierAddresseIP();
         InstancierPort();
         NetworkManager.singleton.StartClient();
     }
+
     public override void OnClientConnect(NetworkConnection conn)
     {
         ClientScene.Ready(conn);

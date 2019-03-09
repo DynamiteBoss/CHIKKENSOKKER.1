@@ -39,7 +39,6 @@ public class ContrôleBallon : NetworkBehaviour
                     }
                     compteur1 = 0;
                 }
-                
             }
             //if (Input.GetKeyDown(KeyCode.RightShift) && compteur2 >= 1f && Nom == NOM_PLAYER_2)
             //{
