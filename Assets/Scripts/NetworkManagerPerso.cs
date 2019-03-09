@@ -13,6 +13,7 @@ public class NetworkManagerPerso : NetworkManager
 {
     public Équipe ÉquipeA { get; set; }
     public Équipe ÉquipeB { get; set; }
+    short compteurId = 0;
     public void JoindrePartie()
     {
         InstancierAddresseIP();
@@ -22,7 +23,7 @@ public class NetworkManagerPerso : NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         ClientScene.Ready(conn);
-        ClientScene.AddPlayer(0/*(short)NetworkServer.connections.Count*/);
+        ClientScene.AddPlayer(compteurId++/*(short)NetworkServer.connections.Count*/);
     }
     public void CreateHost()
     {
@@ -36,8 +37,8 @@ public class NetworkManagerPerso : NetworkManager
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        GameObject joueur= (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
-
+        GameObject joueur = (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
+        joueur.transform.name = string.Format("Player ({0})", compteurId);
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
     }
     void CréerÉquipes()
