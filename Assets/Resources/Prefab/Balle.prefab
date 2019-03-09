@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "est\xC9quipeA": 1
+  "est\xC9quipeA": 0
 --- !u!114 &2808439941992317591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &4888693445055092693
 MonoBehaviour:
