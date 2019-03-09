@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Networking;
 
 //https://docs.unity3d.com/ScriptReference/WaitForSeconds.html
 
-public class ActionsPlayer : MonoBehaviour
+public class ActionsPlayer : NetworkBehaviour
 {
     Transform ZonePlacage { get; set; }
     GameObject JoueurÀPlaquer { get; set; }
