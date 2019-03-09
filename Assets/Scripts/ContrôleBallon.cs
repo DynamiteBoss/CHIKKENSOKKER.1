@@ -33,9 +33,9 @@ public class ContrôleBallon : NetworkBehaviour
                 if (ZoneContrôle.parent.Find("Balle") != null)
                 {
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
-                    if (Balle.transform.parent = ZoneContrôle.parent)
+                    if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        TirerBallon(balle);
+                        CmdTirerBallon(balle);
                     }
                     compteur1 = 0;
                 }
@@ -54,8 +54,8 @@ public class ContrôleBallon : NetworkBehaviour
         
     }
 
-    [ClientRpc]
-    void TirerBallon(GameObject balle)
+    [Command]
+    void CmdTirerBallon(GameObject balle)
     {
         if (balle != null)
         {

@@ -18,5 +18,12 @@ public class BallSpawner : NetworkBehaviour
     void CmdSpawn(GameObject objetÀSpawn)
     {
         NetworkServer.Spawn(objetÀSpawn);
+        RpcSpawn(objetÀSpawn);
+    }
+
+    [ClientRpc]
+    void RpcSpawn(GameObject objetÀSpawn)
+    {
+        NetworkServer.Spawn(objetÀSpawn);
     }
 }
