@@ -13,16 +13,14 @@ public class ContrôleBallon : NetworkBehaviour
     float compteur1 = 0;
     float compteur2 = 0;
 
-    [ClientRpc]
-    void RpcStart()
+    void Start()
     {
         Nom = transform.parent.name;
         ZoneContrôle = this.transform;
         Balle = GameObject.Find("Balle");
     }
-
-    [ClientRpc]
-    void RpcUpdate()
+   
+    void Update()
     {
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
@@ -35,6 +33,7 @@ public class ContrôleBallon : NetworkBehaviour
                 if (ZoneContrôle.parent.Find("Balle") != null)
                 {
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
+<<<<<<< HEAD
                     CmdTirerBallon(balle);
                     //if (balle.transform.parent = ZoneContrôle.parent)
                     //{
@@ -47,6 +46,12 @@ public class ContrôleBallon : NetworkBehaviour
                     //        CmdTirerBallon(balle);
                     //    }
                     //}
+=======
+                    if (balle.transform.parent = ZoneContrôle.parent)
+                    {
+                        RpcTirerBallon(balle);
+                    }
+>>>>>>> parent of 4e4d3fe... Rpc/Cmd
                     compteur1 = 0;
                 }
                 
@@ -63,9 +68,8 @@ public class ContrôleBallon : NetworkBehaviour
         }
         
     }
-    
-    [Command]
-    private void CmdTirerBallon(GameObject balle)
+    [ClientRpc]
+    private void RpcTirerBallon(GameObject balle)
     {
         if (balle != null)
         {
@@ -114,13 +118,12 @@ public class ContrôleBallon : NetworkBehaviour
     {
         if(other.name == "Balle" && other.transform.parent == null)
         {
-            CmdMettreBalleEnfant(other);
+            MettreBalleEnfant(other);
             CalculerDistanceBalle();
         }
     }
-
-    [Command]
-    private void CmdMettreBalleEnfant(Collider other)
+    
+    private void MettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
         if (other.transform.parent == null)
