@@ -13,14 +13,16 @@ public class ContrôleBallon : NetworkBehaviour
     float compteur1 = 0;
     float compteur2 = 0;
 
-    void Start()
+    [ClientRpc]
+    void RpcStart()
     {
         Nom = transform.parent.name;
         ZoneContrôle = this.transform;
         Balle = GameObject.Find("Balle");
     }
-   
-    void Update()
+
+    [ClientRpc]
+    void RpcUpdate()
     {
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
@@ -35,7 +37,7 @@ public class ContrôleBallon : NetworkBehaviour
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
                     if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        RpcTirerBallon(balle);
+                        CmdTirerBallon(balle);
                     }
                     compteur1 = 0;
                 }
@@ -53,8 +55,9 @@ public class ContrôleBallon : NetworkBehaviour
         }
         
     }
-    [ClientRpc]
-    private void RpcTirerBallon(GameObject balle)
+    
+    [Command]
+    private void CmdTirerBallon(GameObject balle)
     {
         if (balle != null)
         {
@@ -90,12 +93,13 @@ public class ContrôleBallon : NetworkBehaviour
     {
         if(other.name == "Balle" && other.transform.parent == null)
         {
-            MettreBalleEnfant(other);
+            CmdMettreBalleEnfant(other);
             CalculerDistanceBalle();
         }
     }
-    
-    private void MettreBalleEnfant(Collider other)
+
+    [Command]
+    private void CmdMettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
         if (other.transform.parent == null)
