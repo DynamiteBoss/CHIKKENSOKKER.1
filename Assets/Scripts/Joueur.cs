@@ -6,6 +6,22 @@ public class Joueur
 {
     public string NomJoueur { get; private set; }
     public char Équipe { get; private set; }
+    public GameObject joueurPhysique;
+
+    public GameObject JoueurPhysique
+    {
+        get
+        {
+            return this.joueurPhysique;
+        }
+        set
+        {
+
+        }
+    }
+
+
+
 
     public Joueur(string nomJoueur, char teamTag)
     {

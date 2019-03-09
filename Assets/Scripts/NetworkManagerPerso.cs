@@ -10,7 +10,9 @@ using System.Linq;
 
 // FAIRE UN CUSTOM PLAYER SPAWN
 public class NetworkManagerPerso : NetworkManager
-{    
+{
+    public Équipe ÉquipeA { get; set; }
+    public Équipe ÉquipeB { get; set; }
     public void JoindrePartie()
     {
         InstancierAddresseIP();
@@ -24,12 +26,13 @@ public class NetworkManagerPerso : NetworkManager
         InstancierPort();
         NetworkManager.singleton.StartHost();
         CréerÉquipes();
+        ÉquipeA[]
     }
 
     void CréerÉquipes()
     {
-        Équipe équipeA = new Équipe('A');
-        Équipe équipeB = new Équipe('B');
+         ÉquipeA = new Équipe('A');
+         ÉquipeB = new Équipe('B');
     }
     void InstancierAddresseIP()
     {
