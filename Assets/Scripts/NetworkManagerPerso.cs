@@ -26,7 +26,7 @@ public class NetworkManagerPerso : NetworkManager
         InstancierPort();
         NetworkManager.singleton.StartHost();
         CréerÉquipes();
-        ÉquipeA[]
+        //ÉquipeA[]
     }
 
     void CréerÉquipes()
