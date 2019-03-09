@@ -2,26 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class ScriptBut : NetworkBehaviour
+public class ScriptBut : MonoBehaviour
 {
     string NomBut1 = "But1";
     string NomBut2 = "But2";
 
-    [SyncVar]
-    public int NbButsA;
+    int NbButsA { get; set; }
 
-    [SyncVar]
-    public int NbButsB;
+    int NbButsB { get; set; }
 
     [SerializeField]
     bool estÉquipeA = true;
 
     Text InterfaceScore { get; set; }
     GameObject Ballon { get; set; }
-
-
     // Start is called before the first frame update
     void Start()
     {
