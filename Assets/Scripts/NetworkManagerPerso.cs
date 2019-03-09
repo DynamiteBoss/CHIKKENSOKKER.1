@@ -26,7 +26,10 @@ public class NetworkManagerPerso : NetworkManager
         InstancierPort();
         NetworkManager.singleton.StartHost();
         CréerÉquipes();
+
       //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
+
+        //ÉquipeA[]
     }
 
     void CréerÉquipes()
