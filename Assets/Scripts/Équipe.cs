@@ -13,7 +13,7 @@ public class Équipe
     {
         get
         {
-            return new Joueur(Joueurs[indice]);
+            return Joueurs[indice];
         }
     }
     /// <summary>
