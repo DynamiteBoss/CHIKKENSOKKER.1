@@ -23,7 +23,7 @@ public class ContrôleBallon : NetworkBehaviour
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
 
-        if(Balle.transform.parent != null)
+        if(Balle.transform.parent != null && isLocalPlayer)
         {
             //Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
             if (Input.GetKeyDown("space") && compteur1 >= 1f)
