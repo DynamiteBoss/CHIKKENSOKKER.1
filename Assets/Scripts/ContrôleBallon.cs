@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+
 public class ContrôleBallon : NetworkBehaviour
 {
     //[SyncVar]
@@ -12,14 +13,13 @@ public class ContrôleBallon : NetworkBehaviour
     float compteur1 = 0;
     float compteur2 = 0;
 
-    [Command]
     void Start()
     {
         Nom = transform.parent.name;
         ZoneContrôle = this.transform;
         Balle = GameObject.Find("Balle");
     }
-    [Command]
+   
     void Update()
     {
         compteur1 += Time.deltaTime;
@@ -35,7 +35,7 @@ public class ContrôleBallon : NetworkBehaviour
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
                     if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        TirerBallon(balle);
+                        RpcTirerBallon(balle);
                     }
                     compteur1 = 0;
                 }
@@ -53,8 +53,8 @@ public class ContrôleBallon : NetworkBehaviour
         }
         
     }
-    [Command]
-    private void TirerBallon(GameObject balle)
+    [ClientRpc]
+    private void RpcTirerBallon(GameObject balle)
     {
         if (balle != null)
         {
@@ -79,14 +79,13 @@ public class ContrôleBallon : NetworkBehaviour
 
     //    }
     //}
-    [Command]
+
     IEnumerator AttendrePourDistanceBallon(float durée,GameObject balle)
     {
         GetComponent<BoxCollider>().isTrigger = false;
         yield return new WaitForSeconds(durée);
         GetComponent<BoxCollider>().isTrigger = true;
     }
-    [Command]
     private void OnTriggerEnter(Collider other)
     {
         if(other.name == "Balle" && other.transform.parent == null)
@@ -95,7 +94,7 @@ public class ContrôleBallon : NetworkBehaviour
             CalculerDistanceBalle();
         }
     }
-    [Command]
+    
     private void MettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
@@ -108,7 +107,7 @@ public class ContrôleBallon : NetworkBehaviour
             other.GetComponent<SphereCollider>().enabled = false;
         }     
     }
-    [Command]
+ 
     private void CalculerDistanceBalle()
     {
         Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
