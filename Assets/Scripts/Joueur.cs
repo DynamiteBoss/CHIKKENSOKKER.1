@@ -12,7 +12,7 @@ public class Joueur
     {
         get
         {
-            return this.joueurPhysique;
+            return joueurPhysique;
         }
         set
         {
@@ -23,10 +23,11 @@ public class Joueur
 
 
 
-    public Joueur(string nomJoueur, char teamTag)
+    public Joueur(string nomJoueur, char teamTag,GameObject joueurPhysique)
     {
         NomJoueur = nomJoueur;
         Équipe = teamTag;
+        JoueurPhysique = joueurPhysique;
     }
 
     public Joueur(Joueur référenceSurUnObjetExistant)
