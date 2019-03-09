@@ -16,7 +16,7 @@ public class Joueur
         }
         set
         {
-
+            joueurPhysique = value;
         }
     }
 
