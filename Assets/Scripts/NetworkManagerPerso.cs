@@ -36,8 +36,7 @@ public class NetworkManagerPerso : NetworkManager
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        GameObject joueur = (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
-        joueur.transform.name = "Player (" + (playerControllerId + 1) + ")";
+        GameObject joueur= (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
 
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
     }
