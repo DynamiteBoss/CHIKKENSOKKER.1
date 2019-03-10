@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class BallSpawner : NetworkBehaviour
 {
-    [SyncVar]
-    public GameObject Balle;
+    
+    [SyncVar] public GameObject Balle;
+    
 
     public bool EstCrée = false;
     public override void OnStartServer()
@@ -15,6 +16,7 @@ public class BallSpawner : NetworkBehaviour
         CmdSpawn(balleJeu);
         EstCrée = true;
     }
+
     [Command]
     void CmdSpawn(GameObject objetÀSpawn)
     {

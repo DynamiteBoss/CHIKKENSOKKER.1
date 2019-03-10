@@ -1365,6 +1365,7 @@ GameObject:
   - component: {fileID: 1518660350}
   - component: {fileID: 1518660358}
   - component: {fileID: 1518660357}
+  - component: {fileID: 1518660359}
   m_Layer: 0
   m_Name: Balle
   m_TagString: Untagged
@@ -1540,6 +1541,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   "est\xC9quipeA": 0
+--- !u!114 &1518660359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518660349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe42e922440e8b14e85f2a341350b1fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncPosBalle: {x: 0, y: 0, z: 0}
 --- !u!1 &1637844967
 GameObject:
   m_ObjectHideFlags: 0
