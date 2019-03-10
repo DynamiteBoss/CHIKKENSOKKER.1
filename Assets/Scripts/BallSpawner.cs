@@ -13,7 +13,8 @@ public class BallSpawner : NetworkBehaviour
     {
         GameObject balleJeu = (GameObject)Instantiate(Balle, new Vector3(0, 1, 0), Quaternion.identity);
         balleJeu.name = "Balle";
-        CmdSpawn(balleJeu);
+        NetworkAnimator.Instantiate(Balle);
+        //CmdSpawn(balleJeu);
         EstCrée = true;
     }
 

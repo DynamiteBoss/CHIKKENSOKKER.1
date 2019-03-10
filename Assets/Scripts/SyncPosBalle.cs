@@ -10,7 +10,7 @@ public class SyncPosBalle : NetworkBehaviour
     [SyncVar] private Vector3 syncPosBalle;
     private NetworkIdentity id;
     private Vector3 lastPos;
-    private float seuilMax = 0.4f;
+    private float seuilMax = 0.1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class SyncPosBalle : NetworkBehaviour
     private void FixedUpdate()
     {
         ModifierLerp();
-
+        TransmettrePosition();
     }
 
     void ModifierLerp()
