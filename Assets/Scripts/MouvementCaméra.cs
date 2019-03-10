@@ -22,7 +22,6 @@ public class MouvementCaméra : NetworkBehaviour
             {
                 vérificationBalle = false;
                 ballon = GameObject.FindGameObjectWithTag("Balle").GetComponent<Rigidbody>();
-                
             }
         }
         if (estCrée)
