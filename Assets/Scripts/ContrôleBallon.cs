@@ -8,6 +8,7 @@ public class ContrôleBallon : NetworkBehaviour
 {
     const float FORCE = 40f;
     GameObject Balle { get; set; }
+    [SyncVar(hook = "OnChangePosition")] Vector3 position = new Vector3(0,0,0);
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
     float compteur1 = 0;
@@ -22,6 +23,10 @@ public class ContrôleBallon : NetworkBehaviour
    
     void Update()
     {
+        if(!transform.parent.GetComponent<NetworkIdentity>().isServer)
+        {
+            return;
+        }
         if (!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             return;
@@ -56,7 +61,10 @@ public class ContrôleBallon : NetworkBehaviour
         }
         
     }
-
+    void OnChangePosition(Vector3 post)
+    {
+        Balle.transform.position = post;
+    }
    
     void CmdTirerBallon()
     {
@@ -97,12 +105,12 @@ public class ContrôleBallon : NetworkBehaviour
     {
         if(other.name == "Balle" && other.transform.parent == null)
         {
-            MettreBalleEnfant(other);
-            CalculerDistanceBalle();
+            CmdMettreBalleEnfant(other);
+            CmdCalculerDistanceBalle();
         }
     }
     
-    private void MettreBalleEnfant(Collider other)
+    private void CmdMettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
         if (other.transform.parent == null)
@@ -115,7 +123,7 @@ public class ContrôleBallon : NetworkBehaviour
         }     
     }
  
-    private void CalculerDistanceBalle()
+    private void CmdCalculerDistanceBalle()
     {
         Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
         //mettre la balle vers le milieu de la zone de controle
