@@ -24,7 +24,7 @@ public class ScriptMouvementAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Ballon = GameObject.Find("Balle").GetComponentInChildren<Rigidbody>();
+        Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
     }
 

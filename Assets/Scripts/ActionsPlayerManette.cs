@@ -17,6 +17,7 @@ public class ActionsPlayerManette : MonoBehaviour
 
     void Start()
     {
+        Balle = GameObject.FindGameObjectWithTag("Balle");
         Name = transform.parent.name;
         if(Name == NOM_PLAYER_1)
         {
@@ -33,7 +34,7 @@ public class ActionsPlayerManette : MonoBehaviour
     }
     void Update()
     {
-        possessionBallon = this.transform.parent.Find("Balle");
+        possessionBallon = Balle.transform.parent;
         compteur += Time.deltaTime;
         if(Name == NOM_PLAYER_1 || Name == NOM_PLAYER_2)
         {

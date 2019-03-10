@@ -15,13 +15,13 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void Start()
     {
         Balle = GameObject.FindGameObjectWithTag("Balle");
-        ZoneContrôle = this.transform;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             return;
         }

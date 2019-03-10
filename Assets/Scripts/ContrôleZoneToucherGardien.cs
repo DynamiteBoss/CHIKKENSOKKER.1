@@ -12,7 +12,7 @@ public class ContrôleZoneToucherGardien : MonoBehaviour
     void Start()
     {
         Gardien = this.transform.parent.gameObject;
-        Balle = GameObject.Find("Balle");
+        Balle = GameObject.FindGameObjectWithTag("Balle");
     }
     private void OnTriggerEnter(Collider other)
     {

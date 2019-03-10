@@ -25,7 +25,7 @@ public class ContrôleGardien : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Balle = GameObject.Find("Balle");
+        Balle = GameObject.FindGameObjectWithTag("Balle");
         Nom = name;
     }
 
