@@ -13,8 +13,8 @@ public class MouvementCaméra : NetworkBehaviour
     {
         if (vérificationBalle)
         {
-            estCrée = GameObject.Find("BallSpawner");
-            if(GameObject.Find("Balle") == true)
+            estCrée = GameObject.Find("BallSpawnerV2");
+            if(GameObject.FindGameObjectWithTag("Balle") == true)
             {
                 estCrée = true;
             }
