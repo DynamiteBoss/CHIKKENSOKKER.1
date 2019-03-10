@@ -17,13 +17,13 @@ public class BallSpawner : NetworkBehaviour
     [Command]
     void CmdSpawn(GameObject objetÀSpawn)
     {
-        NetworkServer.Spawn(objetÀSpawn);
+        //NetworkAnimator.Instantiate(objetÀSpawn);
         RpcSpawn(objetÀSpawn);
     }
 
     [ClientRpc]
     void RpcSpawn(GameObject objetÀSpawn)
     {
-        NetworkServer.Spawn(objetÀSpawn);
+        NetworkAnimator.Instantiate(objetÀSpawn);
     }
 }
