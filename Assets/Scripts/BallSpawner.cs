@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class BallSpawner : NetworkBehaviour
 {
+    [SyncVar]
     public GameObject Balle;
 
     public bool EstCrée = false;
