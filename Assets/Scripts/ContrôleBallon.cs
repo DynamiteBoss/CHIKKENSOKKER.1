@@ -76,7 +76,8 @@ public class ContrôleBallon : NetworkBehaviour
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
-            CmdEnleverLocaleAutorité(this.transform.parent.gameObject);
+            //CmdEnleverLocaleAutorité(this.transform.parent.gameObject);
+            balle.GetComponent<NetworkIdentity>().localPlayerAuthority = false;
         }
     }
     
@@ -103,9 +104,10 @@ public class ContrôleBallon : NetworkBehaviour
     {
         if(other.name == "Balle" && other.transform.parent == null)
         {
-            CmdAssignerLocaleAutorité(this.transform.parent.gameObject);
+            //CmdAssignerLocaleAutorité(this.transform.parent.gameObject);
             MettreBalleEnfant(other);
             CalculerDistanceBalle();
+            Balle.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
     }
     private void MettreBalleEnfant(Collider other)
