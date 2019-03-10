@@ -44,6 +44,8 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void TirerBalle()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+        balle.GetComponent<SphereCollider>().enabled = true;
         //balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
         balle.transform.parent = null;
         //balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
