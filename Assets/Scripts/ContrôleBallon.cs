@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class ContrôleBallon : NetworkBehaviour
 {
-    const float FORCE = 40f;
+    //[SyncVar]
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
@@ -22,10 +22,6 @@ public class ContrôleBallon : NetworkBehaviour
    
     void Update()
     {
-        if (!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
-        {
-            return;
-        }
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
 
@@ -39,7 +35,7 @@ public class ContrôleBallon : NetworkBehaviour
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
                     if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        CmdTirerBallon();
+                        CmdTirerBallon(balle);
                     }
                     compteur1 = 0;
                 }
@@ -58,34 +54,32 @@ public class ContrôleBallon : NetworkBehaviour
     }
 
    
-    void CmdTirerBallon()
+    void CmdTirerBallon(GameObject balle)
     {
 
-        if (GameObject.Find("Balle") != null)
-        {
-            GameObject balle = GameObject.Find("Balle").gameObject;
-            balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
-            StartCoroutine(AttendrePourDistanceBallon(0.1f, balle));
-            balle.GetComponent<SphereCollider>().enabled = true;
-            balle.transform.parent = null;
-            balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * FORCE, ForceMode.Impulse);
-        }
-        //RpcTirerBallon(balle);
-    }
-    
-  
-    private void RpcTirerBallon(GameObject balle)
-    {
         if (balle != null)
         {
             balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
-            StartCoroutine(AttendrePourDistanceBallon(0.1f, balle));
+            StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
-            balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * FORCE, ForceMode.Impulse);
-
+            balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
+            CmdEnleverLocaleAutorité(this.transform.parent.gameObject);
         }
     }
+    
+    //private void RpcTirerBallon(GameObject balle)
+    //{
+    //    if (balle != null)
+    //    {
+    //        balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+    //        StartCoroutine(RpcAttendrePourDistanceBallon(0.1f, balle));
+    //        balle.GetComponent<SphereCollider>().enabled = true;
+    //        balle.transform.parent = null;
+    //        balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
+
+    //    }
+    //}
 
     IEnumerator AttendrePourDistanceBallon(float durée,GameObject balle)
     {
@@ -97,11 +91,11 @@ public class ContrôleBallon : NetworkBehaviour
     {
         if(other.name == "Balle" && other.transform.parent == null)
         {
+            CmdAssignerLocaleAutorité(this.transform.parent.gameObject);
             MettreBalleEnfant(other);
             CalculerDistanceBalle();
         }
     }
-    
     private void MettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
@@ -114,7 +108,24 @@ public class ContrôleBallon : NetworkBehaviour
             other.GetComponent<SphereCollider>().enabled = false;
         }     
     }
- 
+
+    [Command]
+    void CmdAssignerLocaleAutorité(GameObject g)
+    {
+        NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
+        GameObject client = NetworkServer.FindLocalObject(inst);
+        NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
+        iden.AssignClientAuthority(connectionToClient);
+    }
+    [Command]
+    void CmdEnleverLocaleAutorité(GameObject g)
+    {
+        NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
+        GameObject client = NetworkServer.FindLocalObject(inst);
+        NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
+        iden.RemoveClientAuthority(iden.clientAuthorityOwner);
+    }
+
     private void CalculerDistanceBalle()
     {
         Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
