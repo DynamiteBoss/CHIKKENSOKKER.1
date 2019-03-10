@@ -21,9 +21,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer && Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
         {
-            return;
+            RpcTirerBalle();
         }
         compteur1 += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
@@ -46,9 +46,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
         balle.GetComponent<SphereCollider>().enabled = true;
-        //balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
         balle.transform.parent = null;
-        //balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
         AttendrePourDistanceBallon(0.4f, balle);
         /* if (GameObject.Find("Balle") != null)
          {
@@ -66,6 +66,18 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
          }
          */
+    }
+
+    [ClientRpc]
+    void RpcTirerBalle()
+    {
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+        balle.GetComponent<SphereCollider>().enabled = true;
+        balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        balle.transform.parent = null;
+        balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        AttendrePourDistanceBallon(0.4f, balle);
     }
 
 
