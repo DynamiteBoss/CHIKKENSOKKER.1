@@ -25,7 +25,7 @@ public class NetworkManagerPerso : NetworkManager
     public override void OnClientConnect(NetworkConnection conn)
     {
         ClientScene.Ready(conn);
-        ClientScene.AddPlayer(compteurId++/*(short)NetworkServer.connections.Count*/);
+        ClientScene.AddPlayer(0/*(short)NetworkServer.connections.Count*/);
     }
     public void CreateHost()
     {
@@ -40,7 +40,7 @@ public class NetworkManagerPerso : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         GameObject joueur = (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
-        joueur.transform.name = string.Format("Player ({0})", compteurId);
+        joueur.transform.name = string.Format("Player ({0})", ++compteurId);
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
     }
     void CréerÉquipes()
