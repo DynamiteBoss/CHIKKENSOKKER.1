@@ -22,6 +22,10 @@ public class ContrôleBallon : NetworkBehaviour
    
     void Update()
     {
+        if (!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            return;
+        }
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
 

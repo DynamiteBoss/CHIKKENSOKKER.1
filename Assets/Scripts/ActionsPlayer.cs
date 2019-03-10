@@ -23,6 +23,10 @@ public class ActionsPlayer : NetworkBehaviour
     }
     void Update()
     {
+        if(!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            return;
+        }
         possessionBallon = this.transform.parent.Find("Balle");
         compteur += Time.deltaTime;
         float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
