@@ -6,9 +6,8 @@ using UnityEngine.Networking;
 
 public class ContrôleBallon : NetworkBehaviour
 {
-    const float FORCE = 20f;
-    [SyncVar]
-    GameObject Balle;
+    const float FORCE = 40f;
+    GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
     float compteur1 = 0;
