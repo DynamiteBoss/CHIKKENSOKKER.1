@@ -36,7 +36,7 @@ public class ContrôleBallon : NetworkBehaviour
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
                     if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        CmdTirerBallon(balle);
+                        CmdTirerBallon();
                     }
                     compteur1 = 0;
                 }
@@ -55,18 +55,19 @@ public class ContrôleBallon : NetworkBehaviour
     }
 
    
-    void CmdTirerBallon(GameObject balle)
+    void CmdTirerBallon()
     {
 
-        /*if (balle != null)
+        if (GameObject.Find("Balle") != null)
         {
+            GameObject balle = GameObject.Find("Balle").gameObject;
             balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
             StartCoroutine(AttendrePourDistanceBallon(0.1f, balle));
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
-        }*/
-        RpcTirerBallon(balle);
+        }
+        //RpcTirerBallon(balle);
     }
     
   
@@ -75,7 +76,7 @@ public class ContrôleBallon : NetworkBehaviour
         if (balle != null)
         {
             balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
-            StartCoroutine(RpcAttendrePourDistanceBallon(0.1f, balle));
+            StartCoroutine(AttendrePourDistanceBallon(0.1f, balle));
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * FORCE, ForceMode.Impulse);
@@ -83,7 +84,7 @@ public class ContrôleBallon : NetworkBehaviour
         }
     }
 
-    IEnumerator RpcAttendrePourDistanceBallon(float durée,GameObject balle)
+    IEnumerator AttendrePourDistanceBallon(float durée,GameObject balle)
     {
         GetComponent<BoxCollider>().isTrigger = false;
         yield return new WaitForSeconds(durée);
