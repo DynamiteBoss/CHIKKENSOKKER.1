@@ -1768,7 +1768,7 @@ GameObject:
   - component: {fileID: 1987446242}
   - component: {fileID: 1987446241}
   m_Layer: 0
-  m_Name: BallSpawner
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1819,7 +1819,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!4 &1987446243
 Transform:
