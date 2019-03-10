@@ -78,6 +78,7 @@ public class ContrôleBallon : NetworkBehaviour
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
             //CmdEnleverLocaleAutorité(this.transform.parent.gameObject);
             balle.GetComponent<NetworkIdentity>().localPlayerAuthority = false;
+
         }
     }
     
@@ -123,22 +124,22 @@ public class ContrôleBallon : NetworkBehaviour
         }     
     }
 
-    [Command]
-    void CmdAssignerLocaleAutorité(GameObject g)
-    {
-        NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
-        GameObject client = NetworkServer.FindLocalObject(inst);
-        NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
-        iden.AssignClientAuthority(connectionToClient);
-    }
-    [Command]
-    void CmdEnleverLocaleAutorité(GameObject g)
-    {
-        NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
-        GameObject client = NetworkServer.FindLocalObject(inst);
-        NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
-        iden.RemoveClientAuthority(iden.clientAuthorityOwner);
-    }
+    //[Command]
+    //void CmdAssignerLocaleAutorité(GameObject g)
+    //{
+    //    NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
+    //    GameObject client = NetworkServer.FindLocalObject(inst);
+    //    NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
+    //    iden.AssignClientAuthority(connectionToClient);
+    //}
+    //[Command]
+    //void CmdEnleverLocaleAutorité(GameObject g)
+    //{
+    //    NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
+    //    GameObject client = NetworkServer.FindLocalObject(inst);
+    //    NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
+    //    iden.RemoveClientAuthority(iden.clientAuthorityOwner);
+    //}
 
     private void CalculerDistanceBalle()
     {
