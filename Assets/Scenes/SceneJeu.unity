@@ -1768,7 +1768,7 @@ GameObject:
   - component: {fileID: 1987446242}
   - component: {fileID: 1987446241}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BallSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1786,7 +1786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b57f45849b9524999c21128e978041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Balle: {fileID: 450309112859782008, guid: 5902215a1ab31764cb734d1a9b1f193e, type: 3}
+  Balle: {fileID: 20, guid: 5902215a1ab31764cb734d1a9b1f193e, type: 3}
   "EstCr\xE9e": 0
 --- !u!114 &1987446242
 MonoBehaviour:
@@ -1819,7 +1819,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 0
+  m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
 --- !u!4 &1987446243
 Transform:

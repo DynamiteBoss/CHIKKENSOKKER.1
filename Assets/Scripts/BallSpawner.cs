@@ -5,31 +5,29 @@ using UnityEngine.UI;
 public class BallSpawner : NetworkBehaviour
 {
     
-    [SyncVar] public GameObject Balle;
+    public GameObject Balle;
     
 
     public bool EstCrée = false;
     public override void OnStartServer()
     {
-        //GameObject balleJeu = (GameObject)Instantiate(Balle, new Vector3(0, 1, 0), Quaternion.identity);
-        //balleJeu.name = "Balle";
+        var balleJeu = (GameObject)Instantiate(Balle, new Vector3(0, 1, 0), Quaternion.identity);
+        balleJeu.name = "Balle";
         NetworkServer.Spawn(Balle);
-        //NetworkAnimator.Instantiate(Balle);
         Balle.name = "Balle";
-        //CmdSpawn(balleJeu);
         EstCrée = true;
     }
 
-    [Command]
-    void CmdSpawn(GameObject objetÀSpawn)
-    {
-        //NetworkAnimator.Instantiate(objetÀSpawn);
-        RpcSpawn(objetÀSpawn);
-    }
+    //[Command]
+    //void CmdSpawn(GameObject objetÀSpawn)
+    //{
+    //    //NetworkAnimator.Instantiate(objetÀSpawn);
+    //    RpcSpawn(objetÀSpawn);
+    //}
 
-    [ClientRpc]
-    void RpcSpawn(GameObject objetÀSpawn)
-    {
-      //  NetworkAnimator.Instantiate(objetÀSpawn);
-    }
+    //[ClientRpc]
+    //void RpcSpawn(GameObject objetÀSpawn)
+    //{
+    //  //  NetworkAnimator.Instantiate(objetÀSpawn);
+    //}
 }
