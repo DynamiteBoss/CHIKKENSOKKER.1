@@ -8,6 +8,7 @@ public class ContrôleBallon : NetworkBehaviour
 {
     //[SyncVar]
     GameObject Balle { get; set; }
+    [SyncVar(hook = "OnChangePosition")] Vector3 position = new Vector3(0,0,0);
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
     float compteur1 = 0;
@@ -22,6 +23,14 @@ public class ContrôleBallon : NetworkBehaviour
    
     void Update()
     {
+        if(!transform.parent.GetComponent<NetworkIdentity>().isServer)
+        {
+            return;
+        }
+        if (!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            return;
+        }
         compteur1 += Time.deltaTime;
         compteur2 += Time.deltaTime;
 
@@ -35,7 +44,7 @@ public class ContrôleBallon : NetworkBehaviour
                     GameObject balle = ZoneContrôle.parent.Find("Balle").gameObject;
                     if (balle.transform.parent = ZoneContrôle.parent)
                     {
-                        CmdTirerBallon(balle);
+                        TirerBallon(balle);
                     }
                     compteur1 = 0;
                 }
@@ -52,9 +61,12 @@ public class ContrôleBallon : NetworkBehaviour
         }
         
     }
-
+    void OnChangePosition(Vector3 post)
+    {
+        Balle.transform.position = post;
+    }
    
-    void CmdTirerBallon(GameObject balle)
+    void TirerBallon(GameObject balle)
     {
 
         if (balle != null)
