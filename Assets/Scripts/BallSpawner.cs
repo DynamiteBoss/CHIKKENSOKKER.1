@@ -11,9 +11,10 @@ public class BallSpawner : NetworkBehaviour
     public bool EstCrée = false;
     public override void OnStartServer()
     {
-        var balleJeu = (GameObject)Instantiate(Balle, new Vector3(0, 1, 0), Quaternion.identity);
-        balleJeu.name = "Balle";
-        NetworkServer.Spawn(balleJeu);
+        //GameObject balleJeu = (GameObject)Instantiate(Balle, new Vector3(0, 1, 0), Quaternion.identity);
+        //balleJeu.name = "Balle";
+        NetworkServer.Spawn(Balle);
+        //NetworkAnimator.Instantiate(Balle);
         Balle.name = "Balle";
         //CmdSpawn(balleJeu);
         EstCrée = true;
