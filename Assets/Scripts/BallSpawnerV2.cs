@@ -9,7 +9,7 @@ public class BallSpawnerV2 : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        Vector3 spawnPos = new Vector3(0, 0.5f, 0);
+        Vector3 spawnPos = new Vector3(1, 0.5f, 5);
         Quaternion spawnRot = Quaternion.Euler(0, 0, 0);
 
         GameObject balle = (GameObject)Instantiate(ballePrefab, spawnPos, spawnRot);

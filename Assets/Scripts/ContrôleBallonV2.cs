@@ -26,13 +26,18 @@ public class ContrôleBallonV2 : NetworkBehaviour
         //    return;
         //}
         compteur1 += Time.deltaTime;
-        if(Balle.transform.parent != null)
+        if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+        {
+            CmdTirerBalle();
+        }
+       /* if (Balle.transform.parent != null)
         {
             if(Input.GetKeyDown("space") && compteur1 >= TEMPS_MIN)
             {
                 CmdTirerBalle();
             }
         }
+        */
     }
 
     [Command]
@@ -41,6 +46,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         if(GameObject.Find("Balle") != null)
         {
             GameObject balle = GameObject.Find("Balle");
+            balle.GetComponent<PlacerBalle>().enabled = false;
             balle.transform.GetComponent<Rigidbody>().isKinematic = false;
             StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
             balle.GetComponent<SphereCollider>().enabled = true;
@@ -54,8 +60,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
     IEnumerator AttendrePourDistanceBallon(float durée, GameObject balle)
     {
-        GetComponent<BoxCollider>().isTrigger = false;
+        balle.GetComponent<SphereCollider>().isTrigger = false;
         yield return new WaitForSeconds(durée);
-        GetComponent<BoxCollider>().isTrigger = true;
+        balle.GetComponent<SphereCollider>().isTrigger = true;
+        balle.GetComponent<PlacerBalle>().enabled = true;
     }
 }
