@@ -21,10 +21,10 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
-        {
-            return;
-        }
+        //if(!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        //{
+        //    return;
+        //}
         compteur1 += Time.deltaTime;
         if(Balle.transform.parent != null)
         {
