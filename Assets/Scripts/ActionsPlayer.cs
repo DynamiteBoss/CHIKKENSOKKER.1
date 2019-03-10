@@ -27,7 +27,8 @@ public class ActionsPlayer : NetworkBehaviour
         {
             return;
         }
-        possessionBallon = this.transform.parent.Find("Balle");
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        possessionBallon = balle.transform.parent;
         compteur += Time.deltaTime;
         float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
         if (compteur >= 0.95f)

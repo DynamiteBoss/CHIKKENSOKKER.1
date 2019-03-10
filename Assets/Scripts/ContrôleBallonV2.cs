@@ -14,7 +14,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Balle = GameObject.Find("Balle");
+        Balle = GameObject.FindGameObjectWithTag("Balle");
         ZoneContrôle = this.transform;
     }
 
@@ -28,7 +28,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         compteur1 += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
         {
-            CmdTirerBalle();
+            TirerBalle();
         }
        /* if (Balle.transform.parent != null)
         {
@@ -40,21 +40,30 @@ public class ContrôleBallonV2 : NetworkBehaviour
         */
     }
 
-    [Command]
-    void CmdTirerBalle()
+    
+    void TirerBalle()
     {
-        if(GameObject.Find("Balle") != null)
-        {
-            GameObject balle = GameObject.Find("Balle");
-            balle.GetComponent<PlacerBalle>().enabled = false;
-            balle.transform.GetComponent<Rigidbody>().isKinematic = false;
-            StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
-            balle.GetComponent<SphereCollider>().enabled = true;
-            balle.transform.parent = null;
-            Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-            balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-            balle.GetComponent<NetworkIdentity>().localPlayerAuthority = false;
-        }
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        //balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        balle.transform.parent = null;
+        //balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        AttendrePourDistanceBallon(0.4f, balle);
+        /* if (GameObject.Find("Balle") != null)
+         {
+             GameObject balle = GameObject.Find("Balle");
+             balle.transform.parent  = null;
+             /*GameObject balle = GameObject.Find("Balle");
+             balle.GetComponent<PlacerBalle>().enabled = false;
+             balle.transform.GetComponent<Rigidbody>().isKinematic = false;
+             StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
+             balle.GetComponent<SphereCollider>().enabled = true;
+             balle.transform.parent = null;
+             Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
+             balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
+             balle.GetComponent<NetworkIdentity>().localPlayerAuthority = false;
+
+         }
+         */
     }
 
 

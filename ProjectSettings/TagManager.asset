@@ -6,6 +6,7 @@ TagManager:
   tags:
   - A
   - B
+  - Balle
   layers:
   - Default
   - TransparentFX

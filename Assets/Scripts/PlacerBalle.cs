@@ -21,7 +21,6 @@ public class PlacerBalle : MonoBehaviour
         this.transform.parent = other.transform.parent;
         transform.localScale = Vector3.one;
         transform.GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<SphereCollider>().enabled = false;
 
         /*
         if (other.transform.parent == null)
