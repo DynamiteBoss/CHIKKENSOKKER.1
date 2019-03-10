@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ScriptBut : MonoBehaviour
+public class ScriptBut : NetworkBehaviour
 {
     string NomBut1 = "But1";
     string NomBut2 = "But2";

@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 public class ContrôleBallon : NetworkBehaviour
 {
     //[SyncVar]
+    const float FORCE = 20f;
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
     string Nom { get; set; }
@@ -77,7 +78,7 @@ public class ContrôleBallon : NetworkBehaviour
             StartCoroutine(RpcAttendrePourDistanceBallon(0.1f, balle));
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
-            balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
+            balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * FORCE, ForceMode.Impulse);
 
         }
     }
