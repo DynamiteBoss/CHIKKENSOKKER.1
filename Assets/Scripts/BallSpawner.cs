@@ -28,6 +28,6 @@ public class BallSpawner : NetworkBehaviour
     [ClientRpc]
     void RpcSpawn(GameObject objetÀSpawn)
     {
-        NetworkAnimator.Instantiate(objetÀSpawn);
+      //  NetworkAnimator.Instantiate(objetÀSpawn);
     }
 }

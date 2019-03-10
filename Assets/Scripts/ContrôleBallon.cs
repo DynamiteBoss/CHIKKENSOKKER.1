@@ -76,7 +76,7 @@ public class ContrôleBallon : NetworkBehaviour
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
             balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(balle.transform.position.x - ZoneContrôle.transform.parent.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.parent.position.z).normalized * 5, ForceMode.Impulse);
-            CmdEnleverLocaleAutorité(this.transform.parent.gameObject);
+            //CmdEnleverLocaleAutorité(this.transform.parent.gameObject);
         }
     }
     
@@ -103,7 +103,7 @@ public class ContrôleBallon : NetworkBehaviour
     {
         if(other.name == "Balle" && other.transform.parent == null)
         {
-            CmdAssignerLocaleAutorité(this.transform.parent.gameObject);
+            //CmdAssignerLocaleAutorité(this.transform.parent.gameObject);
             MettreBalleEnfant(other);
             CalculerDistanceBalle();
         }
@@ -121,22 +121,22 @@ public class ContrôleBallon : NetworkBehaviour
         }     
     }
 
-    [Command]
-    void CmdAssignerLocaleAutorité(GameObject g)
-    {
-        NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
-        GameObject client = NetworkServer.FindLocalObject(inst);
-        NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
-        iden.AssignClientAuthority(connectionToClient);
-    }
-    [Command]
-    void CmdEnleverLocaleAutorité(GameObject g)
-    {
-        NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
-        GameObject client = NetworkServer.FindLocalObject(inst);
-        NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
-        iden.RemoveClientAuthority(iden.clientAuthorityOwner);
-    }
+    //[Command]
+    //void CmdAssignerLocaleAutorité(GameObject g)
+    //{
+    //    NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
+    //    GameObject client = NetworkServer.FindLocalObject(inst);
+    //    NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
+    //    iden.AssignClientAuthority(connectionToClient);
+    //}
+    //[Command]
+    //void CmdEnleverLocaleAutorité(GameObject g)
+    //{
+    //    NetworkInstanceId inst = g.GetComponent<NetworkIdentity>().netId;
+    //    GameObject client = NetworkServer.FindLocalObject(inst);
+    //    NetworkIdentity iden = client.GetComponent<NetworkIdentity>();
+    //    iden.RemoveClientAuthority(iden.clientAuthorityOwner);
+    //}
 
     private void CalculerDistanceBalle()
     {
