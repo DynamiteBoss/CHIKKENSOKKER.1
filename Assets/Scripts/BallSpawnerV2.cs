@@ -13,18 +13,7 @@ public class BallSpawnerV2 : NetworkBehaviour
         Quaternion spawnRot = Quaternion.Euler(0, 0, 0);
 
         GameObject balle = (GameObject)Instantiate(ballePrefab, spawnPos, spawnRot);
+        balle.transform.name = "Balle";
         NetworkServer.Spawn(balle);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
