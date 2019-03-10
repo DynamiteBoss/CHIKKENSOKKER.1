@@ -21,14 +21,14 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
-        //{
-        //    return;
-        //}
+        if (!transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            return;
+        }
         compteur1 += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
         {
-            TirerBalle();
+            CmdTirerBalle();
         }
        /* if (Balle.transform.parent != null)
         {
@@ -40,8 +40,8 @@ public class ContrôleBallonV2 : NetworkBehaviour
         */
     }
 
-    
-    void TirerBalle()
+    [Command]
+    void CmdTirerBalle()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         //balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);

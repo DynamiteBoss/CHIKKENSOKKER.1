@@ -218,7 +218,6 @@ GameObject:
   - component: {fileID: 51}
   - component: {fileID: 44}
   - component: {fileID: 52}
-  - component: {fileID: 48}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -382,28 +381,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &48
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.033333335
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 1e-12
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 10
 --- !u!1 &17
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +488,7 @@ GameObject:
   - component: {fileID: 49}
   - component: {fileID: 6045675885110710546}
   - component: {fileID: 4782586720537728701}
+  - component: {fileID: 5536364067585712058}
   m_Layer: 0
   m_Name: "ZoneContr\xF4le"
   m_TagString: Untagged
@@ -634,7 +612,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &4782586720537728701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,6 +625,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f505515fc5cb0494fa31b1d86fb9f979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5536364067585712058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!1 &19
 GameObject:
   m_ObjectHideFlags: 0
