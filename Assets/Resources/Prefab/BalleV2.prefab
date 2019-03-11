@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8914354331712875250}
   - component: {fileID: 4529296626617787237}
   - component: {fileID: 332456215313457392}
+  - component: {fileID: 8208502189713598781}
   m_Layer: 0
   m_Name: BalleV2
   m_TagString: Balle
@@ -178,3 +179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04acdcad7c05d6340b39cf85115f1821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8208502189713598781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616913947956764931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  "est\xC9quipeA": 1

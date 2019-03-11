@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 5934104489698992814}
   m_Layer: 0
   m_Name: "ZoneContr\xF4le"
-  m_TagString: Untagged
+  m_TagString: ZoneC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -9,9 +9,10 @@ public class ScriptBut : NetworkBehaviour
     string NomBut1 = "But1";
     string NomBut2 = "But2";
 
-    int NbButsA { get; set; }
-
-    int NbButsB { get; set; }
+    [SyncVar]
+    int NbButsA = 0;
+    [SyncVar]
+    int NbButsB = 0;
 
     [SerializeField]
     bool estÉquipeA = true;
@@ -23,8 +24,6 @@ public class ScriptBut : NetworkBehaviour
     {
         InterfaceScore = GameObject.Find("Interface").gameObject.transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Score").gameObject.GetComponentInChildren<Text>();
         Ballon = this.gameObject;
-        NbButsA = 0;
-        NbButsB = 0;
     }
 
     private void OnTriggerEnter(Collider other)

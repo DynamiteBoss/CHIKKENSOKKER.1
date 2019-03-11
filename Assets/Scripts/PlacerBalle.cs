@@ -7,7 +7,11 @@ public class PlacerBalle : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.tag == "Player")
+        if (other.transform.parent.tag != "Player")
+        {
+
+        }
+        else
         {
             MettreBalleEnfant(other);
             CalculerDistanceBalle();

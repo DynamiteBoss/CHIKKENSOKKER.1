@@ -15,41 +15,28 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void Start()
     {
         Balle = GameObject.FindGameObjectWithTag("Balle");
-
+        ZoneContrôle = this.transform.Find("ZoneContrôle");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer && Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
-            RpcTirerBalle();
+            return;
         }
         compteur1 += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
         {
             CmdTirerBalle();
         }
-       /* if (Balle.transform.parent != null)
-        {
-            if(Input.GetKeyDown("space") && compteur1 >= TEMPS_MIN)
-            {
-                CmdTirerBalle();
-            }
-        }
-        */
     }
 
     [Command]
     void CmdTirerBalle()
     {
-        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
-        balle.GetComponent<SphereCollider>().enabled = true;
-        balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-        balle.transform.parent = null;
-        balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-        AttendrePourDistanceBallon(0.4f, balle);
+        RpcTirerBalle();
+
         /* if (GameObject.Find("Balle") != null)
          {
              GameObject balle = GameObject.Find("Balle");
@@ -74,9 +61,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
         balle.GetComponent<SphereCollider>().enabled = true;
-        balle.GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         balle.transform.parent = null;
-        balle.GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
+        balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
         AttendrePourDistanceBallon(0.4f, balle);
     }
 
