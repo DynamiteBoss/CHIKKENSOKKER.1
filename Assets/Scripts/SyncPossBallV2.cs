@@ -6,20 +6,20 @@ using UnityEngine.Networking;
 
 public class SyncPossBallV2 : NetworkBehaviour
 {
-    [SyncVar(hook = "OnMvtChange")] Vector3 position = new Vector3(0, 0, 0);
-    // Start is called before the first frame update
-    void Start()
-    {
-        position = this.transform.localPosition;
-    }
+    //[SyncVar(hook = "OnMvtChange")] Vector3 position = new Vector3(0, 0, 0);
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    position = this.transform.localPosition;
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
         
-    }
-    void OnMvtChange()
-    {
-        position = this.transform.localPosition;
-    }
+    //}
+    //void OnMvtChange()
+    //{
+    //    position = this.transform.localPosition;
+    //}
 }
