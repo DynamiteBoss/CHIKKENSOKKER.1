@@ -6,10 +6,8 @@ using UnityEngine.Networking;
 
 public class ScriptBut : NetworkBehaviour
 {
-    const string NOM_BUT_1 = "But1";
-    const string NOM_BUT_2 = "But2";
-    [SyncVar]
-    float compteur = 0;
+    string NomBut1 = "But1";
+    string NomBut2 = "But2";
 
     [SyncVar]
     int NbButsA = 0;
@@ -36,19 +34,11 @@ public class ScriptBut : NetworkBehaviour
             Ballon.GetComponent<Rigidbody>().isKinematic = true;
             Ballon.transform.parent = null;
 
-            if(compteur >= 1)
-            {
-                if (other.name == NOM_BUT_1)
-                {
-                    ++NbButsA;
-                    compteur = 0;
-                }
-                else if (other.name == NOM_BUT_2)
-                {
-                    ++NbButsB;
-                    compteur = 0;
-                }
-            }
+            if (other.name == NomBut1)
+                ++NbButsA;
+            else if (other.name == NomBut2)
+                ++NbButsB;
+
             InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
         }
 
@@ -63,6 +53,6 @@ public class ScriptBut : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        compteur += Time.deltaTime;
+        
     }
 }
