@@ -7,23 +7,41 @@ public class PlacerBalle : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.tag != "Player" || other.tag != "ZoneC")
+        if (other.transform.parent.tag != "Player")
         {
 
         }
         else
         {
             MettreBalleEnfant(other);
-            //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
+            CalculerDistanceBalle();
+            this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
     }
     private void MettreBalleEnfant(Collider other)
     {
+        //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
 
-        transform.parent = other.transform.parent;
+        this.transform.parent = other.transform.parent;
         transform.localScale = Vector3.one;
-        transform.localPosition = new Vector3(0, 1.5f, 2);
         transform.GetComponent<Rigidbody>().isKinematic = true;
 
+        /*
+        if (other.transform.parent == null)
+        {
+            //faire en sorte que lautre player puisse pa faire bouger le ballon
+            other.transform.parent = ZoneContrôle.parent;
+            other.transform.localScale = Vector3.one;
+            other.transform.GetComponent<Rigidbody>().isKinematic = true;
+            other.GetComponent<SphereCollider>().enabled = false;
+        }
+        */
+    }
+    private void CalculerDistanceBalle()
+    {
+        this.transform.localPosition = new Vector3(0, 1.5f, 2);
+        // Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
+
+        //mettre la balle vers le milieu de la zone de controle
     }
 }
