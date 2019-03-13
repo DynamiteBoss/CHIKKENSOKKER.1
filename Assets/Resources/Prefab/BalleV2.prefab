@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6264092961347481382}
   - component: {fileID: 2574510236967937128}
   - component: {fileID: 3702527826726437156}
-  - component: {fileID: 8914354331712875250}
   - component: {fileID: 4529296626617787237}
   - component: {fileID: 332456215313457392}
   - component: {fileID: 8208502189713598781}
@@ -130,10 +129,7 @@ MonoBehaviour:
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
-=======
->>>>>>> parent of 6eb9b41... Network Sync Transform //  Buts avec compteur pour éviter 2 buts
 --- !u!114 &8914354331712875250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,16 +149,10 @@ MonoBehaviour:
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_VelocityThreshold: 0.0001
-<<<<<<< HEAD
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
 >>>>>>> parent of dd30e4c... Merge branch 'master' of https://github.com/DynamiteBoss/CHIKKENSOKKER.1
-=======
-  m_SnapThreshold: 0.001
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
->>>>>>> parent of 6eb9b41... Network Sync Transform //  Buts avec compteur pour éviter 2 buts
 --- !u!54 &4529296626617787237
 Rigidbody:
   m_ObjectHideFlags: 0
