@@ -121,9 +121,7 @@ GameObject:
   - component: {fileID: 7249378003488758586}
   - component: {fileID: 4830801867208010834}
   - component: {fileID: 3317139882974209194}
-  - component: {fileID: 7437310154144769448}
-  - component: {fileID: 3387211607622502958}
-  - component: {fileID: 1810067439595718929}
+  - component: {fileID: 108487593489197558}
   m_Layer: 0
   m_Name: Gardien
   m_TagString: Untagged
@@ -299,7 +297,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &7437310154144769448
+--- !u!114 &108487593489197558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -308,211 +306,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4147039269632750063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbdf5a6b1cc27d74cab63a5666d2960a, type: 3}
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  na: {fileID: 1810067439595718929}
-  ghostGO: {fileID: 0}
-  _state: 0
-  ignoreStateUntil: 2
-  sendEveryXTick: 1
-  desiredBufferMS: 0
-  bufferDriftCorrectAmt: 1
-  autoKinematic: 1
-  allowOfftick: 1
-  sendOnEvent: 30
-  includedAxes: 7
-  keyEvery: 16
-  extrapolation: 1
-  extrapolationDivisor: 0
-  maxExtrapolates: 1
-  teleportThreshold: 2
-  bitCullingLevel: 0
-  sequentialKeys: 5
-  rootRotationElement:
-    name: Root Rotation
-    isRoot: 1
-    crusher:
-      isExpanded: 1
-      hideFieldName: 1
-      _trsType: 2
-      defaultTransform: {fileID: 0}
-      uniformAxes: 0
-      xcrusher:
-        axis: 0
-        showBCL: 0
-        expandBCL: 0
-        showEnableToggle: 1
-        enabled: 1
-        _accurateCenter: 0
-        outOfBoundsHandling: 1
-        encoder: 5.6833334
-        decoder: 0.17595308
-        actualMin: -90
-        actualMax: 90
-        wrappoint: 180
-        range: 180
-        rotationMaxValue: 270
-        maxEncodedVal: 1023
-        centerValue: 0
-        centerEncodedValue: 511
-        _limitRange: 1
-        _useHalfRangeX: 1
-        _bitsDeterminedBy: 10
-        _bits: 0a000000060000000500000000000000
-        _min: -90
-        _max: 90
-        _resolution: 1023
-        _precision: 0.17595308
-        _trsType: 1
-      ycrusher:
-        axis: 1
-        showBCL: 0
-        expandBCL: 0
-        showEnableToggle: 1
-        enabled: 1
-        _accurateCenter: 0
-        outOfBoundsHandling: 1
-        encoder: 11.375
-        decoder: 0.08791209
-        actualMin: -180
-        actualMax: 180
-        wrappoint: 180
-        range: 360
-        rotationMaxValue: 180
-        maxEncodedVal: 4095
-        centerValue: 0
-        centerEncodedValue: 2047
-        _limitRange: 1
-        _useHalfRangeX: 0
-        _bitsDeterminedBy: 12
-        _bits: 0c000000080000000600000000000000
-        _min: -180
-        _max: 180
-        _resolution: 4095
-        _precision: 0.08791209
-        _trsType: 1
-      zcrusher:
-        axis: 2
-        showBCL: 0
-        expandBCL: 0
-        showEnableToggle: 1
-        enabled: 1
-        _accurateCenter: 0
-        outOfBoundsHandling: 1
-        encoder: 2.8416667
-        decoder: 0.35190615
-        actualMin: -180
-        actualMax: 180
-        wrappoint: 180
-        range: 360
-        rotationMaxValue: 180
-        maxEncodedVal: 1023
-        centerValue: 0
-        centerEncodedValue: 511
-        _limitRange: 1
-        _useHalfRangeX: 0
-        _bitsDeterminedBy: 10
-        _bits: 0a000000060000000500000000000000
-        _min: -180
-        _max: 180
-        _resolution: 1023
-        _precision: 0.35190615
-        _trsType: 1
-      ucrusher:
-        axis: 4
-        showBCL: 0
-        expandBCL: 0
-        showEnableToggle: 0
-        enabled: 1
-        _accurateCenter: 0
-        outOfBoundsHandling: 1
-        encoder: 12.75
-        decoder: 0.078431375
-        actualMin: -10
-        actualMax: 10
-        wrappoint: 180
-        range: 20
-        rotationMaxValue: 350
-        maxEncodedVal: 255
-        centerValue: 0
-        centerEncodedValue: 127
-        _limitRange: 0
-        _useHalfRangeX: 0
-        _bitsDeterminedBy: 8
-        _bits: 08000000040000000300000000000000
-        _min: -10
-        _max: 10
-        _resolution: 255
-        _precision: 0.078431375
-        _trsType: 4
-      qcrusher:
-        bits: 32
-        _compressLevel: 32
-        transform: {fileID: 5327506683527226346}
-        local: 0
-        isStandalone: 0
-        showEnableToggle: 1
-        enabled: 1
-      local: 0
-      useWorldBounds: 0
-      enableTRSTypeSelector: 0
-      enableLocalSelector: 1
-      bounds:
-        m_Center: {x: 0, y: 0, z: 0}
-        m_Extent: {x: 0, y: 0, z: 0}
-    index: 0
-    drawerHeight: 193
-    nst: {fileID: 0}
-    na: {fileID: 0}
-    sendCullMask: 30
-    keyRate: 5
-    gameobject: {fileID: 0}
-    extrapolation: 0.5
-    maxExtrapolates: 2
-    teleportOverride: 1
-    ghostGO: {fileID: 0}
-    lastSentKeyTime: 0
-    snapshotFrameId: 0
-    targetFrameId: 0
-  debugXform: 0
-  dontDestroyOnLoad: 1
-  destroyUnspawned: 1
-  rb: {fileID: 0}
-  cachedGameObject: {fileID: 0}
-  cachedTransform: {fileID: 0}
-  frameUpdateInterval: 0
-  invFrameUpdateInterval: 0
-  lastSentPos: {x: 0, y: 0, z: 0}
---- !u!114 &3387211607622502958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4147039269632750063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc6587c27fd07824eb346469eb351e86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nst: {fileID: 7437310154144769448}
-  na: {fileID: 0}
-  cachedGameObject: {fileID: 0}
-  cachedTransform: {fileID: 0}
-  frameCount: 0
---- !u!114 &1810067439595718929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4147039269632750063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba7cb10fedfa1164ebbb304fa0368dbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 1e-12
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 10
 --- !u!1 &5364301005658550830
 GameObject:
   m_ObjectHideFlags: 0
