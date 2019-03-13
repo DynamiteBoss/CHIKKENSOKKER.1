@@ -17,6 +17,8 @@ public class ActionsPlayer : NetworkBehaviour
     bool estEnMouvementPlacage = false;
     bool possessionBallon = false;
 
+    int cpt = 0;
+
     void Start()
     {
         ZonePlacage = this.transform;
@@ -49,7 +51,7 @@ public class ActionsPlayer : NetworkBehaviour
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
-                    FairePasse();                                                                                                             //            TANTOT
+                    FairePasse(TrouverJoueurPasse());                                                                                                             //            TANTOT
                     StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                     //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                 }
@@ -70,7 +72,7 @@ public class ActionsPlayer : NetworkBehaviour
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
-                    FairePasse();                                                                                                             //            TANTOT
+                    FairePasse(TrouverJoueurPasse());                                                                                                             //            TANTOT
                     StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                     //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                 }
@@ -78,9 +80,14 @@ public class ActionsPlayer : NetworkBehaviour
         }
     }
 
-    private void FairePasse()
+    private Vector3 TrouverJoueurPasse()
     {
-        throw new NotImplementedException();
+        return Vector3.zero;
+    }
+
+    public void FairePasse(Vector3 positionJoueurVisé)
+    {
+
     }
 
     private void OnTriggerEnter(Collider other)
