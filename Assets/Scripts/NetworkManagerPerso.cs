@@ -45,8 +45,7 @@ public class NetworkManagerPerso : NetworkManager
         GameObject joueur = (Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity));
         joueur.transform.name = string.Format("Player ({0})", ++compteurId);
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
-        AfficheurIP ip = new AfficheurIP();
-        if(NetworkManager.singleton.networkAddress ==  "localhost")
+        if(compteurA==0)
         {
             ÉquipeA[compteurA++].JoueurPhysique = joueur;
         }
