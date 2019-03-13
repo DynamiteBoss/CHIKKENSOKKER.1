@@ -14,9 +14,6 @@ public class NetworkManagerPerso : NetworkManager
     public Équipe ÉquipeA { get; set; }
     public Équipe ÉquipeB { get; set; }
     short compteurId = 0;
-    int compteurA = 0;
-    int compteurB = 0;
-    string AddresseIP;
 
     public void JoindrePartie()
     {
@@ -34,15 +31,15 @@ public class NetworkManagerPerso : NetworkManager
     {
         InstancierAddresseIP();
         InstancierPort();
-        CréerÉquipes();
         NetworkManager.singleton.StartHost();
+        CréerÉquipes();
       //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
 
         //ÉquipeA[]
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        GameObject joueur = (Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity));
+        GameObject joueur = (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
         joueur.transform.name = string.Format("Player ({0})", ++compteurId);
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
         if(compteurA==0)
@@ -53,7 +50,6 @@ public class NetworkManagerPerso : NetworkManager
         {
             ÉquipeB[compteurB++].JoueurPhysique = joueur;
         }
-
     }
     void CréerÉquipes()
     {
@@ -62,7 +58,7 @@ public class NetworkManagerPerso : NetworkManager
     }
     void InstancierAddresseIP()
     {
-        AddresseIP = GameObject.Find("InputIpServeurÀJoindre").GetComponentInChildren<Text>().text;
+        string AddresseIP = GameObject.Find("InputIpServeurÀJoindre").GetComponentInChildren<Text>().text;
         NetworkManager.singleton.networkAddress = AddresseIP;
     }
 

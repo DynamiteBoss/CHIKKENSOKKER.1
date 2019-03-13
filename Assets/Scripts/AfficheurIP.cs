@@ -12,7 +12,7 @@ using System.Net.Sockets;
 public class AfficheurIP : MonoBehaviour
 {
     bool EstVisible;
-    public string IPLocal = "";
+
 
     // Ce code a été pris sur un forum de UNITY, voici le lien : 
     //https://answers.unity.com/questions/1004969/local-ip-adress-in-unet.html 
@@ -20,6 +20,7 @@ public class AfficheurIP : MonoBehaviour
     {
         EstVisible = true;
         IPHostEntry hôte;
+        string IPLocal = "";
         hôte = Dns.GetHostEntry(Dns.GetHostName());
         foreach (IPAddress ip in hôte.AddressList)
         {
