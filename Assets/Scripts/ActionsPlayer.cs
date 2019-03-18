@@ -28,7 +28,7 @@ public class ActionsPlayer : NetworkBehaviour
             return;
         }
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        if(balle.transform.parent == this.gameObject)
+        if(balle.transform.parent == this.transform.parent)
         {
             possessionBallon = true;
         }
