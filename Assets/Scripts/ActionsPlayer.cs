@@ -28,14 +28,23 @@ public class ActionsPlayer : NetworkBehaviour
             return;
         }
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        possessionBallon = balle.transform.parent;
+        if(balle.transform.parent == this.gameObject)
+        {
+            possessionBallon = true;
+        }
+        else
+        {
+            possessionBallon = false;
+        }
+
+        //possessionBallon = balle.transform.parent;
         compteur += Time.deltaTime;
         float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
         if (compteur >= 0.95f)
         {
             if (this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
             {
-                if (Input.GetKeyDown("e") && !possessionBallon && isLocalPlayer)
+                if (Input.GetKeyDown("e") && !possessionBallon)
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
@@ -56,7 +65,7 @@ public class ActionsPlayer : NetworkBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.RightShift) && !possessionBallon && isLocalPlayer)
+                if (Input.GetKeyDown(KeyCode.RightShift) && !possessionBallon)
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
@@ -66,7 +75,7 @@ public class ActionsPlayer : NetworkBehaviour
                     //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                 }
 
-                if (Input.GetKeyDown(KeyCode.RightControl) && compteur >= 0.95f && possessionBallon && isLocalPlayer)
+                if (Input.GetKeyDown(KeyCode.RightControl) && compteur >= 0.95f && possessionBallon)
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
