@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
-    const float FORCE = 100f;
+    const float FORCE = 60f;
 
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
@@ -21,11 +21,14 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             return;
         }
         compteur1 += Time.deltaTime;
+
+
         if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
         {
             CmdTirerBalle();
@@ -59,7 +62,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void RpcTirerBalle()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+        balle.transform.GetComponent<Rigidbody>().isKinematic = false;
         balle.GetComponent<SphereCollider>().enabled = true;
         Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         balle.transform.parent = null;
