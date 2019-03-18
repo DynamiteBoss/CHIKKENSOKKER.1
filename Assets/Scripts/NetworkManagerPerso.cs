@@ -15,6 +15,9 @@ public class NetworkManagerPerso : NetworkManager
     public Équipe ÉquipeB { get; set; }
     short compteurId = 0;
 
+    int compteurA = 0;
+    int compteurB = 0;
+
     public void JoindrePartie()
     {
         InstancierAddresseIP();
