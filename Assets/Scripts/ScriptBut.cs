@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 public class ScriptBut : NetworkBehaviour
 {
+    const float TEMPS_MIN = 1f;
     string NomBut1 = "But1";
     string NomBut2 = "But2";
 
@@ -13,6 +14,8 @@ public class ScriptBut : NetworkBehaviour
     int NbButsA = 0;
     [SyncVar]
     int NbButsB = 0;
+
+    float compteur = 0;
 
     [SerializeField]
     bool estÉquipeA = true;
@@ -28,8 +31,9 @@ public class ScriptBut : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.StartsWith("But"))
+        if (other.name.StartsWith("But") && compteur >= TEMPS_MIN)
         {
+            compteur = 0;
             Ballon.transform.position = new Vector3(0, 1, 0);
             Ballon.GetComponent<Rigidbody>().isKinematic = true;
             Ballon.transform.parent = null;
@@ -53,6 +57,6 @@ public class ScriptBut : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        compteur += Time.deltaTime;
     }
 }
