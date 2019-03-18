@@ -35,7 +35,7 @@ public class ActionsPlayer : NetworkBehaviour
         {
             if (this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
             {
-                if (Input.GetKeyDown("e") && !possessionBallon)
+                if (Input.GetKeyDown("e") && !possessionBallon && isLocalPlayer)
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
@@ -56,7 +56,7 @@ public class ActionsPlayer : NetworkBehaviour
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.RightShift) && !possessionBallon)
+                if (Input.GetKeyDown(KeyCode.RightShift) && !possessionBallon && isLocalPlayer)
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
@@ -66,7 +66,7 @@ public class ActionsPlayer : NetworkBehaviour
                     //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                 }
 
-                if (Input.GetKeyDown(KeyCode.RightControl) && compteur >= 0.95f && possessionBallon)
+                if (Input.GetKeyDown(KeyCode.RightControl) && compteur >= 0.95f && possessionBallon && isLocalPlayer)
                 {
                     //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                     compteur = 0;
