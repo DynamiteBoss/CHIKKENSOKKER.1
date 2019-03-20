@@ -69,7 +69,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         balle.transform.parent = null;
         balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-        AttendrePourDistanceBallon(0.4f, balle);
+        AttendrePourDistanceBallon(4, balle);
     }
 
 
