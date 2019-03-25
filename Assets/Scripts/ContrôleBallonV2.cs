@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
-    const float FORCE = 60f;
+    const float FORCE = 70f;
 
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
@@ -22,6 +22,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void Update()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+
 
         if (!isLocalPlayer)
         {
