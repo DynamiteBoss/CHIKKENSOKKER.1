@@ -14,7 +14,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Balle = GameObject.FindGameObjectWithTag("Balle");
+       
         ZoneContrôle = this.transform.Find("ZoneContrôle");
     }
 
@@ -72,6 +72,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         balle.transform.parent = null;
         balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
         Balle.GetComponent<SphereCollider>().isTrigger = false;
+        Balle.GetComponent<NetworkTransform>().enabled = true;
         //Invoke("AttendreDistanceBAllon", 0.4f);
         //AttendrePourDistanceBallon1(4, balle);
     }

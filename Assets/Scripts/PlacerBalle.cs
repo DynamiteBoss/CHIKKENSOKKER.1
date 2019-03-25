@@ -26,7 +26,7 @@ public class PlacerBalle : MonoBehaviour
         transform.localScale = Vector3.one;
         transform.GetComponent<Rigidbody>().isKinematic = true;
         this.transform.localPosition = new Vector3(0, 1.5f, 2);
-        //GetComponent<NetworkTransform>().enabled = false;
+        GetComponent<NetworkTransform>().enabled = false;
 
         /*
         if (other.transform.parent == null)
