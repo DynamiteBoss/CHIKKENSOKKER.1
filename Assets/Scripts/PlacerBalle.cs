@@ -14,7 +14,7 @@ public class PlacerBalle : MonoBehaviour
         else
         {
             MettreBalleEnfant(other);
-            CalculerDistanceBalle();
+            //CalculerDistanceBalle();
             this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
     }
@@ -25,6 +25,8 @@ public class PlacerBalle : MonoBehaviour
         this.transform.parent = other.transform.parent;
         transform.localScale = Vector3.one;
         transform.GetComponent<Rigidbody>().isKinematic = true;
+        this.transform.localPosition = new Vector3(0, 1.5f, 2);
+        //GetComponent<NetworkTransform>().enabled = false;
 
         /*
         if (other.transform.parent == null)

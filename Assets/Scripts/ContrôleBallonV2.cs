@@ -22,6 +22,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void Update()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        Balle = balle;
         if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             return;
@@ -64,20 +65,30 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void RpcTirerBalle()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        balle.GetComponent<NetworkTransform>().enabled = false;
         balle.transform.GetComponent<Rigidbody>().isKinematic = false;
         balle.GetComponent<SphereCollider>().enabled = true;
         Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         balle.transform.parent = null;
         balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-        AttendrePourDistanceBallon(4, balle);
+        Balle.GetComponent<SphereCollider>().isTrigger = false;
+        //Invoke("AttendreDistanceBAllon", 0.4f);
+        //AttendrePourDistanceBallon1(4, balle);
     }
 
 
-    IEnumerator AttendrePourDistanceBallon(float durée, GameObject balle)
+    IEnumerator AttendrePourDistanceBallon1(float durée, GameObject balle)
     {
         balle.GetComponent<SphereCollider>().isTrigger = false;
         yield return new WaitForSeconds(durée);
         balle.GetComponent<SphereCollider>().isTrigger = true;
         balle.GetComponent<PlacerBalle>().enabled = true;
+    }
+
+    void AttendrePourDistanceBallon()
+    {
+        Balle.GetComponent<NetworkTransform>().enabled = true;
+        Balle.GetComponent<SphereCollider>().isTrigger = true;
+        Balle.GetComponent<PlacerBalle>().enabled = true;
     }
 }
