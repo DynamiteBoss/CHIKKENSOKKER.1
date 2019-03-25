@@ -8,6 +8,7 @@ TagManager:
   - B
   - Balle
   - ZoneC
+  - ZoneP
   layers:
   - Default
   - TransparentFX

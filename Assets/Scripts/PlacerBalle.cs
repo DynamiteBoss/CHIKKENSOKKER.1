@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlacerBalle : MonoBehaviour
+public class PlacerBalle : NetworkBehaviour
 {
+    public bool estPlacer = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent.tag != "Player")
@@ -15,18 +16,27 @@ public class PlacerBalle : MonoBehaviour
         {
             MettreBalleEnfant(other);
             //CalculerDistanceBalle();
-            this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
+            //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
     }
     private void MettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
-
-        this.transform.parent = other.transform.parent;
-        transform.localScale = Vector3.one;
-        transform.GetComponent<Rigidbody>().isKinematic = true;
-        this.transform.localPosition = new Vector3(0, 1.5f, 2);
-        GetComponent<NetworkTransform>().enabled = false;
+        if(other.tag == "ZoneC")
+        {
+            estPlacer = true;
+            GetComponent<NetworkTransform>().enabled = false;
+            this.transform.parent = other.transform.parent;
+            transform.localScale = Vector3.one;
+            
+            this.transform.localPosition = new Vector3(0, 1.5f, 2);
+            Debug.Log(transform.localPosition);
+            transform.GetComponent<Rigidbody>().isKinematic = true;
+            
+            
+        }
+        
+       
 
         /*
         if (other.transform.parent == null)
@@ -45,5 +55,13 @@ public class PlacerBalle : MonoBehaviour
         // Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
 
         //mettre la balle vers le milieu de la zone de controle
+    }
+    private void Update()
+    {
+        if(estPlacer)
+        {
+            if(transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+            transform.localPosition = new Vector3(0, 1.5f, 2);
+        }
     }
 }

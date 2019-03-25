@@ -15,6 +15,7 @@ public class MouvementPlayer : NetworkBehaviour
     }
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, -1, transform.position.z);
         if (!isLocalPlayer)
         { return; }
         DépacerAWSD();

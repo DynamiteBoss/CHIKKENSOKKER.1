@@ -40,7 +40,7 @@ public class ActionsPlayer2 : MonoBehaviour
         if (other.name.StartsWith("Player") && other.gameObject != this.transform.parent.gameObject)
         {
             JoueurÀPlaquer = other.gameObject;
-            Balle = other.transform.Find("Balle").gameObject;
+            Balle = GameObject.FindGameObjectWithTag("Balle");
         }
     }
 

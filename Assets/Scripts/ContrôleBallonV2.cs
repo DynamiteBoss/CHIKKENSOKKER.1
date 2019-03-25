@@ -14,7 +14,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        Balle = GameObject.FindGameObjectWithTag("Balle");
         ZoneContrôle = this.transform.Find("ZoneContrôle");
     }
 
@@ -22,20 +22,27 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void Update()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        Balle = balle;
-        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
+
+        if (!isLocalPlayer)
         {
             return;
         }
-        compteur1 += Time.deltaTime;
 
-        if(balle.transform.parent != null)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+        compteur1 += Time.deltaTime;
+        //if(isLocalPlayer)
+        //{
+            if(balle.transform.parent != null)
             {
-                CmdTirerBalle();
+                if(balle.transform.parent == transform)
+                {
+                    if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+                    {
+                        CmdTirerBalle();
+                    }
+                }
             }
-        }
+        //}
+        
     }
 
     [Command]
@@ -65,7 +72,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void RpcTirerBalle()
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        balle.GetComponent<NetworkTransform>().enabled = false;
+        //balle.GetComponent<NetworkTransform>().enabled = false;
         balle.transform.GetComponent<Rigidbody>().isKinematic = false;
         balle.GetComponent<SphereCollider>().enabled = true;
         Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
@@ -73,6 +80,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
         Balle.GetComponent<SphereCollider>().isTrigger = false;
         Balle.GetComponent<NetworkTransform>().enabled = true;
+        balle.GetComponent<PlacerBalle>().estPlacer = false;
         //Invoke("AttendreDistanceBAllon", 0.4f);
         //AttendrePourDistanceBallon1(4, balle);
     }
