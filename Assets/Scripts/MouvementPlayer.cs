@@ -26,7 +26,7 @@ public class MouvementPlayer : NetworkTransform
         {
             if (Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))
             {
-                NetworkTransform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.04f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.04f);
                 transform.Translate(new Vector3(0, 0, 2) * valVitDiago * Time.deltaTime, Space.World);
             }
             else
