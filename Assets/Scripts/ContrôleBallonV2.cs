@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
-    const float FORCE = 60f;
+    const float FORCE = 70f;
 
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
@@ -23,19 +23,35 @@ public class ContrôleBallonV2 : NetworkBehaviour
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         Balle = balle;
-        if (!transform.GetComponent<NetworkIdentity>().isLocalPlayer)
-        {
-            return;
-        }
         compteur1 += Time.deltaTime;
-
         if(balle.transform.parent != null)
         {
             if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
             {
-                CmdTirerBalle();
+                if(isLocalPlayer && balle.transform.parent == transform)
+                {
+                    CmdTirerBalle();
+
+                }
             }
         }
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+        //    {
+        //        CmdTirerBalle();
+        //    }
+
+        //}
+        
+       // if(balle.transform.parent != null && isLocalPlayer)
+        //{
+           
+        //}
     }
 
     [Command]
