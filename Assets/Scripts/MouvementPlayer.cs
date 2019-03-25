@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MouvementPlayer : NetworkBehaviour
+public class MouvementPlayer : NetworkTransform
 {
     bool autreValeur;
     string Nom { get; set; }
