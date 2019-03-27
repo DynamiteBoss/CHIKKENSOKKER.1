@@ -25,7 +25,7 @@ public class PlacerBalle : NetworkBehaviour
         if(other.tag == "ZoneC")
         {
             estPlacer = true;
-            GetComponent<NetworkTransform>().enabled = false;
+            //GetComponent<NetworkTransform>().enabled = false;
             this.transform.parent = other.transform.parent;
             transform.localScale = Vector3.one;
             
@@ -42,8 +42,8 @@ public class PlacerBalle : NetworkBehaviour
         if (other.transform.parent == null)
         {
             //faire en sorte que lautre player puisse pa faire bouger le ballon
-            other.transform.parent = ZoneContrôle.parent;
             other.transform.localScale = Vector3.one;
+            other.transform.parent = ZoneContrôle.parent;
             other.transform.GetComponent<Rigidbody>().isKinematic = true;
             other.GetComponent<SphereCollider>().enabled = false;
         }
@@ -58,10 +58,10 @@ public class PlacerBalle : NetworkBehaviour
     }
     private void Update()
     {
-        if(estPlacer)
-        {
-            if(transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
-            transform.localPosition = new Vector3(0, 1.5f, 2);
-        }
+        //if(estPlacer)
+        //{
+        //    if(transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        //    transform.localPosition = new Vector3(0, 1.5f, 2);
+        //}
     }
 }
