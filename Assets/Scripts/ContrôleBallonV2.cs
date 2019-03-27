@@ -6,8 +6,11 @@ using UnityEngine.Networking;
 public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
-    const float FORCE = 70f;
+    const float FORCE = 2000f;
 
+
+    GameObject ZoneC { get; set; }
+    BoxCollider [] Liste { get; set; }
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
     float compteur1 = 0f;
@@ -38,6 +41,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                 {
                     if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
                     {
+                    TirerBalle();
                         CmdTirerBalle();
                     }
                 }
@@ -49,8 +53,10 @@ public class ContrôleBallonV2 : NetworkBehaviour
     [Command]
     void CmdTirerBalle()
     {
-        RpcTirerBalle();
-
+        
+        // Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
+        Vector3 direction = new Vector3(0, 0, 30);
+        Balle.GetComponent<Rigidbody>().AddForce(direction, ForceMode.Impulse);
         /* if (GameObject.Find("Balle") != null)
          {
              GameObject balle = GameObject.Find("Balle");
@@ -69,20 +75,44 @@ public class ContrôleBallonV2 : NetworkBehaviour
          */
     }
 
-    [ClientRpc]
-    void RpcTirerBalle()
+    
+    void TirerBalle()
     {
-        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        //balle.GetComponent<NetworkTransform>().enabled = false;
-        balle.transform.GetComponent<Rigidbody>().isKinematic = false;
-        balle.GetComponent<SphereCollider>().enabled = true;
-        Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-        balle.transform.parent = null;
-        balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-        Balle.GetComponent<SphereCollider>().isTrigger = false;
-        Balle.GetComponent<NetworkTransform>().enabled = true;
-        balle.GetComponent<PlacerBalle>().estPlacer = false;
-        //Invoke("AttendreDistanceBAllon", 0.4f);
+        Liste = GetComponentsInChildren<BoxCollider>();
+        foreach(BoxCollider x in Liste)
+        {
+            if(x.transform.parent.tag == "ZoneC")
+            {
+                x.enabled = false;
+            }
+        }
+        //ZoneC = GameObject.FindGameObjectWithTag("ZoneC");
+        //ZoneC.GetComponent<BoxCollider>().enabled = false;
+        Balle.transform.parent = null;
+       
+        //foreach (GameObject x in Liste)
+        //{
+        //    if (x.tag == "ZoneC")
+        //    {
+        //        x.GetComponent<BoxCollider>().enabled = false;
+        //    }
+        //}
+        //Balle.GetComponent<NetworkTransform>().enabled = true;
+        //Balle.GetComponent<NetworkTransform>().enabled = false;
+        Balle.transform.GetComponent<Rigidbody>().isKinematic = false;
+        //Balle.GetComponent<SphereCollider>().enabled = true;
+
+
+        //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
+        //Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
+
+
+
+        //Balle.GetComponent<SphereCollider>().isTrigger = false;
+    
+        //Balle.GetComponent<PlacerBalle>().estPlacer = false;
+
+        //Invoke("AttendrePourDistanceBallon", 0.1f);
         //AttendrePourDistanceBallon1(4, balle);
     }
 
@@ -97,8 +127,23 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
     void AttendrePourDistanceBallon()
     {
-        Balle.GetComponent<NetworkTransform>().enabled = true;
-        Balle.GetComponent<SphereCollider>().isTrigger = true;
+        //Balle.GetComponent<NetworkTransform>().enabled = true;
+        //Balle.GetComponent<SphereCollider>().isTrigger = true;
         Balle.GetComponent<PlacerBalle>().enabled = true;
+        //foreach (GameObject x in Liste)
+        //{
+        //    if (x.tag == "ZoneC")
+        //    {
+        //        x.GetComponent<BoxCollider>().enabled = true;
+        //    }
+        //}
+        foreach (BoxCollider x in Liste)
+        {
+            if (x.transform.parent.tag == "ZoneC")
+            {
+                x.enabled = true;
+            }
+        }
+        //ZoneC.GetComponent<BoxCollider>().enabled = true;
     }
 }
