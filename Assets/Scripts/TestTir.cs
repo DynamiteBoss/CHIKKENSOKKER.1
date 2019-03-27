@@ -30,6 +30,19 @@ public class TestTir : NetworkBehaviour
             CmdTirer();
         }
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.transform.name == "ZoneTemp")
+        {
+            transform.parent = other.transform;
+            transform.localScale = Vector3.one;
+            this.transform.localPosition = new Vector3(0,0,0);
+            transform.GetComponent<Rigidbody>().isKinematic = true;
+        }
+    }
+
+
     [Command]
     void CmdTire()
     {
