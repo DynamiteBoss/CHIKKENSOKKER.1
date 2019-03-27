@@ -75,13 +75,13 @@ public class ContrôleBallonV2 : NetworkBehaviour
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         //balle.GetComponent<NetworkTransform>().enabled = false;
         balle.transform.GetComponent<Rigidbody>().isKinematic = false;
-        balle.GetComponent<SphereCollider>().enabled = true;
+        Balle.GetComponent<NetworkTransform>().enabled = true;
         Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         balle.transform.parent = null;
         balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
         Balle.GetComponent<SphereCollider>().isTrigger = false;
-        Balle.GetComponent<NetworkTransform>().enabled = true;
         balle.GetComponent<PlacerBalle>().estPlacer = false;
+        balle.GetComponent<SphereCollider>().enabled = true;
         //Invoke("AttendreDistanceBAllon", 0.4f);
         //AttendrePourDistanceBallon1(4, balle);
     }
