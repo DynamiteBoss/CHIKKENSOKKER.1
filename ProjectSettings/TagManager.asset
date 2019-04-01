@@ -9,6 +9,7 @@ TagManager:
   - Balle
   - ZoneC
   - ZoneP
+  - Test
   layers:
   - Default
   - TransparentFX
