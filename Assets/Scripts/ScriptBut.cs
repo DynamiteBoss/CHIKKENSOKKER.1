@@ -10,10 +10,10 @@ public class ScriptBut : NetworkBehaviour
     string NomBut1 = "But1";
     string NomBut2 = "But2";
 
-    [SyncVar]
-    int NbButsA = 0;
-    [SyncVar]
-    int NbButsB = 0;
+    [SyncVar(hook = "OnButChangeA")]
+    public int NbButsA = 0;
+    [SyncVar(hook = "OnButChangeB")]
+    public int NbButsB = 0;
 
     float compteur = 0;
 
@@ -31,7 +31,7 @@ public class ScriptBut : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.StartsWith("But") && compteur >= TEMPS_MIN)
+        if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
             compteur = 0;
             Ballon.transform.position = new Vector3(0, 1, 0);
@@ -50,8 +50,17 @@ public class ScriptBut : NetworkBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.name.StartsWith("But"))
+        if(other.tag == "But")
             Ballon.GetComponent<Rigidbody>().isKinematic = false;
+    }
+
+    void OnButChangeA(int but)
+    {
+        NbButsA = but;
+    }
+    void OnButChangeB(int but)
+    {
+        NbButsB = but;
     }
 
     // Update is called once per frame

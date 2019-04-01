@@ -138,7 +138,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         //ZoneC = GameObject.FindGameObjectWithTag("ZoneC");
         //ZoneC.GetComponent<BoxCollider>().enabled = false;
         Balle.transform.parent = null;
-
+        
         //foreach (GameObject x in Liste)
         //{
         //    if (x.tag == "ZoneC")
@@ -160,7 +160,8 @@ public class ContrôleBallonV2 : NetworkBehaviour
         //Balle.GetComponent<SphereCollider>().isTrigger = false;
 
         //Balle.GetComponent<PlacerBalle>().estPlacer = false;
-
+        Balle.GetComponent<PlacerBalle>().estPlacer = false;
+        Balle.GetComponent<SphereCollider>().enabled = true;
         Invoke("AttendrePourDistanceBallon", 0.5f);
         //AttendrePourDistanceBallon1(4, balle);
     }
@@ -194,6 +195,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
             }
         }
         Balle.GetComponent<Rigidbody>().isKinematic = false;
+        
         //ZoneC.GetComponent<BoxCollider>().enabled = true;
     }
 }

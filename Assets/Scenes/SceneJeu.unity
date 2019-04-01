@@ -1109,7 +1109,7 @@ GameObject:
   - component: {fileID: 1162426241}
   m_Layer: 0
   m_Name: But2
-  m_TagString: Untagged
+  m_TagString: But
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1349,7 +1349,7 @@ GameObject:
   - component: {fileID: 1451368540}
   m_Layer: 0
   m_Name: But1
-  m_TagString: Untagged
+  m_TagString: But
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
