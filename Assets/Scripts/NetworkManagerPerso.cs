@@ -18,7 +18,6 @@ public class NetworkManagerPerso : NetworkManager
     int compteurA = 0;
     int compteurB = 0;
     GameObject spawnPoint1;
-    GameObject spawnPoint2;
     
 
     public void JoindrePartie()
@@ -45,7 +44,8 @@ public class NetworkManagerPerso : NetworkManager
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        GameObject joueur = (GameObject)Instantiate(playerPrefab, new Vector3(0,-1f,0), Quaternion.identity);
+        GameObject joueur = (GameObject)Instantiate(playerPrefab);
+         
         joueur.transform.name = string.Format("Player ({0})", ++compteurId);
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
         if(compteurA==0)
