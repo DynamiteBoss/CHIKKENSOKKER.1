@@ -16,7 +16,9 @@ public class ScriptBut : NetworkBehaviour
     public int NbButsB = 0;
 
     [SyncVar(hook ="OnScoreChange")]
-    public string score = 0 + "  -  " + 0; 
+    public string score = 0 + "  -  " + 0;
+
+    [SyncVar(hook = "OnTimeChange")]
     float compteur = 0;
 
     [SerializeField]
@@ -74,6 +76,10 @@ public class ScriptBut : NetworkBehaviour
     {
         score = change;
         InterfaceScore.text = score;
+    }
+    void OnTimeChange(float temps)
+    {
+        compteur = temps;
     }
     // Update is called once per frame
     void Update()
