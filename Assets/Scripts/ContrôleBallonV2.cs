@@ -42,7 +42,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                     if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
                     {
                         CmdTirerBalle1();
-                    Invoke("CmdTirerBalle", 0.2f);
+                    CmdTirerBalle();
                         //CmdTirerBalle();
                     }
                 }
@@ -54,7 +54,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
    [Command]
     void CmdTirerBalle()
     {
-        Tirer1();
+        RpcTirer1();
         //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         
         //Balle.GetComponent<Rigidbody>().AddForce(direction*FORCE, ForceMode.Impulse);
@@ -75,8 +75,8 @@ public class ContrôleBallonV2 : NetworkBehaviour
          }
          */
     }
-   
-    void Tirer1()
+   [ClientRpc]
+    void RpcTirer1()
     {
         Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         Debug.Log(direction);
