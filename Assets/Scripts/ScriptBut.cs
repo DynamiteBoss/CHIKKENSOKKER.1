@@ -19,7 +19,7 @@ public class ScriptBut : NetworkBehaviour
     public string score = 0 + "  -  " + 0;
 
     [SyncVar(hook = "OnTimeChange")]
-    float compteur = 0;
+    public float compteur = 0;
 
     [SerializeField]
     bool estÉquipeA = true;
