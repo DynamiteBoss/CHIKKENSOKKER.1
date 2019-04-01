@@ -13,6 +13,10 @@ public class NetworkManagerPerso : NetworkManager
 {
     public Équipe ÉquipeA { get; set; }
     public Équipe ÉquipeB { get; set; }
+
+
+    public ÉquipeV2 ÉquipeAV2 { get; set; }
+    public ÉquipeV2 ÉquipeBV2 { get; set; }
     short compteurId = 0;
 
     int compteurA = 0;
@@ -59,8 +63,22 @@ public class NetworkManagerPerso : NetworkManager
     }
     void CréerÉquipes()
     {
-         ÉquipeA = new Équipe('A');
-         ÉquipeB = new Équipe('B');
+        // ÉquipeA = new Équipe('A');
+        // ÉquipeB = new Équipe('B');
+
+        ÉquipeAV2 = new ÉquipeV2(CréerÉquipe("A"));
+        ÉquipeAV2 = new ÉquipeV2(CréerÉquipe("B"));
+
+    }
+    static List<JoueurV2> CréerÉquipe(string équipe)
+    {
+        List<JoueurV2> liste = new List<JoueurV2>();
+        liste.Add(new JoueurV2("Joueur1", équipe));
+        liste.Add(new JoueurV2("Joueur2", équipe));
+        liste.Add(new JoueurV2("Joueur3", équipe));
+        liste.Add(new JoueurV2("Joueur4", équipe));
+        liste.Add(new JoueurV2("Joueur5", équipe));
+        return liste;
     }
     void InstancierAddresseIP()
     {
