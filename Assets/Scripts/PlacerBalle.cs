@@ -30,7 +30,7 @@ public class PlacerBalle : NetworkBehaviour
             transform.localScale = Vector3.one;
             
             this.transform.localPosition = new Vector3(0, 1.5f, 2);
-            Debug.Log(transform.localPosition);
+          
             transform.GetComponent<Rigidbody>().isKinematic = true;
             
             

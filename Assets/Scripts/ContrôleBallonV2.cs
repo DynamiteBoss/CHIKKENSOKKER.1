@@ -42,7 +42,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                     if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
                     {
                         CmdTirerBalle1();
-                    CmdTirerBalle();
+                    Invoke("CmdTirerBalle",0.01f);
                         //CmdTirerBalle();
                     }
                 }
@@ -54,7 +54,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
    [Command]
     void CmdTirerBalle()
     {
-        RpcTirer1();
+        Tirer1();
         //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         
         //Balle.GetComponent<Rigidbody>().AddForce(direction*FORCE, ForceMode.Impulse);
@@ -75,11 +75,11 @@ public class ContrôleBallonV2 : NetworkBehaviour
          }
          */
     }
-    [ClientRpc]
-    void RpcTirer1()
+   
+    void Tirer1()
     {
         Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-
+        Debug.Log(direction);
         Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
     }
 
@@ -148,7 +148,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         //}
         //Balle.GetComponent<NetworkTransform>().enabled = true;
         //Balle.GetComponent<NetworkTransform>().enabled = false;
-        Balle.transform.GetComponent<Rigidbody>().isKinematic = false;
+        Balle.GetComponent<Rigidbody>().isKinematic = false;
         //Balle.GetComponent<SphereCollider>().enabled = true;
 
 
@@ -161,7 +161,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
         //Balle.GetComponent<PlacerBalle>().estPlacer = false;
 
-        Invoke("AttendrePourDistanceBallon", 0.1f);
+        Invoke("AttendrePourDistanceBallon", 0.5f);
         //AttendrePourDistanceBallon1(4, balle);
     }
 
@@ -193,6 +193,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                 x.enabled = true;
             }
         }
+        Balle.GetComponent<Rigidbody>().isKinematic = false;
         //ZoneC.GetComponent<BoxCollider>().enabled = true;
     }
 }
