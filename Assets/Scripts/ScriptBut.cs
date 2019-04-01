@@ -51,7 +51,7 @@ public class ScriptBut : NetworkBehaviour
 
             score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
 
-            
+            compteur = 0;
         }
 
         // Ajouter un "Point" à l'équipe 1
