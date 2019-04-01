@@ -29,9 +29,9 @@ public class ContrôleZoneToucherGardien : MonoBehaviour
             {
                 if (Joueur.name == other.transform.parent.name && compteur >= 0.95f)
                 {
-                    Joueur.GetComponentInChildren<ContrôleBallon>().enabled = false;
+                    Joueur.GetComponentInChildren<ContrôleBallonV2>().enabled = false;
                     Balle.transform.parent = null;
-                    Joueur.GetComponentInChildren<ContrôleBallon>().enabled = true;
+                    Joueur.GetComponentInChildren<ContrôleBallonV2>().enabled = true;
                 }
             }
         }
