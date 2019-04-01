@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
-public class InstantierAI : NetworkManagerPerso
+public class InstantierAI : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

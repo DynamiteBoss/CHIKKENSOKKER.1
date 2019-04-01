@@ -17,6 +17,9 @@ public class NetworkManagerPerso : NetworkManager
 
     int compteurA = 0;
     int compteurB = 0;
+    GameObject spawnPoint1;
+    GameObject spawnPoint2;
+    
 
     public void JoindrePartie()
     {
