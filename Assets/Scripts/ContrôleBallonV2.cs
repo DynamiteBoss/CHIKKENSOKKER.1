@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
-    const float FORCE = 2000f;
+    const float FORCE = 60f;
 
 
     GameObject ZoneC { get; set; }
@@ -24,7 +24,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        Balle = GameObject.FindGameObjectWithTag("Balle");
 
 
         if (!isLocalPlayer)
@@ -35,14 +35,15 @@ public class ContrôleBallonV2 : NetworkBehaviour
         compteur1 += Time.deltaTime;
         //if(isLocalPlayer)
         //{
-            if(balle.transform.parent != null)
+            if(Balle.transform.parent != null)
             {
-                if(balle.transform.parent == transform)
+                if(Balle.transform.parent == transform)
                 {
                     if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
                     {
-                    TirerBalle();
-                        CmdTirerBalle();
+                        CmdTirerBalle1();
+                    CmdTirerBalle();
+                        //CmdTirerBalle();
                     }
                 }
             }
@@ -50,13 +51,13 @@ public class ContrôleBallonV2 : NetworkBehaviour
         
     }
 
-    [Command]
+   [Command]
     void CmdTirerBalle()
     {
+        RpcTirer1();
+        //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         
-        // Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-        Vector3 direction = new Vector3(0, 0, 30);
-        Balle.GetComponent<Rigidbody>().AddForce(direction, ForceMode.Impulse);
+        //Balle.GetComponent<Rigidbody>().AddForce(direction*FORCE, ForceMode.Impulse);
         /* if (GameObject.Find("Balle") != null)
          {
              GameObject balle = GameObject.Find("Balle");
@@ -74,15 +75,62 @@ public class ContrôleBallonV2 : NetworkBehaviour
          }
          */
     }
-
-    
-    void TirerBalle()
+    [ClientRpc]
+    void RpcTirer1()
     {
+        Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
 
+        Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
+    }
+
+    [Command]
+    void CmdTirerBalle1()
+    {
+        RpcTirer();
+        //Liste = GetComponentsInChildren<BoxCollider>();
+        //foreach(BoxCollider x in Liste)
+        //{
+        //    if(x.transform.tag == "ZoneC")
+        //    {
+        //        x.enabled = false;
+        //    }
+        //}
+        //ZoneC = GameObject.FindGameObjectWithTag("ZoneC");
+        //ZoneC.GetComponent<BoxCollider>().enabled = false;
+        //Balle.transform.parent = null;
+       
+        //foreach (GameObject x in Liste)
+        //{
+        //    if (x.tag == "ZoneC")
+        //    {
+        //        x.GetComponent<BoxCollider>().enabled = false;
+        //    }
+        //}
+        //Balle.GetComponent<NetworkTransform>().enabled = true;
+        //Balle.GetComponent<NetworkTransform>().enabled = false;
+        //Balle.transform.GetComponent<Rigidbody>().isKinematic = false;
+        //Balle.GetComponent<SphereCollider>().enabled = true;
+
+
+        //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
+        //Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
+
+
+
+        //Balle.GetComponent<SphereCollider>().isTrigger = false;
+
+        //Balle.GetComponent<PlacerBalle>().estPlacer = false;
+      
+        //Invoke("AttendrePourDistanceBallon", 0.1f);
+        //AttendrePourDistanceBallon1(4, balle);
+    }
+    [ClientRpc]
+    void RpcTirer()
+    {
         Liste = GetComponentsInChildren<BoxCollider>();
-        foreach(BoxCollider x in Liste)
+        foreach (BoxCollider x in Liste)
         {
-            if(x.transform.parent.tag == "ZoneC")
+            if (x.transform.tag == "ZoneC")
             {
                 x.enabled = false;
             }
@@ -90,7 +138,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         //ZoneC = GameObject.FindGameObjectWithTag("ZoneC");
         //ZoneC.GetComponent<BoxCollider>().enabled = false;
         Balle.transform.parent = null;
-       
+
         //foreach (GameObject x in Liste)
         //{
         //    if (x.tag == "ZoneC")
@@ -110,10 +158,10 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
 
         //Balle.GetComponent<SphereCollider>().isTrigger = false;
-    
+
         //Balle.GetComponent<PlacerBalle>().estPlacer = false;
 
-        //Invoke("AttendrePourDistanceBallon", 0.1f);
+        Invoke("AttendrePourDistanceBallon", 0.1f);
         //AttendrePourDistanceBallon1(4, balle);
     }
 
@@ -140,7 +188,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         //}
         foreach (BoxCollider x in Liste)
         {
-            if (x.transform.parent.tag == "ZoneC")
+            if (x.transform.tag == "ZoneC")
             {
                 x.enabled = true;
             }
