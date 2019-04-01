@@ -5,13 +5,24 @@ using UnityEngine.Networking;
 
 public class TestTir : NetworkBehaviour
 {
+    public bool estPlacer;
     GameObject Balle { get; set; }
     // Start is called before the first frame update
     void Start()
     {
         Balle = GameObject.FindGameObjectWithTag("Balle");
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.parent.tag != "Player")
+        {
 
+        }
+        else
+        {
+            MettreBalleEnfant(other);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -31,16 +42,31 @@ public class TestTir : NetworkBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void MettreBalleEnfant(Collider other)
     {
-        if(other.transform.name == "ZoneTemp")
+        //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
+        if (other.tag == "ZoneC")
         {
-            transform.parent = other.transform;
+            estPlacer = true;
+            //GetComponent<NetworkTransform>().enabled = false;
+            this.transform.parent = other.transform.parent;
             transform.localScale = Vector3.one;
-            this.transform.localPosition = new Vector3(0,0,0);
+
+            this.transform.localPosition = new Vector3(0, 1.5f, 2);
+            Debug.Log(transform.localPosition);
             transform.GetComponent<Rigidbody>().isKinematic = true;
+
+
         }
     }
+
+    //private void OnCollisionEnter(Collision other)
+    //{
+    //       transform.parent = other.transform;
+    //        transform.localScale = Vector3.one;
+    //        this.transform.localPosition = new Vector3(0,0,0);
+    //        transform.GetComponent<Rigidbody>().isKinematic = true;
+    //}
 
 
     [Command]

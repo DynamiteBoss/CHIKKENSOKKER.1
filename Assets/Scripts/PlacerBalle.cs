@@ -22,7 +22,7 @@ public class PlacerBalle : NetworkBehaviour
     private void MettreBalleEnfant(Collider other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
-        if(other.tag == "ZoneC")
+        if(other.tag == "ZoneC" )
         {
             estPlacer = true;
             //GetComponent<NetworkTransform>().enabled = false;
