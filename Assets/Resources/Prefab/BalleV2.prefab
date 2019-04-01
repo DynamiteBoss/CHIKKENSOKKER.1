@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 332456215313457392}
   - component: {fileID: 8208502189713598781}
   - component: {fileID: 1727964526553916447}
-  - component: {fileID: 7964119964840504492}
   m_Layer: 0
   m_Name: BalleV2
   m_TagString: Balle
@@ -171,6 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NbButsA: 0
+  NbButsB: 0
   "est\xC9quipeA": 1
 --- !u!114 &1727964526553916447
 MonoBehaviour:
@@ -194,16 +195,3 @@ MonoBehaviour:
   m_SnapThreshold: 50
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &7964119964840504492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8616913947956764931}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb51f8d8ebd4094c92b9df9ca915fed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  estPlacer: 0

@@ -15,12 +15,16 @@ public class ScriptBut : NetworkBehaviour
     [SyncVar(hook = "OnButChangeB")]
     public int NbButsB = 0;
 
+    [SyncVar(hook ="OnScoreChange")]
+    public string score = 0 + "  -  " + 0; 
     float compteur = 0;
 
     [SerializeField]
     bool estÉquipeA = true;
 
+    
     Text InterfaceScore { get; set; }
+
     GameObject Ballon { get; set; }
     // Start is called before the first frame update
     void Start()
@@ -43,7 +47,9 @@ public class ScriptBut : NetworkBehaviour
             else if (other.name == NomBut2)
                 ++NbButsB;
 
-            InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
+            score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
+
+            
         }
 
         // Ajouter un "Point" à l'équipe 1
@@ -57,12 +63,18 @@ public class ScriptBut : NetworkBehaviour
     void OnButChangeA(int but)
     {
         NbButsA = but;
+        InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
     }
     void OnButChangeB(int but)
     {
         NbButsB = but;
+        InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
     }
-
+    void OnScoreChange(string change)
+    {
+        score = change;
+        InterfaceScore.text = score;
+    }
     // Update is called once per frame
     void Update()
     {
