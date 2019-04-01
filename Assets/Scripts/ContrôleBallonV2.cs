@@ -42,7 +42,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                     if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
                     {
                         CmdTirerBalle1();
-                    Invoke("CmdTirerBalle",0.01f);
+                    Invoke("CmdTirerBalle", 0.2f);
                         //CmdTirerBalle();
                     }
                 }
