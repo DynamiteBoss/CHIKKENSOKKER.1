@@ -49,8 +49,10 @@ public class NetworkManagerPerso : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         GameObject joueur = (GameObject)Instantiate(playerPrefab);
-         
-        joueur.transform.name = string.Format("Player ({0})", ++compteurId);
+        Debug.Log(compteurId);
+        joueur.transform.name = string.Format("Player ({0})", compteurId);
+        compteurId++;
+        joueur.transform.position = GameObject.Find("SpawnPoint"+ compteurId).transform.position;
         NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
         if(compteurA==0)
         {

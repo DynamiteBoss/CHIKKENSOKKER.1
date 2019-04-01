@@ -123,8 +123,8 @@ GameObject:
   - component: {fileID: 107590531}
   - component: {fileID: 107590532}
   m_Layer: 0
-  m_Name: SpawnPoint1B
-  m_TagString: Untagged
+  m_Name: SpawnPoint3
+  m_TagString: B
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +141,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &107590532
 MonoBehaviour:
@@ -988,8 +988,8 @@ GameObject:
   - component: {fileID: 798224400}
   - component: {fileID: 798224399}
   m_Layer: 0
-  m_Name: SpawnPoint2B
-  m_TagString: Untagged
+  m_Name: SpawnPoint4
+  m_TagString: B
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1018,7 +1018,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1158492986
 PrefabInstance:
@@ -1251,8 +1251,8 @@ GameObject:
   - component: {fileID: 1207860432}
   - component: {fileID: 1207860431}
   m_Layer: 0
-  m_Name: SpawnPoint2A
-  m_TagString: Untagged
+  m_Name: SpawnPoint2
+  m_TagString: A
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1281,7 +1281,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1279976375
 GameObject:
@@ -1570,8 +1570,8 @@ GameObject:
   - component: {fileID: 1645984845}
   - component: {fileID: 1645984844}
   m_Layer: 0
-  m_Name: SpawnPoint1A
-  m_TagString: Untagged
+  m_Name: SpawnPoint1
+  m_TagString: A
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1600,7 +1600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1678102027
 GameObject:
@@ -2315,7 +2315,7 @@ PrefabInstance:
     - target: {fileID: 8685227080764100623, guid: 468732e89b04ff445988a5d52c9e3433,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 8685227080764100623, guid: 468732e89b04ff445988a5d52c9e3433,
         type: 3}
