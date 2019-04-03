@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 7315208394416347330}
   m_Layer: 0
   m_Name: AI
-  m_TagString: Player
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -392,6 +392,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76eedd0797f61cb49af6f1753a8dfdfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modeGlace: 0
+  modeSaoul: 0
+  modeFurax: 0
+  modePluie: 0
+  modeInvincible: 0
 --- !u!114 &8685227080764100648
 MonoBehaviour:
   m_ObjectHideFlags: 0
