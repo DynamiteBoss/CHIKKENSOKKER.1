@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JoueurV2 : MonoBehaviour
+abstract class JoueurV2 : MonoBehaviour
 {
     public string NomJoueur { get; set; }
 
     public string NomÉquipe { get; set; }
+    public GameObject Prefab { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +19,10 @@ public class JoueurV2 : MonoBehaviour
     {
         
     }
-    public JoueurV2(string nom, string équipe)
+    public JoueurV2(string nom, string équipe,GameObject prefab)
     {
         NomJoueur = nom;
         NomÉquipe = équipe;
+        Prefab = prefab;
     }
 }
