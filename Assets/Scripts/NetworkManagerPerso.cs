@@ -74,11 +74,16 @@ public class NetworkManagerPerso : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
         compteurId++;
-        if(compteurA == 0)
+        if (compteurA == 0)
         {
             for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
             {
-                NetworkServer.AddPlayerForConnection(conn, ÉquipeAV2.ListeJoueur[i].gameObject, playerControllerId);
+                GameObject joueur = (GameObject)Instantiate(ÉquipeAV2.ListeJoueur[i].gameObject);
+                Debug.Log(compteurId);
+                joueur.transform.name = string.Format("Player ({0})", compteurId);
+                compteurId++;
+                joueur.transform.position = GameObject.Find("SpawnPoint" + compteurId).transform.position;
+                NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
             }
         }
         else
@@ -90,23 +95,29 @@ public class NetworkManagerPerso : NetworkManager
         }
         compteurA++;
 
-        
-       
+
+
         //GameObject joueur = (GameObject)Instantiate(playerPrefab);
         //Debug.Log(compteurId);
         //joueur.transform.name = string.Format("Player ({0})", compteurId);
         //compteurId++;
         //joueur.transform.position = GameObject.Find("SpawnPoint"+ compteurId).transform.position;
         //NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
-        //if(compteurA==0)
-        //{
-        //    ÉquipeA[compteurA++].JoueurPhysique = joueur;
-        //}
-        //else
-        //{
-        //    ÉquipeB[compteurB++].JoueurPhysique = joueur;
-        //}
     }
+
+
+
+    void AjouterJoueur(NetworkConnection conn, GameObject joueur, short id)
+    {
+        GameObject Joueur = (GameObject)Instantiate(joueur);
+        Debug.Log(compteurId);
+        Joueur.transform.name = string.Format("Player ({0})", compteurId);
+        compteurId++;
+        Joueur.transform.position = GameObject.Find("SpawnPoint" + compteurId).transform.position;
+        NetworkServer.AddPlayerForConnection(conn, Joueur, id);
+    }
+
+
     void CréerÉquipes()
     {
         // ÉquipeA = new Équipe('A');
