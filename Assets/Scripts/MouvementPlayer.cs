@@ -61,7 +61,7 @@ public class MouvementPlayer : NetworkBehaviour
         }
         else
         {
-            if (tag == "player")   //NON CAR LAUTRE CLIENT VA SAPPELER "Player (2)" FAQUE CA MARCHE PAS
+            if (tag == "Player")   //NON CAR LAUTRE CLIENT VA SAPPELER "Player (2)" FAQUE CA MARCHE PAS
                 DéplacerFlèche();
             else { }
         }
