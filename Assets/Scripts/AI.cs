@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ÉquipeV2 : MonoBehaviour
+ class AI : JoueurV2
 {
-    public const int GRANDEUR = 5;
-    public List<JoueurV2> ListeJoueur { get; set; }
+    public AI(string nom, string équipe, GameObject prefab) : base(nom, équipe, prefab)
+    {
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +18,5 @@ public class ÉquipeV2 : MonoBehaviour
     void Update()
     {
         
-    }
-    public ÉquipeV2(List<JoueurV2> liste)
-    {
-        ListeJoueur = liste;
     }
 }

@@ -37,10 +37,8 @@ public class ScriptBut : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Outside");
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
-            Debug.Log("aaaa");
             compteur = 0;
             Ballon.transform.position = new Vector3(0, 1, 0);
             Ballon.GetComponent<Rigidbody>().isKinematic = true;
@@ -67,12 +65,12 @@ public class ScriptBut : NetworkBehaviour
     void OnButChangeA(int but)
     {
         NbButsA = but;
-        InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
+       // InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
     }
     void OnButChangeB(int but)
     {
         NbButsB = but;
-        InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
+       // InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
     }
     void OnScoreChange(string change)
     {
