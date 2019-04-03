@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ÉquipeV2 : MonoBehaviour
 {
-    List<JoueurV2> ListeJoueur { get; set; }
+    public const int GRANDEUR = 5;
+    public List<JoueurV2> ListeJoueur { get; set; }
     // Start is called before the first frame update
     void Start()
     {

@@ -20,7 +20,7 @@ public class ScriptMenuPause : MonoBehaviour
         JoueursPhysiques = GameObject.FindGameObjectsWithTag("Player");
     }
 
-    void DésactiverMouvement()
+    public void DésactiverMouvement()
     {
         for (int i = 0; i < JoueursPhysiques.Length; i++)
         {
@@ -31,7 +31,7 @@ public class ScriptMenuPause : MonoBehaviour
         }
     }
 
-    void RéactiverMouvement()
+    public void RéactiverMouvement()
     {
         for (int i = 0; i < JoueursPhysiques.Length; i++)
         {

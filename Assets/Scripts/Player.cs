@@ -4,8 +4,8 @@ using UnityEngine;
 
  class Player : JoueurV2
 {
-    GameObject playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
-    public Player(string nom,string équipe):base(nom,équipe)
+   
+    public Player(string nom,string équipe, GameObject prefab):base(nom,équipe,prefab)
     {
 
     }

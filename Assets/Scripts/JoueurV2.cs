@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract class JoueurV2 : MonoBehaviour
+public abstract class JoueurV2 : MonoBehaviour
 {
     public string NomJoueur { get; set; }
 
