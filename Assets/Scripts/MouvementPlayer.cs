@@ -44,7 +44,7 @@ public class MouvementPlayer : NetworkBehaviour
         if (modeInvincible) { GetComponentsInChildren<Rigidbody>()[1].isKinematic = true; }
         else { GetComponentsInChildren<Rigidbody>()[1].isKinematic = false; }
 
-        if (/*Nom == NOM_PLAYER_1*/Nom.StartsWith("Player") && Nom.EndsWith("(1)")) //CHANGER POUR LES NOUVEAUX NOMS AVEC LE ONLINE
+        if (tag == "Player") //CHANGER POUR LES NOUVEAUX NOMS AVEC LE ONLINE
         {
             if (!modeGlace && !modePluie)
             {
@@ -61,7 +61,7 @@ public class MouvementPlayer : NetworkBehaviour
         }
         else
         {
-            if (/*Nom == NOM_PLAYER_2*/ Nom.StartsWith("Player") && Nom.EndsWith("(2)"))   //NON CAR LAUTRE CLIENT VA SAPPELER "Player (2)" FAQUE CA MARCHE PAS
+            if (tag == "player")   //NON CAR LAUTRE CLIENT VA SAPPELER "Player (2)" FAQUE CA MARCHE PAS
                 DéplacerFlèche();
             else { }
         }
