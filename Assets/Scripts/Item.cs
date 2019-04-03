@@ -28,6 +28,8 @@ public class Item
                 return new Item("OeufBrouillé", (GameObject)Resources.Load("Prefab/OeufBrouillé"));  //AUCUN VISUEL
             case 7:
                 return new Item("VersDeTerre", (GameObject)Resources.Load("Prefab/VersDeTerre"));   //AUCUN VISUEL
+            case 8:
+                return new Item("ZoneExplosion", (GameObject)Resources.Load("Prefab/ZoneExplosion"));
             default:
                 return null;
             }

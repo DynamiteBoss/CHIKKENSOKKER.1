@@ -32,4 +32,11 @@ public class ItemOeufBlanc : MonoBehaviour
         // OEUF QUI VA SE PARTIR DE L'AVANT DU JOUEUR PI QUI VA REBONDIR SUR LES MURS (DONC ***PAS*** DE DRAG)
         // ON TRIGGER ENTER, LAUTRE JOUEUR SE FAIR RAPE SOLIDE      
     }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+
+        }
+    }
 }

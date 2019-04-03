@@ -89,7 +89,7 @@ public class ScriptItems : MonoBehaviour
                 }
             case 2:
                 {
-                    GameObject OeufBlancGros = Instantiate(Item.RetournerItemListe(2).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufBlancGros = Instantiate(Item.RetournerItemListe(2).ItemPhysique, position + transform.up * 2 + transform.forward * 4.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     GameObject[] listOeux = { OeufBlancGros };
                     foreach (GameObject item in listOeux)
                     {
@@ -121,7 +121,7 @@ public class ScriptItems : MonoBehaviour
                 }
             case 5:
                 {
-                    GameObject OeufMortier = Instantiate(Item.RetournerItemListe(5).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufMortier = Instantiate(Item.RetournerItemListe(5).ItemPhysique, position + transform.up * 3 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     ItemBombe.FaireEffetItem(OeufMortier); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
                     break;
                 }
@@ -144,18 +144,5 @@ public class ScriptItems : MonoBehaviour
                     return;
                 }
         }
-    }
-    static IEnumerator AttendrePourDestroy(float durée, GameObject[] items)
-    {
-        yield return new WaitForSeconds(durée);
-        foreach(GameObject item in items)
-        {
-            Destroy(item);
-        }
-    }
-    static IEnumerator AttendrePourDestroy(float durée, GameObject item)
-    {
-        yield return new WaitForSeconds(durée);
-        Destroy(item);
     }
 }
