@@ -11,7 +11,7 @@ public class MouvementPlayer : NetworkBehaviour
     string[] Controles = new string[] { "w", "a", "s", "d" };
     string[] ControlesInversés = new string[] { "w", "a", "s", "d" };
     string[] ControlesOriginaux = new string[] { "d", "s", "a", "w" };
-
+    bool joueur1EstPris = false;
     [SerializeField]
     bool modeGlace;
 
@@ -44,7 +44,7 @@ public class MouvementPlayer : NetworkBehaviour
         if (modeInvincible) { GetComponentsInChildren<Rigidbody>()[1].isKinematic = true; }
         else { GetComponentsInChildren<Rigidbody>()[1].isKinematic = false; }
 
-        if (tag == "Player") //CHANGER POUR LES NOUVEAUX NOMS AVEC LE ONLINE
+        if (tag == "Player" && name == "Joueur1") //CHANGER POUR LES NOUVEAUX NOMS AVEC LE ONLINE
         {
             if (!modeGlace && !modePluie)
             {
@@ -58,13 +58,12 @@ public class MouvementPlayer : NetworkBehaviour
 
                 DéplacerModeGlace();
             }
+            joueur1EstPris = true;
         }
-        else
-        {
-            if (tag == "Player")   //NON CAR LAUTRE CLIENT VA SAPPELER "Player (2)" FAQUE CA MARCHE PAS
-                DéplacerFlèche();
-            else { }
-        }
+        if (tag == "Player" && name == "Joueur2")   //NON CAR LAUTRE CLIENT VA SAPPELER "Player (2)" FAQUE CA MARCHE PAS
+            DéplacerFlèche();
+        else { }
+        
 
         if (compteur++ == 10)
         {

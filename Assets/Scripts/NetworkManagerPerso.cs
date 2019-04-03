@@ -89,52 +89,52 @@ public class NetworkManagerPerso : NetworkManager
         //}
 
 
-        if (compteurId == 0)
-        {
-            JoueurV2 joueur = ÉquipeAV2.ListeJoueur[0];
-            GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-            prefab.name = joueur.NomJoueur;
-            prefab.transform.position = GameObject.Find("SpawnPoint" + 0).transform.position;
-
-            NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-        }
-        else
-        {
-            JoueurV2 joueur = ÉquipeBV2.ListeJoueur[0];
-            GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-            prefab.name = joueur.NomJoueur;
-            prefab.transform.position = GameObject.Find("SpawnPoint" + 1).transform.position;
-
-            NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-
-        }
-
-
-        //if(compteurId == 0)
+        //if (compteurId == 0)
         //{
-        //    for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
-        //    {
-        //        JoueurV2 joueur = ÉquipeAV2.ListeJoueur[i];
-        //        GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        //        prefab.name = joueur.NomJoueur;
-        //        prefab.transform.position = GameObject.Find("SpawnPoint" + i).transform.position;
+        //    JoueurV2 joueur = ÉquipeAV2.ListeJoueur[0];
+        //    GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
+        //    prefab.name = joueur.NomJoueur;
+        //    prefab.transform.position = GameObject.Find("SpawnPoint" + 0).transform.position;
 
-        //        NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-
-        //    }
+        //    NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
         //}
         //else
         //{
-        //    for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
-        //    {
-        //        JoueurV2 joueur = ÉquipeBV2.ListeJoueur[i];
-        //        GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        //        prefab.name = joueur.NomJoueur;
-        //        prefab.transform.position = GameObject.Find("SpawnPoint" + i + 5 * compteurId).transform.position;
+        //    JoueurV2 joueur = ÉquipeBV2.ListeJoueur[0];
+        //    GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
+        //    prefab.name = joueur.NomJoueur;
+        //    prefab.transform.position = GameObject.Find("SpawnPoint" + 1).transform.position;
 
-        //        NetworkServer.AddPlayerForConnection(conn, ÉquipeBV2.ListeJoueur[i].gameObject, playerControllerId);
-        //    }
+        //    NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
+
         //}
+
+
+        if (compteurId == 0)
+        {
+            for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
+            {
+                JoueurV2 joueur = ÉquipeAV2.ListeJoueur[i];
+                GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
+                prefab.name = joueur.NomJoueur;
+                prefab.transform.position = GameObject.Find("SpawnPoint" + i).transform.position;
+
+                NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
+            {
+                JoueurV2 joueur = ÉquipeBV2.ListeJoueur[i];
+                GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
+                prefab.name = joueur.NomJoueur;
+                prefab.transform.position = GameObject.Find("SpawnPoint" + i + 5 * compteurId).transform.position;
+
+                NetworkServer.AddPlayerForConnection(conn, ÉquipeBV2.ListeJoueur[i].gameObject, playerControllerId);
+            }
+        }
         compteurA++;
         compteurId++;
 
