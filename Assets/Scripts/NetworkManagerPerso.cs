@@ -53,8 +53,9 @@ public class NetworkManagerPerso : NetworkManager
         est1v1 = true;
         InstancierAddresseIP();
         InstancierPort();
-        NetworkManager.singleton.StartHost();
         CréerÉquipes();
+        NetworkManager.singleton.StartHost();
+        
       //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
 
         //ÉquipeA[]
@@ -64,8 +65,9 @@ public class NetworkManagerPerso : NetworkManager
         est1v1 = false;
         InstancierAddresseIP();
         InstancierPort();
-        NetworkManager.singleton.StartHost();
         CréerÉquipes();
+        NetworkManager.singleton.StartHost();
+        
         //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
 
         //ÉquipeA[]
