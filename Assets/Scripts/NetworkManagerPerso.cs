@@ -73,25 +73,36 @@ public class NetworkManagerPerso : NetworkManager
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        compteurId++;
-        if(compteurA == 0)
+        
+        if(compteurId == 0)
         {
             for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
             {
-                NetworkServer.AddPlayerForConnection(conn, ÉquipeAV2.ListeJoueur[i].gameObject, playerControllerId);
+                JoueurV2 joueur = ÉquipeAV2.ListeJoueur[i];
+                GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
+                prefab.name = joueur.NomJoueur;
+                prefab.transform.position = GameObject.Find("SpawnPoint" + i).transform.position;
+
+                NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
             }
         }
         else
         {
             for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
             {
+                JoueurV2 joueur = ÉquipeBV2.ListeJoueur[i];
+                GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
+                prefab.name = joueur.NomJoueur;
+                prefab.transform.position = GameObject.Find("SpawnPoint" + i + 5 * compteurId).transform.position;
+
                 NetworkServer.AddPlayerForConnection(conn, ÉquipeBV2.ListeJoueur[i].gameObject, playerControllerId);
             }
         }
-        compteurA++;
-
-        
        
+        compteurId++;
+
+
+
         //GameObject joueur = (GameObject)Instantiate(playerPrefab);
         //Debug.Log(compteurId);
         //joueur.transform.name = string.Format("Player ({0})", compteurId);
