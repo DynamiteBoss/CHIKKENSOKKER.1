@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 5059102223335454889}
   - component: {fileID: 5627655914446789419}
   - component: {fileID: 2093319804988967129}
+  - component: {fileID: 7324093897370435603}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -294,6 +295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76eedd0797f61cb49af6f1753a8dfdfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modeGlace: 0
+  modeSaoul: 0
+  modeFurax: 0
+  modePluie: 0
+  modeInvincible: 0
 --- !u!114 &51
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +442,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7324093897370435603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17cdc26b5b8ef1a4cb3cb0aa862ce37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &17
 GameObject:
   m_ObjectHideFlags: 0
