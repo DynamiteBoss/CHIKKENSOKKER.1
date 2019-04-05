@@ -21,7 +21,7 @@ public class NetworkManagerPerso : NetworkManager
     Canvas CnvConnexion { get; set; }
     Canvas CnvNbJoueur { get; set; }
 
-    public bool est1v1 = false;
+    /*[SyncVar(hook = "OnEst1v1Change")] */public bool est1v1 = false;
 
     public Équipe ÉquipeA { get; set; }
     public Équipe ÉquipeB { get; set; }
@@ -30,12 +30,23 @@ public class NetworkManagerPerso : NetworkManager
     public ÉquipeV2 ÉquipeAV2 { get; set; }
     public ÉquipeV2 ÉquipeBV2 { get; set; }
 
-    short compteurId = 0;
+    /*[SyncVar(hook = "OnCompteurIdChange")]*/ public int compteurId = 0;
 
-    int compteurA = 0;
+    /*[SyncVar(hook = "OnCompteurAChange")] */public int compteurA = 0;
     int compteurB = 0;
     
-
+    void OnEst1v1Change(bool changement)
+    {
+        est1v1 = changement;
+    }
+    void OnCompteurAChange(int changement)
+    {
+        compteurA = changement;
+    }
+    void OnCompteurIdChange(int changement)
+    {
+        compteurId = changement;
+    }
     public void JoindrePartie()
     {
         InstancierAddresseIP();
@@ -99,7 +110,7 @@ public class NetworkManagerPerso : NetworkManager
         //}
 
 
-        if (compteurId == 0)
+        if (compteurA == 0)
         {
             for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
             {
@@ -119,13 +130,13 @@ public class NetworkManagerPerso : NetworkManager
                 JoueurV2 joueur = ÉquipeBV2.ListeJoueur[i];
                 GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
                 prefab.name = joueur.NomJoueur;
-                prefab.transform.position = GameObject.Find("SpawnPoint" + i + 5 * compteurId).transform.position;
+                prefab.transform.position = GameObject.Find("SpawnPoint" + i + 5 * compteurA).transform.position;
 
                 NetworkServer.AddPlayerForConnection(conn, ÉquipeBV2.ListeJoueur[i].gameObject, playerControllerId);
             }
         }
         compteurA++;
-        compteurId++;
+        
 
         //GameObject joueur = (GameObject)Instantiate(playerPrefab);
         //Debug.Log(compteurId);
@@ -140,7 +151,6 @@ public class NetworkManagerPerso : NetworkManager
     void AjouterJoueur(NetworkConnection conn, GameObject joueur, short id)
     {
         GameObject Joueur = (GameObject)Instantiate(joueur);
-        Debug.Log(compteurId);
         Joueur.transform.name = string.Format("Player ({0})", compteurId);
         compteurId++;
         Joueur.transform.position = GameObject.Find("SpawnPoint" + compteurId).transform.position;
