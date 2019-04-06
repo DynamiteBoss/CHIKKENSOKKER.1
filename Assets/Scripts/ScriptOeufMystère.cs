@@ -25,7 +25,11 @@ public class ScriptOeufMystère : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.parent.tag == "Player")
+        if (other.transform.parent.tag != "Player")
+        {
+          
+        }
+        if (other.transform.parent.tag == "Player")
         {
             Destroy(this.transform.gameObject);
             AttribuerObjetJoueur(other.gameObject, UnityEngine.Random.Range(1, IndiceMax));

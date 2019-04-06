@@ -76,7 +76,7 @@ public class ContrôleGardien : MonoBehaviour
     }
     void PlacerGardienX(float positionGuardienz)
     {
-        if(Nom == GARDIEN_1)
+        if(!GetComponent<TypeÉquipe>().estÉquipeA)
         {
             float dist = Vector3.Distance(transform.position, PositionBalle);
             if (positionGuardienz > MAX_DIST_BUT || positionGuardienz < MIN_DIST_BUT)
@@ -88,7 +88,7 @@ public class ContrôleGardien : MonoBehaviour
         }
         else
         {
-            if(Nom == GARDIEN_2)
+            if(GetComponent<TypeÉquipe>().estÉquipeA)
             {
                 float dist = Vector3.Distance(transform.position, PositionBalle);
                 if (positionGuardienz > MAX_DIST_BUT || positionGuardienz < MIN_DIST_BUT)

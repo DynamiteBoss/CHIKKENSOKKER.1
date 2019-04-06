@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 3932015482608421680}
   - component: {fileID: 7315208394416347330}
   - component: {fileID: 3750591271763664350}
+  - component: {fileID: 7314932539849920910}
   m_Layer: 0
   m_Name: AI
   m_TagString: AI
@@ -487,7 +488,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &4520957246036797618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +553,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cdc26b5b8ef1a4cb3cb0aa862ce37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7314932539849920910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8685227080764100619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea177fc131061d145b29b7d0dee641c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  "est\xC9quipeA": 0
 --- !u!1 &8685227080764100628
 GameObject:
   m_ObjectHideFlags: 0

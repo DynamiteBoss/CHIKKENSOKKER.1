@@ -21,7 +21,7 @@ public class NetworkManagerPerso : NetworkManager
     Canvas CnvConnexion { get; set; }
     Canvas CnvNbJoueur { get; set; }
 
-    /*[SyncVar(hook = "OnEst1v1Change")] */public bool est1v1 = false;
+    public bool est1v1 = false;
 
     public Équipe ÉquipeA { get; set; }
     public Équipe ÉquipeB { get; set; }
@@ -30,41 +30,60 @@ public class NetworkManagerPerso : NetworkManager
     public ÉquipeV2 ÉquipeAV2 { get; set; }
     public ÉquipeV2 ÉquipeBV2 { get; set; }
 
-    /*[SyncVar(hook = "OnCompteurIdChange")]*/ public int compteurId = 0;
+    public int compteurId = 0;
 
-    /*[SyncVar(hook = "OnCompteurAChange")] */public int compteurA = 0;
+    public int compteurA = 0;
+
     int compteurB = 0;
-    
+
+/*
+    [SyncVar(hook = "OnEst1v1Change")]
+    public bool est1v1 = false;
+    [SyncVar(hook = "OnCompteurIdChange")]
+    public int compteurId = 0;
+    [SyncVar(hook = "OnCompteurAChange")]
+    public int compteurA = 0;
+    [SyncVar(hook = "OnCompteurBChange")]
+    public int compteurB = 0;
+
     void OnEst1v1Change(bool changement)
     {
         est1v1 = changement;
-    }
-    void OnCompteurAChange(int changement)
-    {
-        compteurA = changement;
     }
     void OnCompteurIdChange(int changement)
     {
         compteurId = changement;
     }
+    void OnCompteurAChange(int changement)
+    {
+        compteurA = changement;
+    }
+    void OnCompteurBChange(int changement)
+    {
+        compteurB = changement;
+    }
+    */
     public void JoindrePartie()
     {
         InstancierAddresseIP();
         InstancierPort();
+        
         NetworkManager.singleton.StartClient();
     }
 
     public override void OnClientConnect(NetworkConnection conn)
     {
+        CréerÉquipe();
         ClientScene.Ready(conn);
         ClientScene.AddPlayer(0/*(short)NetworkServer.connections.Count*/);
     }
     public void CreateHost(bool estSeul)
     {
+
         est1v1 = estSeul;
         InstancierAddresseIP();
         InstancierPort();
-        CréerÉquipes();
+       
         NetworkManager.singleton.StartHost();
         
       //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
@@ -117,8 +136,9 @@ public class NetworkManagerPerso : NetworkManager
                 JoueurV2 joueur = ÉquipeAV2.ListeJoueur[i];
                 GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
                 prefab.name = joueur.NomJoueur;
-                prefab.transform.position = GameObject.Find("SpawnPoint" + i).transform.position;
-
+                prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
+                compteurB++;
+                prefab.GetComponent<TypeÉquipe>().estÉquipeA = true;
                 NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
 
             }
@@ -130,8 +150,9 @@ public class NetworkManagerPerso : NetworkManager
                 JoueurV2 joueur = ÉquipeBV2.ListeJoueur[i];
                 GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
                 prefab.name = joueur.NomJoueur;
-                prefab.transform.position = GameObject.Find("SpawnPoint" + i + 5 * compteurA).transform.position;
-
+                prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
+                compteurB++;
+                prefab.GetComponent<TypeÉquipe>().estÉquipeA = false;
                 NetworkServer.AddPlayerForConnection(conn, ÉquipeBV2.ListeJoueur[i].gameObject, playerControllerId);
             }
         }
@@ -145,32 +166,46 @@ public class NetworkManagerPerso : NetworkManager
         //joueur.transform.position = GameObject.Find("SpawnPoint"+ compteurId).transform.position;
         //NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
     }
-
+  
 
 
     void AjouterJoueur(NetworkConnection conn, GameObject joueur, short id)
     {
         GameObject Joueur = (GameObject)Instantiate(joueur);
         Joueur.transform.name = string.Format("Player ({0})", compteurId);
+
         compteurId++;
         Joueur.transform.position = GameObject.Find("SpawnPoint" + compteurId).transform.position;
         NetworkServer.AddPlayerForConnection(conn, Joueur, id);
     }
 
 
-    void CréerÉquipes()
+    void CréerÉquipe()
     {
         // ÉquipeA = new Équipe('A');
         // ÉquipeB = new Équipe('B');
         if(est1v1)
         {
-            ÉquipeAV2 = new ÉquipeV2(CréerÉquipe1v1("A", prefabs));
-            ÉquipeBV2 = new ÉquipeV2(CréerÉquipe1v1("B", prefabs));
+            if(compteurA == 0)
+            {
+                ÉquipeAV2 = new ÉquipeV2(CréerÉquipe1v1("A", prefabs));
+            }
+            else
+            {
+                ÉquipeBV2 = new ÉquipeV2(CréerÉquipe1v1("B", prefabs));
+            }
+            
         }
         else
         {
-            ÉquipeAV2 = new ÉquipeV2(CréerÉquipe2v2("A", prefabs));
-            ÉquipeBV2 = new ÉquipeV2(CréerÉquipe2v2("B", prefabs));
+            if (compteurA == 0)
+            {
+                ÉquipeAV2 = new ÉquipeV2(CréerÉquipe2v2("A", prefabs));
+            }
+            else
+            {
+                ÉquipeBV2 = new ÉquipeV2(CréerÉquipe2v2("B", prefabs));
+            }
         }
 
     }
@@ -238,9 +273,9 @@ public class NetworkManagerPerso : NetworkManager
         CnvConnexion.enabled = false;
         CnvNbJoueur.enabled = true;
 
-        Btn1v1.onClick.RemoveAllListeners();
+        //Btn1v1.onClick.RemoveAllListeners();
         Btn1v1.onClick.AddListener(() => CreateHost(true));
-        Btn2v2.onClick.RemoveAllListeners();
+        //Btn2v2.onClick.RemoveAllListeners();
         Btn2v2.onClick.AddListener(() => CreateHost(false));
     }
     private void Start()
@@ -261,3 +296,4 @@ public class NetworkManagerPerso : NetworkManager
         prefabs.Add(gardienPre);
     }
 }
+
