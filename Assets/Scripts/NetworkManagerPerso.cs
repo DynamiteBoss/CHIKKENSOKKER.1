@@ -139,7 +139,7 @@ public class NetworkManagerPerso : NetworkManager
         JoueurV2 joueur = ÉquipeAV2.ListeJoueur[playerControllerId];
         GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
         prefab.name = joueur.NomJoueur;
-        prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
+        prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position + Vector3.up;
         compteurB++;
         if (compteurA == 0)
         {

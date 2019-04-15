@@ -8,11 +8,7 @@ public class PlacerBalle : NetworkBehaviour
     public bool estPlacer = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.tag != "Player")
-        {
-
-        }
-        else
+        if (other.transform.parent.tag == "Player" || other.transform.parent.tag == "AI")
         {
             MettreBalleEnfant(other);
             //CalculerDistanceBalle();
