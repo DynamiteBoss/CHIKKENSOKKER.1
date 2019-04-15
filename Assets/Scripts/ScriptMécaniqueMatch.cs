@@ -48,7 +48,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [SyncVar(hook = "OnTimerChange")] public float timer;
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
     [SyncVar(hook = "OnCompteur2Change")] public int compteur2 = 0;
-    [SyncVar(hook = "OnCompteur3Change")] public int compteur3 = 0;
 
     List<GameObject> Joueur { get; set; }
     public int nbOeufs = 0;
@@ -91,7 +90,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             ++compteur;
             ++compteur2;
-            ++compteur3;
             timer -= Time.deltaTime;
             if (compteur == NbFramesUpdate + 1)
             {
@@ -195,9 +193,5 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnCompteur2Change(int changement)
     {
         compteur2 = changement;
-    }
-    void OnCompteur3Change(int changement)
-    {
-        compteur3 = changement;
     }
 }
