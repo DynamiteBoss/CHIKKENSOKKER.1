@@ -36,52 +36,54 @@ public class ActionsPlayer : NetworkBehaviour
         {
             possessionBallon = false;
         }
-
-        //possessionBallon = balle.transform.parent;
-        compteur += Time.deltaTime;
-        float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
-        if (compteur >= 0.95f)
+        if (transform.parent.tag == "Player")
         {
-            if (this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
+            //possessionBallon = balle.transform.parent;
+            compteur += Time.deltaTime;
+            float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
+            if (compteur >= 0.95f) 
             {
-                if (Input.GetKeyDown("e") && !possessionBallon)
+                if (transform.parent.name.StartsWith("Joueur1"))
                 {
-                    //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
-                    compteur = 0;
-                    estEnMouvementPlacage = true;
-                    FairePlacage();
-                    StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                    //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
-                }
+                    if (Input.GetKeyDown("e") && !possessionBallon)
+                    {
+                        //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
+                        compteur = 0;
+                        estEnMouvementPlacage = true;
+                        FairePlacage();
+                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
+                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                    }
 
-                if (Input.GetKeyDown("q") && compteur >= 0.95f && possessionBallon)
-                {
-                    //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
-                    compteur = 0;
-                    FairePasse();                                                                                                             //            TANTOT
-                    StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                    //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                    if (Input.GetKeyDown("q") && compteur >= 0.95f && possessionBallon)
+                    {
+                        //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
+                        compteur = 0;
+                        FairePasse();                                                                                                             //            TANTOT
+                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
+                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                    }
                 }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.RightShift) && !possessionBallon)
+                else
                 {
-                    //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
-                    compteur = 0;
-                    estEnMouvementPlacage = true;
-                    FairePlacage();
-                    StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                    //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
-                }
+                    if (Input.GetKeyDown(KeyCode.Keypad1) && !possessionBallon)
+                    {
+                        //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
+                        compteur = 0;
+                        estEnMouvementPlacage = true;
+                        FairePlacage();
+                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
+                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                    }
 
-                if (Input.GetKeyDown(KeyCode.RightControl) && compteur >= 0.95f && possessionBallon)
-                {
-                    //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
-                    compteur = 0;
-                    FairePasse();                                                                                                             //            TANTOT
-                    StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                    //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                    if (Input.GetKeyDown(KeyCode.Keypad2) && compteur >= 0.95f && possessionBallon)
+                    {
+                        //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
+                        compteur = 0;
+                        FairePasse();                                                                                                             //            TANTOT
+                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
+                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                    }
                 }
             }
         }

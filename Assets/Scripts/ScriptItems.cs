@@ -12,45 +12,48 @@ public class ScriptItems : NetworkBehaviour
     void Update()
     {
         framesDélai++;
-        if (Input.GetKeyDown("1") && framesDélai > 60)
+        if (isLocalPlayer && tag == "Player")
         {
-            CmdInstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("2") && framesDélai > 60)
-        {
-            CmdInstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("3") && framesDélai > 60)
-        {
-            CmdInstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("4") && framesDélai > 60)
-        {
-            CmdInstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("5") && framesDélai > 60)
-        {
-            CmdInstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("6") && framesDélai > 60)
-        {
-            CmdInstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("7") && framesDélai > 60)
-        {
-            CmdInstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
-        }
-        if (Input.GetKeyDown("8") && framesDélai > 60)
-        {
-            CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
-            framesDélai = 0;
+            if (Input.GetKeyDown("1") && framesDélai > 60)
+            {
+                CmdInstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("2") && framesDélai > 60)
+            {
+                CmdInstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("3") && framesDélai > 60)
+            {
+                CmdInstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("4") && framesDélai > 60)
+            {
+                CmdInstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("5") && framesDélai > 60)
+            {
+                CmdInstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("6") && framesDélai > 60)
+            {
+                CmdInstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("7") && framesDélai > 60)
+            {
+                CmdInstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            if (Input.GetKeyDown("8") && framesDélai > 60)
+            {
+                CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
         }
     }
     [Command]

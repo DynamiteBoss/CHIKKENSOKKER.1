@@ -9,6 +9,9 @@ using UnityEngine.Networking;
 
 public class ScriptMécaniqueMatch : NetworkBehaviour
 {
+    GameObject Balle { get; set; }
+    GameObject PnlFin { get; set; }
+    Text TxtFin { get; set; }
     [SerializeField]
     const float DuréeMatch = 300f;
 
@@ -59,9 +62,13 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Balle = GameObject.FindGameObjectWithTag("Balle");
         Debug.Log(NetworkServer.localConnections.Count);
-        
-            timer = DuréeMatch;
+
+        PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
+        TxtFin = PnlFin.transform.Find("TxtFin").gameObject.GetComponentInChildren<Text>();
+        PnlFin.SetActive(false);
+            timer = 10;
         
         //timer = DuréeMatch;
         //if()
@@ -142,7 +149,31 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     private void TerminerMatch()
     {
-        GetComponent<ScriptMenuPause>().DésactiverMouvement();
+        string message;
+        int butA = Balle.GetComponent<ScriptBut>().NbButsA;
+        int butB = Balle.GetComponent<ScriptBut>().NbButsB;
+        if(butA < butB)
+        {
+            message = "L'équipe B remporte la partie " + butB +  " - " + butA;
+        }
+        else
+        {
+            if(butA > butB)
+            {
+                message = "L'équipe A remporte la partie " + butB + " - " + butA;
+            }
+            else
+            {
+                message = "Partie nulle" + butB + " - " + butA;
+            }
+        }
+        PnlFin.SetActive(true);
+        TxtFin.text = message;
+
+
+
+
+        //GetComponent<ScriptMenuPause>().DésactiverMouvement();
     }
     void AjusterModeNuit()
     {

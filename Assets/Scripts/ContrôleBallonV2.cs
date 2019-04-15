@@ -35,18 +35,33 @@ public class ContrôleBallonV2 : NetworkBehaviour
         compteur1 += Time.deltaTime;
         //if(isLocalPlayer)
         //{
-            if(Balle.transform.parent != null)
+        if (tag == "Player")
+        {
+            if (Balle.transform.parent != null)
             {
-                if(Balle.transform.parent == transform)
+                if (Balle.transform.parent == transform)
                 {
-                    if(Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+                    if(name.StartsWith("Joueur1"))
                     {
-                        CmdTirerBalle1();
-                    CmdTirerBalle();
-                        //CmdTirerBalle();
+                        if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+                        {
+                            CmdTirerBalle1();
+                            CmdTirerBalle();
+                            //CmdTirerBalle();
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKeyDown(KeyCode.Keypad3) && compteur1 >= TEMPS_MIN)
+                        {
+                            CmdTirerBalle1();
+                            CmdTirerBalle();
+                            //CmdTirerBalle();
+                        }
                     }
                 }
             }
+        }
         //}
         
     }
