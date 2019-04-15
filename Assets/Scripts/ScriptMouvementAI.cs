@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ScriptMouvementAI : MonoBehaviour
+public class ScriptMouvementAI : NetworkBehaviour
 {
     Vector3 PointÀAller { get; set; }
 
@@ -21,6 +22,8 @@ public class ScriptMouvementAI : MonoBehaviour
     float deltaPosition = 0.5f;
     bool aLeBallon;
     string ModePositionnement;
+
+    const float VitDeplacement = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,32 +37,104 @@ public class ScriptMouvementAI : MonoBehaviour
         ++compteurFrames;
         DéplacerJoueur();
         RotaterJoueur();
-        if (compteurFrames == NbFramesAvantUpdate)
+
+        DéplacerJoueurVersPoint(PointÀAller);
+        if (compteurFrames++ == 17)
         {
-            if(!aLeBallon)
-            {
+            compteurFrames = 0;
+            PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
+
+        }
+    }
+
+    private Vector3 TrouverPointDéplacement(string comportement)
+    {
+        switch (comportement)
+        {
+            case "Attaquer":
+                return GérerPositionsAtt();
+                break;
+            case "Défendre":
+                return GérerPositionsDef();
+                break;
+            case "Avancer":
+                return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+                break;
+            case "Revenir":
+                return new Vector3(-20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f,5f), this.transform.position.y, this.transform.position.z);
+                break;
+            default:
+                return Ballon.transform.position;
                 
-                compteurFrames = 0;
-                EffectuerMiseÀJour();
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other == Ballon)
+        {
+            this.transform.parent.GetComponentInChildren<ActionsPlayer>().enabled = true;
+            this.transform.parent.GetComponentInChildren<MouvementPlayer>().enabled = true;
+            this.transform.parent.GetComponentInChildren<MouvementManette>().enabled = true;
+            this.enabled = false;
+        }
+
+    }
+
+    private Vector3 GérerPositionsDef()              //       À MODIFIER
+    {
+        return new Vector3(-20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+    }
+    private Vector3 GérerPositionsAtt()              //       À MODIFIER
+    {
+        return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+    }
+
+    private void DéplacerJoueurVersPoint(Vector3 pointDéplacement)
+    {
+        if ((this.transform.position - Ballon.transform.position).magnitude > 1)
+        {
+            this.transform.position += (pointDéplacement - this.transform.position).normalized * VitDeplacement * Time.deltaTime;
+        }
+    }
+
+    private string TrouverCorportementDéplacement()
+    {
+        if (Ballon.transform.parent != null)
+        {
+            if (Ballon.transform.position.x * (this.transform.GetComponent<CombinerMeshPlayer>().estÉquipeA ? 1 : -1) <= 0)
+            {
+                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
+                {
+                    return "Avancer";
+                }
+                else
+                {
+                    return "Défendre";
+                }
             }
             else
             {
-                if ((But.transform.position - this.transform.position).magnitude <= 12.5f) //À retirer : mettre qu'on prend le contrôle
+                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
                 {
-                    TirerBallon();
+                    return "Attaquer";
                 }
-                compteurFrames = 0;
-
+                else
+                {
+                    return "Revenir";
+                }
             }
-
         }
-            
+        else
+        {
+            return "Default";
+        }
+
     }
 
     private void EffectuerMiseÀJour()
     {
         CalculerNouvellePosition();
-        if(this.transform.Find("Balle"))
+        if (this.transform.Find("Balle"))
         {
             aLeBallon = true;
             PointÀAller = new Vector3(But.transform.position.x, this.transform.position.y, But.transform.position.z);
@@ -72,7 +147,7 @@ public class ScriptMouvementAI : MonoBehaviour
 
     private void RotaterJoueur()
     {
-        if(!aLeBallon)
+        if (!aLeBallon)
         {
             Vector3 orientation = Ballon.transform.position;
             orientation.y = -90;
@@ -97,7 +172,7 @@ public class ScriptMouvementAI : MonoBehaviour
 
     private void TirerBallon()
     {
-        
+
         Ballon.isKinematic = false;
         Ballon.GetComponentInChildren<SphereCollider>().enabled = true;
         Ballon.transform.parent = null;
@@ -121,23 +196,23 @@ public class ScriptMouvementAI : MonoBehaviour
         switch (ModePositionnement)
         {
             case "PosAllié_BalleAllié":
-                
+
                 break;
             case "PosAllié_BalleEnnemie":
-                
+
                 break;
             case "PosEnnemie_BalleAlliée":
-                
+
                 break;
             case "PosEnnemie_BalleEnnemie":
-                
+
                 break;
             default:
                 /*if (Ballon.velocity.magnitude <= 2)
                     PointÀAller = Ballon.position;
                 else*/
                 //PointÀAller = new Vector3(PointÀAller.x + UnityEngine.Random.Range(-deltaPosition, deltaPosition), PointÀAller.y, PointÀAller.z + UnityEngine.Random.Range(-deltaPosition, deltaPosition));
-                
+
                 this.transform.position += (PointÀAller - this.transform.position).normalized * Time.deltaTime * déplacementParSeconde;
 
                 break;
@@ -148,6 +223,6 @@ public class ScriptMouvementAI : MonoBehaviour
 
     private void BougerJoueur()
     {
-        
+
     }
 }
