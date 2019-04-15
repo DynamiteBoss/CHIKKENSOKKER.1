@@ -14,60 +14,65 @@ public class ScriptItems : NetworkBehaviour
         framesDélai++;
         if (Input.GetKeyDown("1") && framesDélai > 60)
         {
-            InstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("2") && framesDélai > 60)
         {
-            InstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("3") && framesDélai > 60)
         {
-            InstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("4") && framesDélai > 60)
         {
-            InstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("5") && framesDélai > 60)
         {
-            InstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("6") && framesDélai > 60)
         {
-            InstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("7") && framesDélai > 60)
         {
-            InstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
         if (Input.GetKeyDown("8") && framesDélai > 60)
         {
-            InstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
+            CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
             framesDélai = 0;
         }
     }
-
-    public void InstancierItem(int indiceItem, Vector3 position)
+    [Command]
+    public void CmdInstancierItem(int indiceItem, Vector3 position)
+    {
+        RpcInstancierItem(indiceItem, position);
+    }
+    [ClientRpc]
+    private void RpcInstancierItem(int indiceItem, Vector3 position)
     {
         switch (indiceItem)
         {
-            // RESTE À INSTANCIER LES ITEMS A LA POSITION DU JOUEUR AVEC UNE FORCE SI BESOIN
 
             case 0:
                 {
-                    GameObject Crotte1 = Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject Crotte2 = Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));   
-                    GameObject Crotte3 = Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.right * 2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte1 = (GameObject)Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte2 = (GameObject)Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte3 = (GameObject)Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.right * 2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     GameObject[] listCrotte = { Crotte1, Crotte2, Crotte3 };
                     foreach (GameObject item in listCrotte)
                     {
+                        NetworkServer.Spawn(item);
                         Destroy(item, 6);
                     }
                     ItemCrotte.FaireEffetItem(listCrotte); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
@@ -75,14 +80,15 @@ public class ScriptItems : NetworkBehaviour
                 }
             case 1:
                 {
-                    GameObject Crotte1 = Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * -4 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject Crotte2 = Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject Crotte3 = Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.forward * 4.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject Crotte4 = Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject Crotte5 = Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * 4 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte1 = (GameObject)Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * -4 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte2 = (GameObject)Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte3 = (GameObject)Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.forward * 4.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte4 = (GameObject)Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject Crotte5 = (GameObject)Instantiate(Item.RetournerItemListe(1).ItemPhysique, position + transform.up * 2 + transform.right * 4 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     GameObject[] listCrotte = { Crotte1, Crotte2, Crotte3, Crotte4, Crotte5 };
                     foreach (GameObject item in listCrotte)
                     {
+                        NetworkServer.Spawn(item);
                         Destroy(item, 6);
                     }
                     ItemCrotte.FaireEffetItem(listCrotte); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
@@ -90,10 +96,11 @@ public class ScriptItems : NetworkBehaviour
                 }
             case 2:
                 {
-                    GameObject OeufBlancGros = Instantiate(Item.RetournerItemListe(2).ItemPhysique, position + transform.up * 2 + transform.forward * 4.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufBlancGros = (GameObject)Instantiate(Item.RetournerItemListe(2).ItemPhysique, position + transform.up * 2 + transform.forward * 4.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     GameObject[] listOeux = { OeufBlancGros };
                     foreach (GameObject item in listOeux)
                     {
+                        NetworkServer.Spawn(item);
                         Destroy(item, 5);
                     }
                     ItemOeufBlanc.FaireEffetItem(0, listOeux); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
@@ -101,13 +108,14 @@ public class ScriptItems : NetworkBehaviour
                 }
             case 3:
                 {
-                    GameObject OeufBlanc1 = Instantiate(Item.RetournerItemListe(3).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject OeufBlanc2 = Instantiate(Item.RetournerItemListe(3).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    GameObject OeufBlanc3 = Instantiate(Item.RetournerItemListe(3).ItemPhysique, position + transform.up * 2 + transform.right * 2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufBlanc1 = (GameObject)Instantiate(Item.RetournerItemListe(3).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufBlanc2 = (GameObject)Instantiate(Item.RetournerItemListe(3).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufBlanc3 = (GameObject)Instantiate(Item.RetournerItemListe(3).ItemPhysique, position + transform.up * 2 + transform.right * 2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     GameObject[] listOeux = { OeufBlanc1, OeufBlanc2, OeufBlanc3 };
                     foreach (GameObject item in listOeux)
                     {
-                        Destroy(item,5);
+                        NetworkServer.Spawn(item);
+                        Destroy(item, 5);
                     }
                     ItemOeufBlanc.FaireEffetItem(1, listOeux); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
 
@@ -115,28 +123,32 @@ public class ScriptItems : NetworkBehaviour
                 }
             case 4:
                 {
-                    GameObject OeufBrun = Instantiate(Item.RetournerItemListe(4).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufBrun = (GameObject)Instantiate(Item.RetournerItemListe(4).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     ItemOeufBrun.FaireEffetItem(OeufBrun); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
+                    NetworkServer.Spawn(OeufBrun);
                     Destroy(OeufBrun, 5);
                     break;
                 }
             case 5:
                 {
-                    GameObject OeufMortier = Instantiate(Item.RetournerItemListe(5).ItemPhysique, position + transform.up * 3 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
+                    GameObject OeufMortier = (GameObject)Instantiate(Item.RetournerItemListe(5).ItemPhysique, position + transform.up * 3 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
                     ItemBombe.FaireEffetItem(OeufMortier); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
+                    NetworkServer.Spawn(OeufMortier);
                     break;
                 }
             case 6:
                 {
-                    GameObject oeufBrouillé = Instantiate(Item.RetournerItemListe(6).ItemPhysique, position, Quaternion.identity);   //PA BESOIN DE VISUEL
+                    GameObject oeufBrouillé = (GameObject)Instantiate(Item.RetournerItemListe(6).ItemPhysique, position, Quaternion.identity);   //PA BESOIN DE VISUEL
                     ItemBrouillé.FaireEffetItem(this.transform.gameObject/* RESTE JUSTE A METTRE UN JOUEUR ICI PI CA VA SE METTRE */);
+                    NetworkServer.Spawn(oeufBrouillé);
                     Destroy(oeufBrouillé, 0.1f);
                     break;
                 }
             case 7:
                 {
-                    GameObject versDeTerre = Instantiate(Item.RetournerItemListe(7).ItemPhysique, position, Quaternion.identity);   //PA BESOIN DE VISUEL
+                    GameObject versDeTerre = (GameObject)Instantiate(Item.RetournerItemListe(7).ItemPhysique, position, Quaternion.identity);   //PA BESOIN DE VISUEL
                     ItemVers.FaireEffetItem(this.transform.gameObject/* RESTE JUSTE A METTRE UN JOUEUR ICI PI CA VA SE METTRE */);
+                    NetworkServer.Spawn(versDeTerre);
                     Destroy(versDeTerre, 0.1f);
                     break;
                 }
