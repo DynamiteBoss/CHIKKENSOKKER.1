@@ -141,7 +141,8 @@ public class NetworkManagerPerso : NetworkManager
         prefab.name = joueur.NomJoueur;
         prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
         compteurB++;
-        if (compteurA == 0)
+        Debug.Log(compteurB);
+        if (compteurB < 6)
         {
             prefab.GetComponent<TypeÉquipe>().estÉquipeA = true;
         }

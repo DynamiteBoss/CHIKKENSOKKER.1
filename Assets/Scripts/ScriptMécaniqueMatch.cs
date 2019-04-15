@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Networking;
 
-public class ScriptMécaniqueMatch : MonoBehaviour
+public class ScriptMécaniqueMatch : NetworkBehaviour
 {
     [SerializeField]
     const float DuréeMatch = 300f;
@@ -39,13 +40,17 @@ public class ScriptMécaniqueMatch : MonoBehaviour
     const int NbOeufMax = 3;
 
     Text TxtTimer { get; set; }
+    [SyncVar(hook = "OnChronomètreChange")] public string chronomètre;
     GameObject PnlNuit { get; set; }
     Light LumierePrincipale { get; set; }
 
-    float Timer { get; set; }
-    int compteur = 0;
-    int compteur2 = 0;
 
+    [SyncVar(hook = "OnTimerChange")] public float timer;
+    [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
+    [SyncVar(hook = "OnCompteur2Change")] public int compteur2 = 0;
+    [SyncVar(hook = "OnCompteur3Change")] public int compteur3 = 0;
+
+    List<GameObject> Joueur { get; set; }
     public int nbOeufs = 0;
 
     bool ajusteLumiere = false;
@@ -55,7 +60,23 @@ public class ScriptMécaniqueMatch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Timer = DuréeMatch;
+        Debug.Log(NetworkServer.localConnections.Count);
+        
+            timer = DuréeMatch;
+        
+        //timer = DuréeMatch;
+        //if()
+        //{
+        //    timer = DuréeMatch;
+        //}
+        //timer = DuréeMatch;
+        //if (isServer && isLocalPlayer)
+        //{
+        //    timer = DuréeMatch;
+        //}
+
+
+
         TxtTimer = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Temps").gameObject.GetComponentInChildren<Text>();
         PnlNuit = GameObject.Find("Interface").transform.Find("PnlNuit").gameObject;
 
@@ -66,53 +87,59 @@ public class ScriptMécaniqueMatch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ++compteur;
-        ++compteur2;
-        Timer -= Time.deltaTime;
-        if (compteur == NbFramesUpdate + 1)
+        if (GameObject.FindGameObjectsWithTag("Gardien").Length == 2)
         {
-            compteur = 0;
-            if (Timer > 0)
+            ++compteur;
+            ++compteur2;
+            ++compteur3;
+            timer -= Time.deltaTime;
+            if (compteur == NbFramesUpdate + 1)
             {
-                FaireProgresserMatchUnPas();
-            }
-            else
-            {
-                TerminerMatch();
-            }
-            if (ajusteLumiere)
-                AjusterModeNuit();
+                compteur = 0;
+                if (timer > 0)
+                {
+                    FaireProgresserMatchUnPas();
+                }
+                else
+                {
+                    TerminerMatch();
+                }
+                if (ajusteLumiere)
+                    AjusterModeNuit();
 
-        }
-        if (compteur2 % 20 == 0)
-        {
-            if (EstEnModeNuit != modeNuitLocal)
-            {
-                modeNuitLocal = EstEnModeNuit;
-                ajusteLumiere = true;
             }
-            if (compteur2 == FrequenceObjet)
+            if (compteur2 % 20 == 0)
             {
-                compteur2 = 0;
-                FaireApparaitreObjet();
+                if (EstEnModeNuit != modeNuitLocal)
+                {
+                    modeNuitLocal = EstEnModeNuit;
+                    ajusteLumiere = true;
+                }
+                if (compteur2 == FrequenceObjet)
+                {
+                    compteur2 = 0;
+                    CmdFaireApparaitreObjet();
+                }
             }
         }
 
     }
-
-    private void FaireApparaitreObjet()
+    [Command]
+    public void CmdFaireApparaitreObjet()
     {
         Vector3 positionObj = new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ));
         if (nbOeufs < NbOeufMax)
         {
-            GameObject OeufHasard = Instantiate((GameObject)Resources.Load("Prefab/Item"), positionObj, Quaternion.identity);
+            GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), positionObj, Quaternion.identity);
+            NetworkServer.Spawn(OeufHasard);
             nbOeufs++;
         }
     }
 
     private void FaireProgresserMatchUnPas()
     {
-        TxtTimer.text = String.Format("{0:m} : {1} ", (((int)Timer) / 60).ToString(), ((int)Timer % 60).ToString().Length == 1 ? "0" + ((int)Timer % 60).ToString() : ((int)Timer % 60).ToString());
+        chronomètre = String.Format("{0:m} : {1} ", (((int)timer) / 60).ToString(), ((int)timer % 60).ToString().Length == 1 ? "0" + ((int)timer % 60).ToString() : ((int)timer % 60).ToString());
+        TxtTimer.text = chronomètre;
     }
 
     private void TerminerMatch()
@@ -152,5 +179,25 @@ public class ScriptMécaniqueMatch : MonoBehaviour
             }
         }
 
+    }
+    void OnTimerChange(float changement)
+    {
+        timer = changement;
+    }
+    void OnChronomètreChange(string changement)
+    {
+        chronomètre = changement;
+    }
+    void OnCompteurChange(int changement)
+    {
+        compteur = changement;
+    }
+    void OnCompteur2Change(int changement)
+    {
+        compteur2 = changement;
+    }
+    void OnCompteur3Change(int changement)
+    {
+        compteur3 = changement;
     }
 }

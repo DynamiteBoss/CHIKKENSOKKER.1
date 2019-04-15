@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class TypeÉquipe : NetworkBehaviour
 {
-    public bool estÉquipeA;
+    [SyncVar(hook ="OnEstÉquipeAChange")]public bool estÉquipeA;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +16,10 @@ public class TypeÉquipe : NetworkBehaviour
     void Update()
     {
         
+    }
+
+    void OnEstÉquipeAChange(bool changement)
+    {
+        estÉquipeA = changement;
     }
 }
