@@ -225,7 +225,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: '5 : 00'
 --- !u!222 &87898928
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -790,7 +790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EstEnModeNuit: 0
   "chronom\xE8tre": '5 : 00'
-  timer: 0
+  timer: 300
   compteur: 0
   compteur2: 0
   nbOeufs: 0

@@ -138,20 +138,22 @@ public class NetworkManagerPerso : NetworkManager
 
         JoueurV2 joueur = ÉquipeAV2.ListeJoueur[playerControllerId];
         GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        prefab.name = joueur.NomJoueur;
         prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
         compteurB++;
-        Debug.Log(compteurB);
+        string message;
         if (compteurB < 6)
         {
             prefab.GetComponent<TypeÉquipe>().estÉquipeA = true;
+            message = joueur.NomJoueur + "A";
         }
         else
         {
             prefab.GetComponent<TypeÉquipe>().estÉquipeA = false;
+            message = joueur.NomJoueur + "B";
         }
 
         NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
+        prefab.name = message;
             //NetworkServer.Spawn(prefab);
 
         
@@ -245,19 +247,19 @@ public class NetworkManagerPerso : NetworkManager
         List<JoueurV2> liste = new List<JoueurV2>();
         liste.Add(new Player("Joueur1", équipe,prefab[0]));
         liste.Add(new Player("Joueur2", équipe,prefab[0]));
-        liste.Add(new AI("Joueur3", équipe,prefab[1]));
-        liste.Add(new AI("Joueur4", équipe,prefab[1]));
-        liste.Add(new Gardien("Joueur5", équipe,prefab[2]));
+        liste.Add(new AI("AI1", équipe,prefab[1]));
+        liste.Add(new AI("AI2", équipe,prefab[1]));
+        liste.Add(new Gardien("Gardien1", équipe,prefab[2]));
         return liste;
     }
     static List<JoueurV2> CréerÉquipe1v1(string équipe, List<GameObject> prefab)
     {
         List<JoueurV2> liste = new List<JoueurV2>();
         liste.Add(new Player("Joueur1", équipe, prefab[0]));
-        liste.Add(new AI("Joueur2", équipe, prefab[1]));
-        liste.Add(new AI("Joueur3", équipe, prefab[1]));
-        liste.Add(new AI("Joueur4", équipe, prefab[1]));
-        liste.Add(new Gardien("Joueur5", équipe, prefab[2]));
+        liste.Add(new AI("AI1", équipe, prefab[1]));
+        liste.Add(new AI("AI2", équipe, prefab[1]));
+        liste.Add(new AI("AI3", équipe, prefab[1]));
+        liste.Add(new Gardien("Gardien1", équipe, prefab[2]));
         return liste;
     }
 
