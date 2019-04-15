@@ -9,7 +9,7 @@ public class ScriptMouvementAI : NetworkBehaviour
 {
     Vector3 PointÀAller { get; set; }
 
-    Vector3 PositionTactique { get; set; }
+    Vector3 positionTactique;
 
     Vector3 Positionement { get; set; }
 
@@ -28,31 +28,34 @@ public class ScriptMouvementAI : NetworkBehaviour
     bool aLeBallon;
     string ModePositionnement;
     int noComportement;
+    short constÉquipe;
 
-
-    const float VitDeplacement = 6f;
+    const float VitDeplacement = 7.5f;
     // Start is called before the first frame update
     void Start()
     {
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
-        noComportement = int.Parse(this.name[this.name.Length - 1].ToString());
+        noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
         if (noComportement == 3)
         {
-            PositionTactique = new Vector3(5, 0, 8);
+            positionTactique = new Vector3(5, 0, 8);
         }
         else if (noComportement == 4)
         {
-            PositionTactique = new Vector3(5, 0, -8);
+            positionTactique = new Vector3(5, 0, -8);
         }
         else if (noComportement == 2)
         {
-            PositionTactique = new Vector3(-5, 0, 4);
+            positionTactique = new Vector3(-5, 0, 4);
         }
         else
         {
-            PositionTactique = new Vector3(-5, 0, -4);
+            positionTactique = new Vector3(-5, 0, -4);
         }
+        Debug.Log(noComportement);
+
+        constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
     }
 
     // Update is called once per frame
@@ -83,13 +86,16 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return GérerPositionsDef();
                 break;
             case "Avancer":
-                return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+                return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
                 break;
             case "Revenir":
-                return new Vector3(-20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f,5f), this.transform.position.y, this.transform.position.z);
+                return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f,5f), this.transform.position.y, this.transform.position.z);
                 break;
             default:
-                return Ballon.transform.position;
+                if (GameObject.FindGameObjectsWithTag("AI").OrderBy(x => (x.transform.position - Ballon.transform.position).magnitude).Where(x => x.GetComponentInChildren<ScriptMouvementAI>().enabled && x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA).First().transform == this.transform)
+                    return Ballon.transform.position;
+                else
+                    return positionTactique * constÉquipe - Vector3.right * 20 * constÉquipe;
                 
         }
     }
@@ -106,7 +112,7 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private Vector3 GérerPositionsDef()              //       À MODIFIER
     {
-        //return new Vector3(-20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+        //return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
         /*switch (noComportement)
         {
             case 1:
@@ -118,16 +124,16 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return GérerPositionsDef();
                 break;
             case 4:*/
-                return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+                return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
                 //break;
         //}
     }
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
-        //return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+        //return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
         PointÀAller = (GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
-        .OrderByDescending(x => x.transform.position.x * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1)).First().transform.position);
-        PointÀAller += PositionTactique + new Vector3(0, (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) * (10/PointÀAller.x), 0);
+            .OrderByDescending(x => x.transform.position.x * constÉquipe).First().transform.position);
+        PointÀAller += (positionTactique + new Vector3(constÉquipe /** (10/PointÀAller.x)*/, 0, 0));
         return PointÀAller;
         
     }
@@ -142,9 +148,10 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private string TrouverCorportementDéplacement()
     {
+
         if (Ballon.transform.parent != null)
         {
-            if (Ballon.transform.parent.position.x * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) <= 0)
+            if (Ballon.transform.parent.position.x * constÉquipe <= 0)
             {
                 if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
@@ -167,11 +174,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 }
             }
         }
-        else
-        {
-            return "Default";
-        }
-
+        return "Default";
     }
 
     private void EffectuerMiseÀJour()
