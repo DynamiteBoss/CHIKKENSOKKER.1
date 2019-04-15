@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,10 @@ using UnityEngine.Networking;
 public class ScriptMouvementAI : NetworkBehaviour
 {
     Vector3 PointÀAller { get; set; }
+
+    Vector3 PositionTactique { get; set; }
+
+    Vector3 Positionement { get; set; }
 
     Rigidbody Ballon { get; set; }
 
@@ -22,13 +27,32 @@ public class ScriptMouvementAI : NetworkBehaviour
     float deltaPosition = 0.5f;
     bool aLeBallon;
     string ModePositionnement;
+    int noComportement;
 
-    const float VitDeplacement = 10f;
+
+    const float VitDeplacement = 6f;
     // Start is called before the first frame update
     void Start()
     {
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
+        noComportement = int.Parse(this.name[this.name.Length - 1].ToString());
+        if (noComportement == 3)
+        {
+            PositionTactique = new Vector3(5, 0, 8);
+        }
+        else if (noComportement == 4)
+        {
+            PositionTactique = new Vector3(5, 0, -8);
+        }
+        else if (noComportement == 2)
+        {
+            PositionTactique = new Vector3(-5, 0, 4);
+        }
+        else
+        {
+            PositionTactique = new Vector3(-5, 0, -4);
+        }
     }
 
     // Update is called once per frame
@@ -44,6 +68,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             compteurFrames = 0;
             PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
             Debug.DrawLine(this.transform.position + Vector3.up, PointÀAller, Color.gray, 17f / 60f);
+            Debug.Log(TrouverCorportementDéplacement());
         }
     }
 
@@ -77,16 +102,34 @@ public class ScriptMouvementAI : NetworkBehaviour
             this.transform.GetComponentInChildren<MouvementManette>().enabled = true;
             this.enabled = false;
         }
-
     }
 
     private Vector3 GérerPositionsDef()              //       À MODIFIER
     {
-        return new Vector3(-20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+        //return new Vector3(-20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+        /*switch (noComportement)
+        {
+            case 1:
+                return 
+            case 2:
+
+                break;
+            case 3:
+                return GérerPositionsDef();
+                break;
+            case 4:*/
+                return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+                //break;
+        //}
     }
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
-        return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+        //return new Vector3(20 * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+        PointÀAller = (GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
+        .OrderByDescending(x => x.transform.position.x * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1)).First().transform.position);
+        PointÀAller += PositionTactique + new Vector3(0, (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) * (10/PointÀAller.x), 0);
+        return PointÀAller;
+        
     }
 
     private void DéplacerJoueurVersPoint(Vector3 pointDéplacement)
@@ -101,9 +144,9 @@ public class ScriptMouvementAI : NetworkBehaviour
     {
         if (Ballon.transform.parent != null)
         {
-            if (Ballon.transform.position.x * (this.transform.GetComponent<CombinerMeshPlayer>().estÉquipeA ? 1 : -1) <= 0)
+            if (Ballon.transform.parent.position.x * (this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1) <= 0)
             {
-                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
+                if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
                     return "Avancer";
                 }
@@ -114,7 +157,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             }
             else
             {
-                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
+                if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
                     return "Attaquer";
                 }
