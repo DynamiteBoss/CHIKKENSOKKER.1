@@ -81,12 +81,12 @@ public class ActionPlaquageGardien : MonoBehaviour
     }
     IEnumerator AttendreDéactivationScriptPlaqué(float durée, float direction)
     {
-        JoueurÀPlaquer.GetComponentInChildren<ContrôleBallon>().enabled = false;    //désactiver le controle du ballon du player attaqué
+        JoueurÀPlaquer.GetComponentInChildren<ContrôleBallonV2>().enabled = false;    //désactiver le controle du ballon du player attaqué
         JoueurÀPlaquer.GetComponent<MouvementPlayer>().enabled = false;    //désactiver le mouvement du player attaqué
         yield return new WaitForSeconds(durée / 3);
         JoueurÀPlaquer.GetComponent<Rigidbody>().AddForce(-(Mathf.Sin(direction) * 24), 0, -(Mathf.Cos(direction) * 24), ForceMode.Impulse);
         yield return new WaitForSeconds(2 * durée / 3);
-        JoueurÀPlaquer.GetComponentInChildren<ContrôleBallon>().enabled = true;    //réactiver le controle du ballon du player attaqué
+        JoueurÀPlaquer.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon du player attaqué
         JoueurÀPlaquer.GetComponent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player attaquésd
     }
     IEnumerator AttendreDéactivationScriptPlaqueur(float durée,Rigidbody corps)

@@ -101,12 +101,12 @@ public class ActionsPlayerManette : MonoBehaviour
     }
     IEnumerator AttendreDéactivationScriptPlaqueur(float durée, float direction)
     {
-        this.transform.parent.GetComponentInChildren<ContrôleBallon>().enabled = false;    //désactiver le controle du ballon
+        this.transform.parent.GetComponentInChildren<ContrôleBallonV2>().enabled = false;    //désactiver le controle du ballon
         this.GetComponentInParent<MouvementPlayer>().enabled = false;    //désactiver le mouvement du player
         yield return new WaitForSeconds(durée / 3);
         this.transform.parent.GetComponent<Rigidbody>().AddForce(-(Mathf.Sin(direction) * 36.5f), 0, -(Mathf.Cos(direction) * 36.5f), ForceMode.Impulse);
         yield return new WaitForSeconds(2 * durée / 3);
-        this.transform.parent.GetComponentInChildren<ContrôleBallon>().enabled = true;    //réactiver le controle du ballon
+        this.transform.parent.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon
         this.GetComponentInParent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player
     }
     IEnumerator AttendreDéactivationScriptPlaqué(float durée, float direction)

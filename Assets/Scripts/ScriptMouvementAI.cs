@@ -39,19 +39,19 @@ public class ScriptMouvementAI : NetworkBehaviour
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
         if (noComportement == 3)
         {
-            positionTactique = new Vector3(5, 0, 8);
+            positionTactique = new Vector3(7, 0, 12);
         }
         else if (noComportement == 4)
         {
-            positionTactique = new Vector3(5, 0, -8);
+            positionTactique = new Vector3(7, 0, -12);
         }
         else if (noComportement == 2)
         {
-            positionTactique = new Vector3(-5, 0, 4);
+            positionTactique = new Vector3(-7, 0, 5);
         }
         else
         {
-            positionTactique = new Vector3(-5, 0, -4);
+            positionTactique = new Vector3(-7, 0, -5);
         }
         Debug.Log(noComportement);
 
