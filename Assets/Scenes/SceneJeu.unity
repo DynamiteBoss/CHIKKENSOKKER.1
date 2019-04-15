@@ -225,7 +225,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '5 : 00'
+  m_Text: 
 --- !u!222 &87898928
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -680,6 +680,7 @@ GameObject:
   - component: {fileID: 282840812}
   - component: {fileID: 282840815}
   - component: {fileID: 282840816}
+  - component: {fileID: 282840817}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -788,7 +789,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EstEnModeNuit: 0
+  "chronom\xE8tre": '5 : 00'
+  timer: 0
+  compteur: 0
+  compteur2: 0
   nbOeufs: 0
+--- !u!114 &282840817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282840810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &334911856
 GameObject:
   m_ObjectHideFlags: 0
