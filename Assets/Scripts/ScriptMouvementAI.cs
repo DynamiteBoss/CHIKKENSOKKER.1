@@ -16,14 +16,14 @@ public class ScriptMouvementAI : NetworkBehaviour
     int NbFramesAvantUpdate = 10;
 
     [SerializeField]
-    float déplacementParSeconde = 0.1f;
+    float déplacementParSeconde = 1f;
 
     int compteurFrames = 0;
     float deltaPosition = 0.5f;
     bool aLeBallon;
     string ModePositionnement;
 
-    const float VitDeplacement = 0.5f;
+    const float VitDeplacement = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +43,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             compteurFrames = 0;
             PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
-
+            Debug.DrawLine(this.transform.position + Vector3.up, PointÀAller, Color.gray, 17f / 60f);
         }
     }
 
@@ -72,9 +72,9 @@ public class ScriptMouvementAI : NetworkBehaviour
     {
         if (other == Ballon)
         {
-            this.transform.parent.GetComponentInChildren<ActionsPlayer>().enabled = true;
-            this.transform.parent.GetComponentInChildren<MouvementPlayer>().enabled = true;
-            this.transform.parent.GetComponentInChildren<MouvementManette>().enabled = true;
+            this.transform.GetComponentInChildren<ActionsPlayer>().enabled = true;
+            this.transform.GetComponentInChildren<MouvementPlayer>().enabled = true;
+            this.transform.GetComponentInChildren<MouvementManette>().enabled = true;
             this.enabled = false;
         }
 
@@ -91,9 +91,9 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private void DéplacerJoueurVersPoint(Vector3 pointDéplacement)
     {
-        if ((this.transform.position - Ballon.transform.position).magnitude > 1)
+        if ((this.transform.position - (Ballon.transform.position + Vector3.up)).magnitude > 1)
         {
-            this.transform.position += (pointDéplacement - this.transform.position).normalized * VitDeplacement * Time.deltaTime;
+            this.transform.position += new Vector3(pointDéplacement.x - this.transform.position.x, 0, pointDéplacement.z - this.transform.position.z).normalized * VitDeplacement * Time.deltaTime;
         }
     }
 
@@ -103,7 +103,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             if (Ballon.transform.position.x * (this.transform.GetComponent<CombinerMeshPlayer>().estÉquipeA ? 1 : -1) <= 0)
             {
-                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
+                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
                     return "Avancer";
                 }
@@ -114,7 +114,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             }
             else
             {
-                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA)
+                if (Ballon.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
                     return "Attaquer";
                 }
