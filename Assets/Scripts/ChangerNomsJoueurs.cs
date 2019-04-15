@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ChangerNomsJoueurs : MonoBehaviour
+public class ChangerNomsJoueurs : NetworkBehaviour
 {
     int cmptJA = 1;
     int cmptJB = 1;
@@ -20,22 +21,47 @@ public class ChangerNomsJoueurs : MonoBehaviour
         Gardien = GameObject.FindGameObjectsWithTag("Gardien");
         AI = GameObject.FindGameObjectsWithTag("AI");
 
-        ChangerName("Player", cmptJA, cmptJB, Player);
+        ChangerName("Joueur", cmptJA, cmptJB, Player);
         ChangerName("Gardien", cmptGA, cmptGB, Gardien);
         ChangerName("AI", cmptAIA, cmptAIB, AI);
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {/*
+        Player = GameObject.FindGameObjectsWithTag("Player");
+        Gardien = GameObject.FindGameObjectsWithTag("Gardien");
+        AI = GameObject.FindGameObjectsWithTag("AI");
+
+        ChangerName("Joueur", cmptJA, cmptJB, Player);
+        ChangerName("Gardien", cmptGA, cmptGB, Gardien);
+        ChangerName("AI", cmptAIA, cmptAIB, AI);*/
     }
 
-    void ChangerName(string nom,int cmpt1,int cmpt2,GameObject[] Liste)
+   
+    void ChangerName(string nom,int cmpt1,int cmpt2,GameObject[] liste)
     {
-        foreach(GameObject x in Liste)
+        foreach (GameObject x in liste)
         {
-            if(x.GetComponent<TypeÉquipe>().estÉquipeA)
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                x.transform.name = nom + cmpt1 + "A";
+                cmpt1++;
+            }
+            else
+            {
+                x.transform.name = nom + cmpt2 + "B";
+                cmpt2++;
+            }
+        }
+    }
+    //RpcChangerName(nom, cmpt1, cmpt2, liste);
+    [ClientRpc]
+    void RpcChangerName(string nom, int cmpt1, int cmpt2, GameObject[] liste)
+    {
+        foreach (GameObject x in liste)
+        {
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
             {
                 x.transform.name = nom + cmpt1 + "A";
                 cmpt1++;
@@ -48,3 +74,6 @@ public class ChangerNomsJoueurs : MonoBehaviour
         }
     }
 }
+  
+    
+

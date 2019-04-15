@@ -89,14 +89,9 @@ public class NetworkManagerPerso : NetworkManager
         InstancierPort();
        
         NetworkManager.singleton.StartHost();
-        
-      //  ÉquipeA[0].JoueurPhysique = GameObject.Find()
-
-        //ÉquipeA[]
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-
 
 
         //AjouterJoueur(conn,playerPrefab,playerControllerId);
