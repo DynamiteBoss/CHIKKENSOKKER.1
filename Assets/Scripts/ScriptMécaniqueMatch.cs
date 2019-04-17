@@ -51,6 +51,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [SyncVar(hook = "OnTimerChange")] public float timer;
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
     [SyncVar(hook = "OnCompteur2Change")] public int compteur2 = 0;
+    [SyncVar(hook = "OnCompteur3Change")] public int compteur3 = 0;
 
     List<GameObject> Joueur { get; set; }
     public int nbOeufs = 0;
@@ -63,12 +64,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void Start()
     {
         Balle = GameObject.FindGameObjectWithTag("Balle");
-        Debug.Log(NetworkServer.localConnections.Count);
 
         PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
         TxtFin = PnlFin.transform.Find("TxtFin").gameObject.GetComponentInChildren<Text>();
-        PnlFin.SetActive(false);
-            timer = 10;
         
         //timer = DuréeMatch;
         //if()
@@ -89,12 +87,27 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         LumierePrincipale = GameObject.Find("LumierePrincipale").GetComponentInChildren<Light>();
         modeNuitLocal = EstEnModeNuit;
     }
-
+    void PartirMatch()
+    {
+        PnlFin.SetActive(false);
+        timer = DuréeMatch;
+        Balle.GetComponent<ScriptBut>().NbButsA = 0;
+        Balle.GetComponent<ScriptBut>().NbButsB = 0;
+        Balle.GetComponent<ScriptBut>().score = "0 - 0";
+        Balle.transform.parent = null;
+        Balle.transform.position = new Vector3(1, 0.5f, 5);
+    }
     // Update is called once per frame
     void Update()
     {
         if (GameObject.FindGameObjectsWithTag("Gardien").Length == 2)
         {
+            if(compteur3 == 0)
+            {
+
+                PartirMatch();
+                compteur3++;
+            }
             ++compteur;
             ++compteur2;
             timer -= Time.deltaTime;
@@ -164,11 +177,13 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             }
             else
             {
-                message = "Partie nulle" + butB + " - " + butA;
+                message = "Partie nulle " + butB + " - " + butA;
             }
         }
         PnlFin.SetActive(true);
         TxtFin.text = message;
+
+        Invoke("PartirMatch", 5f);
 
 
 
@@ -224,5 +239,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnCompteur2Change(int changement)
     {
         compteur2 = changement;
+    }
+    void OnCompteur3Change(int changement)
+    {
+        compteur3 = changement;
     }
 }

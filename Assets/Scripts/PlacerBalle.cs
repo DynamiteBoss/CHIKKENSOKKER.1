@@ -56,8 +56,8 @@ public class PlacerBalle : NetworkBehaviour
     {
         if (estPlacer)
         {
-            if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
-                transform.localPosition = new Vector3(0, 1.5f, 2);
+            /*if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+                transform.localPosition = new Vector3(0, 1.5f, 2);*/
         }
     }
 }
