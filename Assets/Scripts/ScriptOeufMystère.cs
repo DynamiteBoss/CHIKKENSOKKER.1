@@ -25,24 +25,41 @@ public class ScriptOeufMystère : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.tag != "Player")
-        {
-          
-        }
-        if (other.transform.parent.tag == "Player")
+        if (other.name == "Tête")
         {
             Destroy(this.transform.gameObject);
-            AttribuerObjetJoueur(other.gameObject, UnityEngine.Random.Range(1, IndiceMax));
-            GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;
+            //GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
+            AttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
         }
+        else if (other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps")
+        {
+            Destroy(this.transform.gameObject);
+            //GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
+            AttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
+        }
+        else{ }
 
     }
 
     private void AttribuerObjetJoueur(GameObject joueur, int indice)
     {
-
+        GameObject player = GameObject.Find(joueur.name);
+        switch (player.GetComponent<ScriptItems>().Inventaire.Count)
+        {
+            case 0:
+                Debug.Log(player.GetComponent<ScriptItems>().Inventaire.Count);
+                player.GetComponent<ScriptItems>().Inventaire.Add(indice);
+                Debug.Log(player.GetComponent<ScriptItems>().Inventaire.Count);
+                return;
+            case 1:
+                player.GetComponent<ScriptItems>().Inventaire.Add(indice);
+                return;
+            case 2:
+                return;
+            default:
+                return;
+        }
         //#######################################################
         /*Version Temporaire*/
-
     }
 }

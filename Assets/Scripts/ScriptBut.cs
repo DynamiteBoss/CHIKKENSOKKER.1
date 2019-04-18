@@ -31,7 +31,7 @@ public class ScriptBut : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InterfaceScore = GameObject.Find("Interface").gameObject.transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Score").gameObject.GetComponentInChildren<Text>();
+        InterfaceScore = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Score").GetComponent<Text>();
         Ballon = this.gameObject;
     }
 

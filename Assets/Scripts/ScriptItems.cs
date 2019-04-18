@@ -7,6 +7,11 @@ using UnityEngine.Networking;
 public class ScriptItems : NetworkBehaviour
 {
     int framesDélai = 0;
+
+    [SerializeField]
+    public List<int> Inventaire = new List<int>();
+
+
     void Start()
     {}
     void Update()
@@ -52,6 +57,23 @@ public class ScriptItems : NetworkBehaviour
             if (Input.GetKeyDown("8") && framesDélai > 60)
             {
                 CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
+                framesDélai = 0;
+            }
+            // vRAI COMMANDE AVEC LE VRAI BOUTON
+            if (Input.GetKeyDown("r") && this.Inventaire.Count != 0 && framesDélai > 60)
+            {
+                CmdInstancierItem(Inventaire[0], this.transform.position);
+                if (Inventaire.Count < 2)
+                {
+                    Inventaire.RemoveAt(0);
+                }
+                else
+                {
+                    int temp = Inventaire[1];
+                    Inventaire.RemoveAt(1);
+                    Inventaire.RemoveAt(0);
+                    Inventaire.Add(temp);
+                }               
                 framesDélai = 0;
             }
         }
