@@ -96,6 +96,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         Balle.GetComponent<ScriptBut>().score = "0 - 0";
         Balle.transform.parent = null;
         Balle.transform.position = new Vector3(1, 0.5f, 5);
+        compteur = 0;
     }
     // Update is called once per frame
     void Update()

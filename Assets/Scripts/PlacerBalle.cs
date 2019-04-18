@@ -5,14 +5,19 @@ using UnityEngine.Networking;
 
 public class PlacerBalle : NetworkBehaviour
 {
+    const int NOMBRE_PLAYER_MAX = 4;
     public bool estPlacer = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.tag == "Player" || other.transform.parent.tag == "AI")
+        if (other.transform.parent.tag == "Player")
         {
             MettreBalleEnfant(other);
             //CalculerDistanceBalle();
             //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
+        }
+        if(other.transform.parent.tag == "AI")
+        {
+            
         }
     }
     private void MettreBalleEnfant(Collider other)
@@ -59,5 +64,45 @@ public class PlacerBalle : NetworkBehaviour
             /*if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
                 transform.localPosition = new Vector3(0, 1.5f, 2);*/
         }
+    }
+    void TrouverJoueurÀChanger(GameObject aI)
+    {
+        GameObject tampon;
+        GameObject dernierPosseseur = GetComponent<ContrôleBallonV2>().dernierPosseseur;
+        if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
+        {
+            tampon = GetComponent<ContrôleBallonV2>().dernierPosseseur;
+            ChangerAIÀJoueur(aI, dernierPosseseur, tampon);
+        }
+        else
+        {
+            GameObject[] liste = new GameObject[NOMBRE_PLAYER_MAX];
+            List<GameObject> liste2 = new List<GameObject>();
+            liste = GameObject.FindGameObjectsWithTag("Player");
+            foreach(GameObject x in liste)
+            {
+                if(aI.GetComponent<TypeÉquipe>().estÉquipeA == x.GetComponent<TypeÉquipe>().estÉquipeA)
+                {
+                    liste2.Add(x);
+                }
+            }
+            int grandeur = liste2.Count;
+            int aléatoire = Random.Range(1, grandeur);
+            tampon = liste2[aléatoire];
+            ChangerAIÀJoueur(aI, liste2[aléatoire], tampon);
+
+        }
+    }
+    void ChangerAIÀJoueur(GameObject aI,GameObject joueur, GameObject tampon)
+    {
+        joueur.GetComponent<MouvementPlayer>().enabled = false;
+        joueur.GetComponent<ScriptMouvementAI>().enabled = true;
+        joueur.tag = "AI";
+        joueur.name = aI.name;
+
+        aI.name = tampon.name;
+        aI.GetComponent<MouvementPlayer>().enabled = true;
+        aI.GetComponent<ScriptMouvementAI>().enabled = false;
+        aI.tag = "Player";
     }
 }
