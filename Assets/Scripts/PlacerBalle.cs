@@ -124,6 +124,7 @@ public class PlacerBalle : NetworkBehaviour
     }
     void TrouverJoueurÀChangerGardien(GameObject gardien)
     {
+        AncienGardien = gardien;
         string tampon;
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
