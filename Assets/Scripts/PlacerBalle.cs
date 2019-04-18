@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class PlacerBalle : NetworkBehaviour
 {
+    public GameObject AncienGardien;
+    public GameObject dernierPosseseur;
     const int NOMBRE_PLAYER_MAX = 4;
     public bool estPlacer = false;
     private void OnTriggerEnter(Collider other)
@@ -18,6 +20,20 @@ public class PlacerBalle : NetworkBehaviour
         if(other.transform.parent.tag == "AI")
         {
             
+            if(other.tag == "ZoneC")
+            {
+                TrouverJoueurÀChanger(other.transform.parent.gameObject);
+                MettreBalleEnfant(other);
+            }
+        }
+        if (other.transform.parent.tag == "Gardien")
+        {
+
+            if (other.tag == "ZoneC")
+            {
+                TrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
+                MettreBalleEnfant(other);
+            }
         }
     }
     private void MettreBalleEnfant(Collider other)
@@ -67,11 +83,10 @@ public class PlacerBalle : NetworkBehaviour
     }
     void TrouverJoueurÀChanger(GameObject aI)
     {
-        GameObject tampon;
-        GameObject dernierPosseseur = GetComponent<ContrôleBallonV2>().dernierPosseseur;
+        string tampon;
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
         {
-            tampon = GetComponent<ContrôleBallonV2>().dernierPosseseur;
+            tampon = dernierPosseseur.name;
             ChangerAIÀJoueur(aI, dernierPosseseur, tampon);
         }
         else
@@ -88,21 +103,51 @@ public class PlacerBalle : NetworkBehaviour
             }
             int grandeur = liste2.Count;
             int aléatoire = Random.Range(1, grandeur);
-            tampon = liste2[aléatoire];
+            tampon = liste2[aléatoire].name;
             ChangerAIÀJoueur(aI, liste2[aléatoire], tampon);
 
         }
     }
-    void ChangerAIÀJoueur(GameObject aI,GameObject joueur, GameObject tampon)
+    void ChangerAIÀJoueur(GameObject aI,GameObject joueur, string tampon)
     {
+
         joueur.GetComponent<MouvementPlayer>().enabled = false;
         joueur.GetComponent<ScriptMouvementAI>().enabled = true;
         joueur.tag = "AI";
         joueur.name = aI.name;
 
-        aI.name = tampon.name;
+        aI.name = tampon;
         aI.GetComponent<MouvementPlayer>().enabled = true;
+        //Invoke("RendreFlaseAvecDélai",0.5f);
         aI.GetComponent<ScriptMouvementAI>().enabled = false;
         aI.tag = "Player";
     }
+    void TrouverJoueurÀChangerGardien(GameObject gardien)
+    {
+        string tampon;
+        if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == gardien.GetComponent<TypeÉquipe>().estÉquipeA)
+        {
+            tampon = dernierPosseseur.name;
+            ChangerAIÀJoueur(gardien, dernierPosseseur, tampon);
+        }
+        else
+        {
+            GameObject[] liste = new GameObject[NOMBRE_PLAYER_MAX];
+            List<GameObject> liste2 = new List<GameObject>();
+            liste = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject x in liste)
+            {
+                if (gardien.GetComponent<TypeÉquipe>().estÉquipeA == x.GetComponent<TypeÉquipe>().estÉquipeA)
+                {
+                    liste2.Add(x);
+                }
+            }
+            int grandeur = liste2.Count;
+            int aléatoire = Random.Range(1, grandeur);
+            tampon = liste2[aléatoire].name;
+            ChangerAIÀJoueur(gardien, liste2[aléatoire], tampon);
+
+        }
+    }
+
 }

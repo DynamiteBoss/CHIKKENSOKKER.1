@@ -7,7 +7,6 @@ public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
     const float FORCE = 60f;
-    public GameObject dernierPosseseur;
 
     GameObject ZoneC { get; set; }
     BoxCollider [] Liste { get; set; }
@@ -178,7 +177,11 @@ public class ContrôleBallonV2 : NetworkBehaviour
         Balle.GetComponent<PlacerBalle>().estPlacer = false;
         Balle.GetComponent<SphereCollider>().enabled = true;
         Invoke("AttendrePourDistanceBallon", 0.5f);
-        dernierPosseseur = this.gameObject;
+        Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
+        if(Balle.GetComponent<PlacerBalle>().AncienGardien != null)
+        {
+
+        }
         //AttendrePourDistanceBallon1(4, balle);
     }
 
