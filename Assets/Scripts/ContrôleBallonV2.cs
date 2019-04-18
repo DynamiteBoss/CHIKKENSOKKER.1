@@ -180,7 +180,31 @@ public class ContrôleBallonV2 : NetworkBehaviour
         Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
         if(Balle.GetComponent<PlacerBalle>().AncienGardien != null)
         {
+            GameObject gardien = Balle.GetComponent<PlacerBalle>().AncienGardien;
 
+
+            GameObject[] listeAI = new GameObject[8];
+            List<GameObject> listeAIMonÉquipe = new List<GameObject>();
+            listeAI = GameObject.FindGameObjectsWithTag("AI");
+            string équipe;
+
+            foreach (GameObject x in listeAI)
+            {
+                if (gardien.GetComponent<TypeÉquipe>().estÉquipeA == x.GetComponent<TypeÉquipe>().estÉquipeA)
+                {
+                    listeAIMonÉquipe.Add(x);
+                }
+            }
+            if (gardien.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                équipe = "A";
+            }
+            else
+            {
+                équipe = "B";
+            }
+            GameObject joueur = listeAIMonÉquipe[listeAIMonÉquipe.Count];
+            //tampon = joueur.name;
         }
         //AttendrePourDistanceBallon1(4, balle);
     }
