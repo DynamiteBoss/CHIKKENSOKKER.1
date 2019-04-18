@@ -66,6 +66,8 @@ public class ScriptItems : NetworkBehaviour
                 if (Inventaire.Count < 2)
                 {
                     Inventaire.RemoveAt(0);
+                    if (this.transform.gameObject.name.EndsWith("A")) { ModifierSprite(1, 'A'); }
+                    else { ModifierSprite(1, 'B'); }
                 }
                 else
                 {
@@ -73,10 +75,65 @@ public class ScriptItems : NetworkBehaviour
                     Inventaire.RemoveAt(1);
                     Inventaire.RemoveAt(0);
                     Inventaire.Add(temp);
-                }               
+                    if (this.transform.gameObject.name.EndsWith("A"))
+                    {
+                        ModifierSprite(1, 'A');
+                        ModifierSprite(2, 'A');
+                    }
+                    else
+                    {
+                        ModifierSprite(1, 'B');
+                        ModifierSprite(2, 'B');
+                    }
+                }
                 framesDélai = 0;
             }
         }
+    }
+    private void ModifierSprite(int position, char équipe)
+    {
+        if (position == 2)
+        {
+            GameObject.Find("Objet" + (position - 1) + équipe).GetComponent<SpriteRenderer>().sprite = GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite;
+            GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = null;
+        }
+        else
+        {
+            GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = null;
+        }
+        //switch (nbSprite)    //FAIRE QUE LE PLAYER 2 PUISSE UTILISER LES MEME ITEMS QUE LE PLAYER 1
+        //{
+        //    case 0:
+        //        AfficherSprite(position, équipe, "crotte3");
+        //        return;
+        //    case 1:
+        //        AfficherSprite(position, équipe, "crotte5");
+        //        return;
+        //    case 2:
+        //        AfficherSprite(position, équipe, "oeufXL");
+        //        return;
+        //    case 3:
+        //        AfficherSprite(position, équipe, "oeuf3");
+        //        return;
+        //    case 4:
+        //        AfficherSprite(position, équipe, "torpille");
+        //        return;
+        //    case 5:
+        //        AfficherSprite(position, équipe, "bombe");
+        //        return;
+        //    case 6:
+        //        AfficherSprite(position, équipe, "brouillé");
+        //        return;
+        //    case 7:
+        //        AfficherSprite(position, équipe, "versdeterre");
+        //        return;
+        //    default:
+        //        return;
+        //}
+    }
+    private void AfficherSprite(int position, char équipe, string nomSprite)
+    {
+        GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
     }
     [Command]
     public void CmdInstancierItem(int indiceItem, Vector3 position)

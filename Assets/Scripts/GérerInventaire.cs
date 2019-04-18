@@ -55,7 +55,6 @@ public class GérerInventaire : MonoBehaviour
     private void AfficherSprite(int position, char équipe, string nomSprite)
     {
         GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
-        GameObject.Find("Objet" + position + équipe).transform.localScale = new Vector3(10, 10, 10);
     }
         
 }

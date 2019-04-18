@@ -47,9 +47,7 @@ public class ScriptOeufMystère : MonoBehaviour
         switch (player.GetComponent<ScriptItems>().Inventaire.Count)
         {
             case 0:
-                Debug.Log(player.GetComponent<ScriptItems>().Inventaire.Count);
                 player.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                Debug.Log(player.GetComponent<ScriptItems>().Inventaire.Count);
                 return;
             case 1:
                 player.GetComponent<ScriptItems>().Inventaire.Add(indice);
