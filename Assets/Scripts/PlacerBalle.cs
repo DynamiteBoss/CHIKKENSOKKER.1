@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class PlacerBalle : NetworkBehaviour
 {
     public GameObject AncienGardien = null;
-    public GameObject dernierPosseseur;
+    public GameObject dernierPosseseur = GameObject.Find("Joueur1A");
     const int NOMBRE_PLAYER_MAX = 4;
     public bool estPlacer = false;
     private void OnTriggerEnter(Collider other)
@@ -77,8 +77,8 @@ public class PlacerBalle : NetworkBehaviour
     {
         if (estPlacer)
         {
-            /*if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
-                transform.localPosition = new Vector3(0, 1.5f, 2);*/
+            if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+                transform.localPosition = new Vector3(-0.1f, 1.5f, 2);
         }
     }
     void TrouverJoueurÀChanger(GameObject aI)
@@ -164,7 +164,7 @@ public class PlacerBalle : NetworkBehaviour
         gardien.name = tampon;
         gardien.GetComponent<MouvementPlayer>().enabled = true;
         gardien.GetComponent<ContrôleGardien>().enabled = false;
-        gardien.GetComponent<ActionPlaquageGardien>().enabled = false;
+        gardien.GetComponentInChildren<ActionPlaquageGardien>().enabled = false;
         gardien.tag = "Player";
     }
 }

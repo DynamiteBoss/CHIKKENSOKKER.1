@@ -9,11 +9,12 @@ using UnityEngine.Networking;
 
 public class ScriptMécaniqueMatch : NetworkBehaviour
 {
+    string[] tags = new string[] { "Player", "AI", "Gardien" };
     GameObject Balle { get; set; }
     GameObject PnlFin { get; set; }
     Text TxtFin { get; set; }
     [SerializeField]
-    const float DuréeMatch = 300f;
+    const float DuréeMatch = 10f;
 
     [SerializeField]
     const float DuréePluie = 30f;
@@ -52,6 +53,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
     [SyncVar(hook = "OnCompteur2Change")] public int compteur2 = 0;
     [SyncVar(hook = "OnCompteur3Change")] public int compteur3 = 0;
+    [SyncVar(hook = "OnCompteurSpawnChange")] public int compteurSpawn = 0;
+
 
     List<GameObject> Joueur { get; set; }
     public int nbOeufs = 0;
@@ -94,6 +97,50 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void PartirMatch()
     {
+        GameObject[] liste = new GameObject[10];
+        GameObject[] listeAI = new GameObject[10];
+        GameObject[] listeGardien = new GameObject[10];
+        List<GameObject> listeCommune = new List<GameObject>();
+
+        List<GameObject> listeA = new List<GameObject>();
+        List<GameObject> listeB = new List<GameObject>();
+
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach(GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+
+        foreach(GameObject x in listeCommune)
+        {
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                listeA.Add(x);
+            }
+            else
+            {
+                listeB.Add(x);
+            }
+        }
+
+        foreach(GameObject x in listeA)
+        {
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
+            compteurSpawn++;
+        }
+        foreach(GameObject x in listeB)
+        {
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
+            compteurSpawn++;
+        }
+
+
+
+    
+
         PnlFin.SetActive(false);
         timer = DuréeMatch;
         Balle.GetComponent<ScriptBut>().NbButsA = 0;
@@ -102,13 +149,98 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         Balle.transform.parent = null;
         Balle.transform.position = new Vector3(1, 0.5f, 5);
         compteur = 0;
+        compteurSpawn = 0;
+        foreach (GameObject x in listeCommune)
+        {
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = true;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = true;
+            }
+            else
+            {
+                x.GetComponent<ContrôleGardien>().enabled = true;
+            }
+        }
+    }
+    void AttendreDébutMatch()
+    {
+        GameObject[] liste = new GameObject[10];
+        List<GameObject> listeCommune = new List<GameObject>();
+       
+        GameObject[] listeAI = new GameObject[10];
+        GameObject[] listeGardien = new GameObject[10];
+       
+
+        List<GameObject> listeA = new List<GameObject>();
+        List<GameObject> listeB = new List<GameObject>();
+
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+
+        foreach (GameObject x in listeCommune)
+        {
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                listeA.Add(x);
+            }
+            else
+            {
+                listeB.Add(x);
+            }
+        }
+
+        foreach (GameObject x in listeA)
+        {
+           
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
+            compteurSpawn++;
+        }
+        foreach (GameObject x in listeB)
+        {
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
+            compteurSpawn++;
+        }
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+        foreach (GameObject x in listeCommune)
+        {
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = false;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = false;
+            }
+            else
+            {
+                x.GetComponent<ContrôleGardien>().enabled = false;
+            }
+        }
+        compteurSpawn = 0;
     }
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("Gardien").Length == 2)
+        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)
         {
-            if(compteur3 == 0)
+            if (compteur3 == 0)
             {
 
                 PartirMatch();
@@ -146,6 +278,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                 }
             }
         }
+        else
+            AttendreDébutMatch();
 
     }
     [Command]
@@ -189,6 +323,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         PnlFin.SetActive(true);
         TxtFin.text = message;
 
+        Invoke("AttendreDébutMatch", 4);
         Invoke("PartirMatch", 5f);
 
 
@@ -249,5 +384,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnCompteur3Change(int changement)
     {
         compteur3 = changement;
+    }
+    void OnCompteurSpawnChange(int changement)
+    {
+        compteurSpawn = changement;
     }
 }

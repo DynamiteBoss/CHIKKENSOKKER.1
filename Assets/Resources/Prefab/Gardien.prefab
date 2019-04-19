@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 4715430594555658152}
   - component: {fileID: 2124374094884470968}
   - component: {fileID: 1839410285112830898}
+  - component: {fileID: 8997579278280761467}
+  - component: {fileID: 4546855555362023411}
   m_Layer: 0
   m_Name: Gardien
   m_TagString: Gardien
@@ -370,6 +372,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a128c027e9f96cb468fb17a702ce681d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8997579278280761467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147039269632750063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f505515fc5cb0494fa31b1d86fb9f979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4546855555362023411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147039269632750063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17cdc26b5b8ef1a4cb3cb0aa862ce37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Inventaire: 
 --- !u!1 &5364301005658550830
 GameObject:
   m_ObjectHideFlags: 0

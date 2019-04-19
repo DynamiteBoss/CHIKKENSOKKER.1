@@ -178,6 +178,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         Balle.GetComponent<SphereCollider>().enabled = true;
         Invoke("AttendrePourDistanceBallon", 0.5f);
         Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
+
         if(Balle.GetComponent<PlacerBalle>().AncienGardien != null)
         {
             GameObject gardien = Balle.GetComponent<PlacerBalle>().AncienGardien;
@@ -203,10 +204,27 @@ public class ContrôleBallonV2 : NetworkBehaviour
             {
                 équipe = "B";
             }
-            GameObject joueur = listeAIMonÉquipe[listeAIMonÉquipe.Count];
+            GameObject joueur = listeAIMonÉquipe[listeAIMonÉquipe.Count-1];
+            ChangerJoueurÀGardien(joueur,gardien, équipe);
+            Balle.GetComponent<PlacerBalle>().dernierPosseseur = GameObject.Find("Joueur1" + équipe);
             //tampon = joueur.name;
         }
         //AttendrePourDistanceBallon1(4, balle);
+    }
+    void ChangerJoueurÀGardien(GameObject joueur,GameObject gardien,string équipe)
+    {
+        joueur.name = "Joueur1" + équipe;
+        joueur.GetComponent<ScriptMouvementAI>().enabled = false;
+        joueur.GetComponent<MouvementPlayer>().enabled = true;
+        joueur.tag = "Player";
+
+        gardien.name = "Gardien1" + équipe;
+        gardien.GetComponent<MouvementPlayer>().enabled = false;
+        gardien.GetComponent<ContrôleGardien>().enabled = true;
+        gardien.GetComponentInChildren<ActionPlaquageGardien>().enabled = true;
+        gardien.tag = "Gardien";
+
+        Balle.GetComponent<PlacerBalle>().AncienGardien = null;
     }
 
 
