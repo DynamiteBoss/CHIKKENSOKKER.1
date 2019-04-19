@@ -6,9 +6,13 @@ using UnityEngine.Networking;
 public class PlacerBalle : NetworkBehaviour
 {
     public GameObject AncienGardien = null;
-    public GameObject dernierPosseseur = GameObject.Find("Joueur1A");
+    public GameObject dernierPosseseur;
     const int NOMBRE_PLAYER_MAX = 4;
     public bool estPlacer = false;
+    void Start()
+    {
+        dernierPosseseur = GameObject.Find("Joueur1A");
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.parent.tag == "Player")
@@ -68,18 +72,18 @@ public class PlacerBalle : NetworkBehaviour
     }
     private void CalculerDistanceBalle()
     {
-        this.transform.localPosition = new Vector3(0, 1.5f, 2);
+        this.transform.localPosition = new Vector3(-0.1f, 1.5f, 2);
         // Balle.transform.localPosition = new Vector3(0, 1.5f, 2);
 
         //mettre la balle vers le milieu de la zone de controle
     }
     private void Update()
     {
-        if (estPlacer)
+        /*if (estPlacer)
         {
             if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
                 transform.localPosition = new Vector3(-0.1f, 1.5f, 2);
-        }
+        }*/
     }
     void TrouverJoueurÀChanger(GameObject aI)
     {

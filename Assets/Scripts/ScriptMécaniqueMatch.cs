@@ -48,6 +48,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     GameObject PnlNuit { get; set; }
     Light LumierePrincipale { get; set; }
 
+    bool matchEnCours = true;
 
     [SyncVar(hook = "OnTimerChange")] public float timer;
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
@@ -75,7 +76,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
         PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
         TxtFin = PnlFin.transform.Find("TxtFin").gameObject.GetComponentInChildren<Text>();
-        
+
         //timer = DuréeMatch;
         //if()
         //{
@@ -97,6 +98,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void PartirMatch()
     {
+        
         GameObject[] liste = new GameObject[10];
         GameObject[] listeAI = new GameObject[10];
         GameObject[] listeGardien = new GameObject[10];
@@ -136,10 +138,10 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
             compteurSpawn++;
         }
+        
 
 
 
-    
 
         PnlFin.SetActive(false);
         timer = DuréeMatch;
@@ -150,6 +152,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         Balle.transform.position = new Vector3(1, 0.5f, 5);
         compteur = 0;
         compteurSpawn = 0;
+        matchEnCours = true;
         foreach (GameObject x in listeCommune)
         {
             if (x.tag == tags[0])
@@ -170,10 +173,10 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     {
         GameObject[] liste = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
-       
+
         GameObject[] listeAI = new GameObject[10];
         GameObject[] listeGardien = new GameObject[10];
-       
+
 
         List<GameObject> listeA = new List<GameObject>();
         List<GameObject> listeB = new List<GameObject>();
@@ -201,7 +204,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
         foreach (GameObject x in listeA)
         {
-           
+
             x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
             compteurSpawn++;
         }
@@ -234,47 +237,51 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             }
         }
         compteurSpawn = 0;
+        Balle.transform.position = new Vector3(1, 0.5f, 5);
     }
     // Update is called once per frame
     void Update()
     {
         if (GameObject.FindGameObjectsWithTag("AI").Length > 3)
         {
-            if (compteur3 == 0)
+            if (matchEnCours)
             {
+                if (compteur3 == 0)
+                {
 
-                PartirMatch();
-                compteur3++;
-            }
-            ++compteur;
-            ++compteur2;
-            timer -= Time.deltaTime;
-            if (compteur == NbFramesUpdate + 1)
-            {
-                compteur = 0;
-                if (timer > 0)
-                {
-                    FaireProgresserMatchUnPas();
+                    PartirMatch();
+                    compteur3++;
                 }
-                else
+                ++compteur;
+                ++compteur2;
+                timer -= Time.deltaTime;
+                if (compteur == NbFramesUpdate + 1)
                 {
-                    TerminerMatch();
-                }
-                if (ajusteLumiere)
-                    AjusterModeNuit();
+                    compteur = 0;
+                    if (timer > 0)
+                    {
+                        FaireProgresserMatchUnPas();
+                    }
+                    else
+                    {
+                        TerminerMatch();
+                    }
+                    if (ajusteLumiere)
+                        AjusterModeNuit();
 
-            }
-            if (compteur2 % 20 == 0)
-            {
-                if (EstEnModeNuit != modeNuitLocal)
-                {
-                    modeNuitLocal = EstEnModeNuit;
-                    ajusteLumiere = true;
                 }
-                if (compteur2 == FrequenceObjet)
+                if (compteur2 % 20 == 0)
                 {
-                    compteur2 = 0;
-                    CmdFaireApparaitreObjet();
+                    if (EstEnModeNuit != modeNuitLocal)
+                    {
+                        modeNuitLocal = EstEnModeNuit;
+                        ajusteLumiere = true;
+                    }
+                    if (compteur2 == FrequenceObjet)
+                    {
+                        compteur2 = 0;
+                        CmdFaireApparaitreObjet();
+                    }
                 }
             }
         }
@@ -302,16 +309,17 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     private void TerminerMatch()
     {
+        matchEnCours = false;
         string message;
         int butA = Balle.GetComponent<ScriptBut>().NbButsA;
         int butB = Balle.GetComponent<ScriptBut>().NbButsB;
-        if(butA < butB)
+        if (butA < butB)
         {
-            message = "L'équipe B remporte la partie " + butB +  " - " + butA;
+            message = "L'équipe B remporte la partie " + butB + " - " + butA;
         }
         else
         {
-            if(butA > butB)
+            if (butA > butB)
             {
                 message = "L'équipe A remporte la partie " + butB + " - " + butA;
             }
@@ -323,7 +331,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         PnlFin.SetActive(true);
         TxtFin.text = message;
 
-        Invoke("AttendreDébutMatch", 4);
+        Invoke("AttendreDébutMatch", 4f);
         Invoke("PartirMatch", 5f);
 
 

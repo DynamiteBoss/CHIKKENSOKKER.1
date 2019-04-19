@@ -86,4 +86,8 @@ public class ScriptBut : NetworkBehaviour
     {
         compteur += Time.deltaTime;
     }
+    void DéplacerÉquipe()
+    {
+
+    }
 }
