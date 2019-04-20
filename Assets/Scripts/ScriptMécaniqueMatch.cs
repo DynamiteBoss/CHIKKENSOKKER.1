@@ -100,8 +100,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     {
         
         GameObject[] liste = new GameObject[10];
-        GameObject[] listeAI = new GameObject[10];
-        GameObject[] listeGardien = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
 
         List<GameObject> listeA = new List<GameObject>();
@@ -172,8 +170,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         GameObject[] liste = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
 
-        GameObject[] listeAI = new GameObject[10];
-        GameObject[] listeGardien = new GameObject[10];
 
 
         List<GameObject> listeA = new List<GameObject>();
@@ -240,8 +236,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/true)   // TEMPORAIRE
+        if (/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/true)
         {
+            Debug.Log("Allo");
             if (matchEnCours)
             {
                 if (compteur3 == 0)
@@ -284,7 +281,11 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             }
         }
         else
+        {
+            Debug.Log("Bye");
             AttendreDébutMatch();
+        }
+            
 
     }
     [Command]

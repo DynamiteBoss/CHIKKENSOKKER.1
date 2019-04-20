@@ -11,6 +11,7 @@ public class ScriptItems : NetworkBehaviour
     // allo 
     public List<int> Inventaire = new List<int>();
 
+
     [SerializeField]
     string équipe;
 

@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 
 public class ScriptBut : NetworkBehaviour
 {
+    string[] tags = new string[] { "Player", "AI", "Gardien" };
+    public int compteurSpawn = 0;
     const float TEMPS_MIN = 1f;
     string NomBut1 = "But1";
     string NomBut2 = "But2";
@@ -39,8 +41,10 @@ public class ScriptBut : NetworkBehaviour
     {
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
+            GameObject[] liste = new GameObject[10];
+            List<GameObject> liste1 = new List<GameObject>();
             compteur = 0;
-            Ballon.transform.position = new Vector3(0, 1, 0);
+            Ballon.transform.position = new Vector3(1, 0.5f, 5);
             Ballon.GetComponent<Rigidbody>().isKinematic = true;
             Ballon.transform.parent = null;
 
@@ -52,9 +56,90 @@ public class ScriptBut : NetworkBehaviour
             score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
 
             compteur = 0;
+            PlacerJoueur(liste1,liste);
+            Invoke("RéactiverMouvement", 1f);
         }
 
         // Ajouter un "Point" à l'équipe 1
+    }
+    void PlacerJoueur(List<GameObject> liste1, GameObject[] liste)
+    {
+        List<GameObject> listeA = new List<GameObject>();
+        List<GameObject> listeB = new List<GameObject>();
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                liste1.Add(z);
+            }
+        }
+        foreach(GameObject x in liste1)
+        {
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                listeA.Add(x);
+            }
+            else
+            {
+                listeB.Add(x);
+            }
+        }
+        foreach (GameObject x in listeA)
+        {
+
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
+            compteurSpawn++;
+        }
+        foreach (GameObject x in listeB)
+        {
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
+            compteurSpawn++;
+        }
+        compteurSpawn = 0;
+        foreach (GameObject x in liste1)
+        {
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = false;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = false;
+            }
+            else
+            {
+                x.GetComponent<ContrôleGardien>().enabled = false;
+            }
+        }
+    }
+    void RéactiverMouvment()
+    {
+        GameObject[] liste = new GameObject[10];
+        List<GameObject> liste1 = new List<GameObject>();
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                liste1.Add(z);
+            }
+        }
+        foreach(GameObject x in liste1)
+        {
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = true;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = true;
+            }
+            else
+            {
+                x.GetComponent<ContrôleGardien>().enabled = true;
+            }
+        }
     }
     private void OnTriggerExit(Collider other)
     {
