@@ -32,7 +32,7 @@ public class ScriptOeufMystère : NetworkBehaviour
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
             CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
         }
-        else if (other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps" && other.transform.parent.tag == "Player")
+        if (other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps" && other.transform.parent.tag == "Player")
         {
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
