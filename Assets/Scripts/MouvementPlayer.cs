@@ -38,6 +38,7 @@ public class MouvementPlayer : NetworkBehaviour
     }
     void Update()
     {
+
         //transform.position = new Vector3(transform.position.x, -1, transform.position.z);
         if (!isLocalPlayer)
         { return; }
@@ -60,10 +61,10 @@ public class MouvementPlayer : NetworkBehaviour
             }
             joueur1EstPris = true;
         }
-        if (tag == "Player" && name.StartsWith("Joueur2"))  
+        if (tag == "Player" && name.StartsWith("Joueur2"))
             DéplacerFlèche();
         else { }
-        
+
 
         if (compteur++ == 10)
         {

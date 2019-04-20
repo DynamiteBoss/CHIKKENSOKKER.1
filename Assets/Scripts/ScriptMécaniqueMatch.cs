@@ -14,10 +14,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     GameObject PnlFin { get; set; }
     Text TxtFin { get; set; }
     [SerializeField]
-
     const float DuréeMatch = 10f;
     const float DuréeMatchVrai = 180f;
-
 
     [SerializeField]
     const float DuréePluie = 30f;
