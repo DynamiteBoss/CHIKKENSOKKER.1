@@ -14,7 +14,10 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     GameObject PnlFin { get; set; }
     Text TxtFin { get; set; }
     [SerializeField]
-    const float DuréeMatch = 300f; // sECONDES
+
+    const float DuréeMatch = 10f;
+    const float DuréeMatchVrai = 180f;
+
 
     [SerializeField]
     const float DuréePluie = 30f;
@@ -89,7 +92,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         //}
 
 
-
         TxtTimer = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Temps").gameObject.GetComponentInChildren<Text>();
         PnlNuit = GameObject.Find("Interface").transform.Find("PnlNuit").gameObject;
 
@@ -100,8 +102,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     {
         
         GameObject[] liste = new GameObject[10];
-        GameObject[] listeAI = new GameObject[10];
-        GameObject[] listeGardien = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
 
         List<GameObject> listeA = new List<GameObject>();
@@ -141,10 +141,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         
 
 
-
-
         PnlFin.SetActive(false);
-        timer = DuréeMatch;
+        timer = DuréeMatchVrai;
         Balle.GetComponent<ScriptBut>().NbButsA = 0;
         Balle.GetComponent<ScriptBut>().NbButsB = 0;
         Balle.GetComponent<ScriptBut>().score = "0 - 0";
@@ -174,8 +172,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         GameObject[] liste = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
 
-        GameObject[] listeAI = new GameObject[10];
-        GameObject[] listeGardien = new GameObject[10];
 
 
         List<GameObject> listeA = new List<GameObject>();
@@ -242,8 +238,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)
+        if (/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/true)
         {
+            Debug.Log("Allo");
             if (matchEnCours)
             {
                 if (compteur3 == 0)
@@ -286,7 +283,11 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             }
         }
         else
+        {
+            Debug.Log("Bye");
             AttendreDébutMatch();
+        }
+            
 
     }
     [Command]

@@ -158,6 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04acdcad7c05d6340b39cf85115f1821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AncienGardien: {fileID: 0}
+  dernierPosseseur: {fileID: 0}
   estPlacer: 0
 --- !u!114 &8208502189713598781
 MonoBehaviour:
