@@ -55,9 +55,9 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
         Debug.Log(noComportement);
 
+       
         constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
     }
-
     // Update is called once per frame
     void Update()
     {
