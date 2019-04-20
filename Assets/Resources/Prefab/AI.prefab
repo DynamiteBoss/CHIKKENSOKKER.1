@@ -1110,6 +1110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Inventaire: 
+  "\xE9quipe": 
 --- !u!114 &7314932539849920910
 MonoBehaviour:
   m_ObjectHideFlags: 0
