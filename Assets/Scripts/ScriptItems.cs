@@ -8,6 +8,7 @@ public class ScriptItems : NetworkBehaviour
 {
     int framesDélai = 0;
 
+    // allo 
     [SerializeField]
     [SyncVar(hook = "OnInventaireChange")] public List<int> Inventaire = new List<int>();
 
