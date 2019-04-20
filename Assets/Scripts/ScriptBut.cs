@@ -113,7 +113,7 @@ public class ScriptBut : NetworkBehaviour
             }
         }
     }
-    void RéactiverMouvment()
+    void RéactiverMouvement()
     {
         GameObject[] liste = new GameObject[10];
         List<GameObject> liste1 = new List<GameObject>();
