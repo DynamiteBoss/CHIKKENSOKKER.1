@@ -1162,8 +1162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f72eba7e9e6aa3498b7e4598cd85a61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PatteGauche: {fileID: 6064308570023129819}
-  PatteDroite: {fileID: 6346309553010015785}
+  PatteGauche: {fileID: 6346309553010015785}
+  PatteDroite: {fileID: 6064308570023129819}
 --- !u!1 &9187126277625345566
 GameObject:
   m_ObjectHideFlags: 0
