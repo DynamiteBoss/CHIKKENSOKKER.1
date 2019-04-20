@@ -130,7 +130,7 @@ public class PlacerBalle : NetworkBehaviour
         AncienGardien = gardien;
         string tampon;
         
-        GameObject[] listeAI = new GameObject[8];
+        GameObject[] listeAI = new GameObject[10];
         List<GameObject> listeAIMonÉquipe = new List<GameObject>();
         listeAI = GameObject.FindGameObjectsWithTag("AI");
         string équipe;
