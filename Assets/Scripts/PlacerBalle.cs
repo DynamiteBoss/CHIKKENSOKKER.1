@@ -119,6 +119,7 @@ public class PlacerBalle : NetworkBehaviour
         joueur.GetComponent<ScriptMouvementAI>().enabled = true;
         joueur.tag = "AI";
         joueur.name = aI.name;
+        joueur.GetComponentInChildren<Rigidbody>().isKinematic = true;
 
         aI.name = tampon;
         aI.GetComponent<MouvementPlayer>().enabled = true;
@@ -164,6 +165,7 @@ public class PlacerBalle : NetworkBehaviour
         joueur.GetComponent<ScriptMouvementAI>().enabled = true;
         joueur.tag = "AI";
         joueur.name = "AI"+équipe+grandeur;
+        joueur.GetComponentInChildren<Rigidbody>().isKinematic = true;
 
         gardien.name = tampon;
         gardien.GetComponent<MouvementPlayer>().enabled = true;
