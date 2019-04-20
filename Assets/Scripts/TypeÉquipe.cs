@@ -15,7 +15,39 @@ public class TypeÉquipe : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GameObject capsule = transform.Find("CapsuleIdentité").gameObject;
+        if (tag == "Player")
+        {
+            capsule.GetComponentInChildren<MeshRenderer>().enabled = true;
+            if (GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                if (name == "Joueur1A")
+                {
+                    capsule.GetComponent<MeshRenderer>().material.color = Color.blue;
+                }
+                else
+                {
+                    capsule.GetComponent<MeshRenderer>().material.color = Color.red;
+                }
+
+            }
+            else
+            {
+                if (name == "Joueur1B")
+                {
+                    capsule.GetComponent<MeshRenderer>().material.color = Color.green;
+                }
+                else
+                {
+                    capsule.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("PAS PLAYER");
+            capsule.GetComponentInChildren<MeshRenderer>().enabled = false;
+        }
     }
 
     void OnEstÉquipeAChange(bool changement)
