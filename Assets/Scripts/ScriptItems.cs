@@ -9,11 +9,16 @@ public class ScriptItems : NetworkBehaviour
     int framesDélai = 0;
 
     [SerializeField]
-    public List<int> Inventaire = new List<int>();
+    [SyncVar(hook = "OnInventaireChange")] public List<int> Inventaire = new List<int>();
 
+    [SerializeField]
+    string équipe;
 
     void Start()
-    {}
+    {
+        if (this.transform.gameObject.name.EndsWith("A")) { équipe = "A"; }
+        else { équipe = "B"; }
+    }
     void Update()
     {
         framesDélai++;
@@ -59,15 +64,17 @@ public class ScriptItems : NetworkBehaviour
                 CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
                 framesDélai = 0;
             }
-            // vRAI COMMANDE AVEC LE VRAI BOUTON
-            if (Input.GetKeyDown("r") && this.Inventaire.Count != 0 && framesDélai > 60)
+
+            // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
+            if (Input.GetKeyDown("r") && this.Inventaire.Count != 0 && framesDélai > 60 && this.transform.gameObject.name.Contains("1"))
             {
                 CmdInstancierItem(Inventaire[0], this.transform.position);
+
                 if (Inventaire.Count < 2)
                 {
                     Inventaire.RemoveAt(0);
-                    if (this.transform.gameObject.name.EndsWith("A")) { ModifierSprite(1, 'A'); }
-                    else { ModifierSprite(1, 'B'); }
+                    if (équipe == "A") { CmdModifierSprite(1, 'A'); }
+                    else { CmdModifierSprite(1, 'B'); }
                 }
                 else
                 {
@@ -75,22 +82,53 @@ public class ScriptItems : NetworkBehaviour
                     Inventaire.RemoveAt(1);
                     Inventaire.RemoveAt(0);
                     Inventaire.Add(temp);
-                    if (this.transform.gameObject.name.EndsWith("A"))
+                    if (équipe == "A")
                     {
-                        ModifierSprite(1, 'A');
-                        ModifierSprite(2, 'A');
+                        CmdModifierSprite(1, 'A');
+                        CmdModifierSprite(2, 'A');
                     }
                     else
                     {
-                        ModifierSprite(1, 'B');
-                        ModifierSprite(2, 'B');
+                        CmdModifierSprite(1, 'B');
+                        CmdModifierSprite(2, 'B');
+                    }
+                }
+                framesDélai = 0;
+            }
+            // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
+            if (Input.GetKeyDown(KeyCode.Keypad1) && this.Inventaire.Count != 0 && framesDélai > 60 && this.transform.gameObject.name.Contains("2"))
+            {
+                CmdInstancierItem(GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire[0], this.transform.position);
+
+                if (GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.Count < 2)
+                {
+                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.RemoveAt(0);
+                    if (équipe == "A") { CmdModifierSprite(1, 'A'); }
+                    else { CmdModifierSprite(1, 'B'); }
+                }
+                else
+                {
+                    int temp = GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire[1];
+                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.RemoveAt(1);
+                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.RemoveAt(0);
+                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.Add(temp);
+                    if (équipe == "A")
+                    {
+                        CmdModifierSprite(1, 'A');
+                        CmdModifierSprite(2, 'A');
+                    }
+                    else
+                    {
+                        CmdModifierSprite(1, 'B');
+                        CmdModifierSprite(2, 'B');
                     }
                 }
                 framesDélai = 0;
             }
         }
     }
-    private void ModifierSprite(int position, char équipe)
+    [Command]
+    private void CmdModifierSprite(int position, char équipe)
     {
         if (position == 2)
         {
@@ -131,10 +169,10 @@ public class ScriptItems : NetworkBehaviour
         //        return;
         //}
     }
-    private void AfficherSprite(int position, char équipe, string nomSprite)
-    {
-        GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
-    }
+    //private void AfficherSprite(int position, char équipe, string nomSprite)
+    //{
+    //    GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
+    //}
     [Command]
     public void CmdInstancierItem(int indiceItem, Vector3 position)
     {
@@ -239,5 +277,9 @@ public class ScriptItems : NetworkBehaviour
                     return;
                 }
         }
+    }
+    void OnInventaireChange(List<int> changement)
+    {
+        Inventaire = changement;
     }
 }

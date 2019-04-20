@@ -15,6 +15,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     Text TxtFin { get; set; }
     [SerializeField]
     const float DuréeMatch = 10f;
+    const float DuréeMatchVrai = 180f;
 
     [SerializeField]
     const float DuréePluie = 30f;
@@ -89,7 +90,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         //}
 
 
-
         TxtTimer = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Temps").gameObject.GetComponentInChildren<Text>();
         PnlNuit = GameObject.Find("Interface").transform.Find("PnlNuit").gameObject;
 
@@ -141,10 +141,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         
 
 
-
-
         PnlFin.SetActive(false);
-        timer = DuréeMatch;
+        timer = DuréeMatchVrai;
         Balle.GetComponent<ScriptBut>().NbButsA = 0;
         Balle.GetComponent<ScriptBut>().NbButsB = 0;
         Balle.GetComponent<ScriptBut>().score = "0 - 0";
