@@ -124,8 +124,9 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return GérerPositionsDef();
                 break;
             case 4:*/
-                return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-                //break;
+        return new Vector3(20 * (-constÉquipe) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+
+        //break;
         //}
     }
     private Vector3 GérerPositionsAtt()              //       À MODIFIER

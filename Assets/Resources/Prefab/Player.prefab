@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 27}
   - component: {fileID: 42}
   - component: {fileID: 38}
-  - component: {fileID: 6474611437862009500}
   m_Layer: 0
   m_Name: Corps
   m_TagString: Untagged
@@ -113,18 +112,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 3
---- !u!114 &6474611437862009500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 263f857899e585e478c4d64c223b8c0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &15
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,6 +529,7 @@ GameObject:
   - component: {fileID: 35}
   - component: {fileID: 30}
   - component: {fileID: 41}
+  - component: {fileID: 4715311952872614658}
   m_Layer: 0
   m_Name: "T\xEAte"
   m_TagString: Untagged
@@ -622,6 +610,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: -0.75, y: 0.5, z: 0}
+--- !u!114 &4715311952872614658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263f857899e585e478c4d64c223b8c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &18
 GameObject:
   m_ObjectHideFlags: 0

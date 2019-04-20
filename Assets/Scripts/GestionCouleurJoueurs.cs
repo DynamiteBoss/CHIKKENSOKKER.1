@@ -1,30 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GestionCouleurJoueurs : MonoBehaviour
+public class GestionCouleurJoueurs : NetworkBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        if (this.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA)
+
+        if (this.transform.parent.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA)
         {
             AppliquerCouleurÉquipe(Color.red);
         }
         else AppliquerCouleurÉquipe(Color.blue);
-
     }
+
     void AppliquerCouleurÉquipe(Color couleur)
     {
-        GameObject[] skins = transform.GetComponentsInChildren<GameObject>();
-        for (int i = 0; i != skins.Length; i++)
-        {
-            skins[i].GetComponent<Material>().color = couleur;
-        }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.GetComponent<MeshRenderer>().material.color = couleur;
     }
 }
