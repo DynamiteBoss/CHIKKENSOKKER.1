@@ -91,7 +91,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
                 break;
             case "Revenir":
-                return DéterminerPosJoueur();
+                return DéterminerPosJoueurDefaut();
                 break;
             default:
                 if (GameObject.FindGameObjectsWithTag("AI").OrderBy(x => (x.transform.position - Ballon.transform.position).magnitude).Where(x => x.GetComponentInChildren<ScriptMouvementAI>().enabled && x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA).First().transform == this.transform)
@@ -101,7 +101,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 
         }
     }
-  private Vector3 DéterminerPosJoueur()
+  private Vector3 DéterminerPosJoueurDefaut()
     {
         int abscisse = 1;
         int ordonnée = 1;
