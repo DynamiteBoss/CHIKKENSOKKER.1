@@ -7,7 +7,6 @@ public class ScriptGestionZones : MonoBehaviour
 {
     List<GameObject> Zones { get; set; }
     GameObject Balle { get; set; }
-
     [SerializeField]
     int iDernièreZoneQuittée = -1;
     [SerializeField]
