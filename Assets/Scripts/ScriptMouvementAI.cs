@@ -25,6 +25,8 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     int compteurFrames = 0;
     float deltaPosition = 0.5f;
+    const int DÉCALLAGE_DEMI_TERRAIN = 20;
+    int rayonZoneJoueur = 10;
     bool aLeBallon;
     string ModePositionnement;
     int noComportement;
@@ -83,13 +85,13 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return GérerPositionsAtt();
                 break;
             case "Défendre":
-                return GérerPositionsDef();
+                return Vector3.one;// GérerComportementDef();
                 break;
             case "Avancer":
                 return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
                 break;
             case "Revenir":
-                return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f,5f), this.transform.position.y, this.transform.position.z);
+                return DéterminerPosJoueur();
                 break;
             default:
                 if (GameObject.FindGameObjectsWithTag("AI").OrderBy(x => (x.transform.position - Ballon.transform.position).magnitude).Where(x => x.GetComponentInChildren<ScriptMouvementAI>().enabled && x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA).First().transform == this.transform)
@@ -98,6 +100,50 @@ public class ScriptMouvementAI : NetworkBehaviour
                     return positionTactique * constÉquipe - Vector3.right * 20 * constÉquipe;
                 
         }
+    }
+  private Vector3 DéterminerPosJoueur()
+    {
+        int abscisse = 1;
+        int ordonnée = 1;
+        if (noComportement == 2 || noComportement == 3)
+        {
+            abscisse = -1;
+        }
+        if (noComportement == 3 || noComportement == 4)
+        {
+            ordonnée = -1;
+        }
+        Vector3 posCible = new Vector3((10 * abscisse - DÉCALLAGE_DEMI_TERRAIN * constÉquipe), this.transform.position.y, 10 * ordonnée);
+        if (tag != "Player")
+        {
+            GameObject[] listeJoueurs = GameObject.FindGameObjectsWithTag("Player");
+            List<GameObject> listeA = new List<GameObject>();
+            List<GameObject> listeB = new List<GameObject>();
+            foreach (GameObject x in listeJoueurs)
+            {
+                if (x.GetComponent<TypeÉquipe>().estÉquipeA)
+                {
+                    listeA.Add(x);
+                }
+                else listeB.Add(x);
+            }
+            if(GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                for(int i = 0; i != listeA.Capacity;i++)
+                {
+                    if (listeA[i].transform.position.x < posCible.x+rayonZoneJoueur && listeA[i].transform.position.x > posCible.x - rayonZoneJoueur &&
+                        listeA[i].transform.position.y < posCible.y + rayonZoneJoueur && listeA[i].transform.position.y > posCible.y - rayonZoneJoueur)
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+        return posCible;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -110,25 +156,30 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
     }
 
-    private Vector3 GérerPositionsDef()              //       À MODIFIER
-    {
-        //return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-        /*switch (noComportement)
-        {
-            case 1:
-                return 
-            case 2:
+    //private Vector3 GérerComportementDef()              //       À MODIFIER
+    //{
+    //    //return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+    //    switch (TrouverComportementDéfense())
+    //    {
+    //        case 1:
 
-                break;
-            case 3:
-                return GérerPositionsDef();
-                break;
-            case 4:*/
-        return new Vector3(20 * (-constÉquipe) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+    //        case 2:
 
-        //break;
-        //}
-    }
+    //            break;
+    //        case 3:
+    //            return GérerComportementDef();
+    //            break;
+    //        case 4:
+    //            return new Vector3(20 * (-constÉquipe) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+
+    //            break;
+    //    }
+    //}
+
+    //private int TrouverComportementDéfense()
+    //{
+    //    if ()
+    //}
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
         //return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
