@@ -306,7 +306,7 @@ public class NetworkManagerPerso : NetworkManager
         //Btn2v2.onClick.RemoveAllListeners();
         Btn2v2.onClick.AddListener(() => CreateHost(false));
     }
-    private void Start()
+    void Start()
     {
         Btn1v1 = GameObject.Find("Btn1v1").GetComponent<Button>();
         Btn2v2 = GameObject.Find("Btn2v2").GetComponent<Button>();
