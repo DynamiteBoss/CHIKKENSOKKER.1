@@ -15,13 +15,17 @@ public class PlacerBalle : NetworkBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.parent.tag == "Player")
+        if (other.transform.parent.tag == "Untagged")
+        {
+            return;
+        }
+        else if (other.transform.parent.tag == "Player")
         {
             MettreBalleEnfant(other);
             //CalculerDistanceBalle();
             //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
-        if(other.transform.parent.tag == "AI")
+        else if(other.transform.parent.tag == "AI")
         {
             
             if(other.tag == "ZoneC")
@@ -30,7 +34,7 @@ public class PlacerBalle : NetworkBehaviour
                 MettreBalleEnfant(other);
             }
         }
-        if (other.transform.parent.tag == "Gardien")
+        else if (other.transform.parent.tag == "Gardien")
         {
 
             if (other.tag == "ZoneC")
