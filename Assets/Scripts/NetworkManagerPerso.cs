@@ -69,7 +69,6 @@ public class NetworkManagerPerso : NetworkManager
         InstancierPort();
         NetworkManager.singleton.StartClient();
     }
-
     public override void OnClientConnect(NetworkConnection conn)
     {
         CréerÉquipe();
@@ -87,7 +86,7 @@ public class NetworkManagerPerso : NetworkManager
         est1v1 = estSeul;
         InstancierAddresseIP();
         InstancierPort();
-       
+        NetworkServer.Reset();
         NetworkManager.singleton.StartHost();
     }
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
@@ -304,7 +303,7 @@ public class NetworkManagerPerso : NetworkManager
         //Btn1v1.onClick.RemoveAllListeners();
         Btn1v1.onClick.AddListener(() => CreateHost(true));
         //Btn2v2.onClick.RemoveAllListeners();
-        Btn2v2.onClick.AddListener(() => CreateHost(false));
+        //Btn2v2.onClick.AddListener(() => CreateHost(false));
     }
     private void Start()
     {

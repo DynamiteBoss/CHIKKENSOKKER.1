@@ -36,6 +36,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
