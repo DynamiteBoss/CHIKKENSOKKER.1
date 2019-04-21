@@ -286,8 +286,8 @@ public class NetworkManagerPerso : NetworkManager
     void GérerBoutonsMenu()
     {
         GameObject.Find("BtnHost").GetComponent<Button>().onClick.AddListener(() => GérerGrandeurÉquipe());
-
-        //GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
         GameObject.Find("BtnJoin").GetComponent<Button>().onClick.AddListener(() => JoindrePartie());
     }
     
