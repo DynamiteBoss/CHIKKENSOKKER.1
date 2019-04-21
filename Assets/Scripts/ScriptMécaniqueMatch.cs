@@ -236,7 +236,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)
+        if (/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/true)
         {
             Debug.Log("Allo");
             if (matchEnCours)
