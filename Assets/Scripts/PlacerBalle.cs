@@ -56,7 +56,7 @@ public class PlacerBalle : NetworkBehaviour
             transform.localScale = Vector3.one;
             
             this.transform.localPosition = new Vector3(0, 1.5f, 2);
-            GetComponent<SphereCollider>().enabled = true;
+            GetComponent<SphereCollider>().enabled = false;
             transform.GetComponent<Rigidbody>().isKinematic = this.transform.parent != null;
             
             
