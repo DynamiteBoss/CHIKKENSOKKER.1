@@ -12,13 +12,10 @@ public class ScriptOeufMystère : NetworkBehaviour
 
     public const int IndiceMax = 8;
 
-    // Start is called before the first frame update
     void Start()
-    {
-        
+    {    
     }
 
-    // Update is called once per frame
     void Update()
     {
         this.transform.rotation = Quaternion.Euler(this.transform.rotation.eulerAngles.x + 3.1f*Mathf.Sin(180-(compteur++%360)/5.7f), this.transform.rotation.eulerAngles.y + 1, this.transform.rotation.eulerAngles.z + 2.3f*Mathf.Cos(180 - (compteur++ % 360) / 15.3f));
@@ -30,73 +27,45 @@ public class ScriptOeufMystère : NetworkBehaviour
         {
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
-            CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
+            AttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
         }
         if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
         {
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
-            CmdAttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
+            AttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
         }
         else{ }
 
     }
-    [Command]
-    private void CmdAttribuerObjetJoueur(GameObject joueur, int indice)
+    private void AttribuerObjetJoueur(GameObject joueur, int indice)
     {
         GameObject player = GameObject.Find(joueur.name);
-        if (player.name.Contains("1"))
+        if (player.GetComponent<TypeÉquipe>().estÉquipeA)
         {
-            switch (player.GetComponent<ScriptItems>().Inventaire.Count)
+            if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 != Inventaire.ITEMNUL)
             {
-                case 0:
-                    player.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                    return;
-                case 1:
-                    player.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                    return;
-                case 2:
-                    return;
-                default:
-                    return;
+                Inventaire.itemA2 = indice;
+                //METTRE ITEM A2
+            }
+            else if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 == Inventaire.ITEMNUL)
+            {
+                Inventaire.itemA1 = indice;
+                //METTRE ITEM A1
             }
         }
-        if (player.name.Contains("2"))
+        else
         {
-            if (player.GetComponent<TypeÉquipe>().estÉquipeA)
+            if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 != Inventaire.ITEMNUL)
             {
-                switch (GameObject.Find("Joueur1A").gameObject.GetComponent<ScriptItems>().Inventaire.Count)
-                {
-                    case 0:
-                        GameObject.Find("Joueur1A").gameObject.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                        return;
-                    case 1:
-                        GameObject.Find("Joueur1A").gameObject.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                        return;
-                    case 2:
-                        return;
-                    default:
-                        return;
-                }
+                Inventaire.itemB2 = indice;
+                //METTRE ITEM B2
             }
-            else
+            else if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 == Inventaire.ITEMNUL)
             {
-                switch (GameObject.Find("Joueur1B").gameObject.GetComponent<ScriptItems>().Inventaire.Count)
-                {
-                    case 0:
-                        GameObject.Find("Joueur1B").gameObject.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                        return;
-                    case 1:
-                        GameObject.Find("Joueur1B").gameObject.GetComponent<ScriptItems>().Inventaire.Add(indice);
-                        return;
-                    case 2:
-                        return;
-                    default:
-                        return;
-                }
+                Inventaire.itemB1 = indice;
+                //METTRE ITEM B1
             }
         }
-        //#######################################################
-        /*Version Temporaire*/
     }
 }
