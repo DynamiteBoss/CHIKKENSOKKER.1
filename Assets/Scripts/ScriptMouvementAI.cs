@@ -110,7 +110,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     {
         if(tag=="AI")
         {
-            if(EstPasSeulDansZone())
+            //if(EstPasSeulDansZone())
         }
 
 
