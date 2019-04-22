@@ -230,6 +230,10 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         }
         compteurSpawn = 0;
         Balle.transform.position = new Vector3(1, 0.5f, 5);
+        Balle.transform.parent = null;
+        Balle.GetComponent<Rigidbody>().isKinematic = false;
+        Balle.GetComponent<SphereCollider>().enabled = true;
+        Balle.GetComponent<PlacerBalle>().estPlacer = false;
     }
     // Update is called once per frame
     void Update()
