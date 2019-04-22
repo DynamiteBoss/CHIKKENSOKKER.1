@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -28,7 +29,13 @@ public static class Inventaire
     {
         itemB2 = changement;
     }
-    public static void AfficherInventaire(char équipe, int position)
+    [Command]
+    public static void CmdAfficherInventaire(char équipe, int position)
+    {
+        RpcAfficherInventaire(équipe, position);
+    }
+    [ClientRpc]
+    private static void RpcAfficherInventaire(char équipe, int position)
     {
         int valeurItemTemp = 8;
 
@@ -38,34 +45,40 @@ public static class Inventaire
         switch (valeurItemTemp)
         {
             case 0:
-                AfficherSprite(position, équipe, "crotte3");
+                CmdAfficherSprite(position, équipe, "crotte3");
                 return;
             case 1:
-                AfficherSprite(position, équipe, "crotte5");
+                CmdAfficherSprite(position, équipe, "crotte5");
                 return;
             case 2:
-                AfficherSprite(position, équipe, "oeufXL");
+                CmdAfficherSprite(position, équipe, "oeufXL");
                 return;
             case 3:
-                AfficherSprite(position, équipe, "oeuf3");
+                CmdAfficherSprite(position, équipe, "oeuf3");
                 return;
             case 4:
-                AfficherSprite(position, équipe, "torpille");
+                CmdAfficherSprite(position, équipe, "torpille");
                 return;
             case 5:
-                AfficherSprite(position, équipe, "bombe");
+                CmdAfficherSprite(position, équipe, "bombe");
                 return;
             case 6:
-                AfficherSprite(position, équipe, "brouillé");
+                CmdAfficherSprite(position, équipe, "brouillé");
                 return;
             case 7:
-                AfficherSprite(position, équipe, "versdeterre");
+                CmdAfficherSprite(position, équipe, "versdeterre");
                 return;
             default:
                 return;
         }
     }
-    private static void AfficherSprite(int position, char équipe, string nomSprite)
+    [Command]
+    private static void CmdAfficherSprite(int position, char équipe, string nomSprite)
+    {
+        RpcfficherSprite(position, équipe, nomSprite);   
+    }
+    [ClientRpc]
+    private static void RpcfficherSprite(int position, char équipe, string nomSprite)
     {
         GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
     }

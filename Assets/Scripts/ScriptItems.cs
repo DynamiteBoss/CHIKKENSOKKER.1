@@ -8,13 +8,8 @@ public class ScriptItems : NetworkBehaviour
 {
     int framesDélai = 0;
 
-    [SerializeField]
-    string équipe;
-
     void Start()
     {
-        if (this.transform.gameObject.name.EndsWith("A")) { équipe = "A"; }
-        else { équipe = "B"; }
     }
     void Update()
     {
@@ -65,7 +60,7 @@ public class ScriptItems : NetworkBehaviour
             // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
             if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.Contains("1"))
             {
-                if (équipe == "A" && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
+                if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
                 {
                     CmdInstancierItem(Inventaire.itemA1, this.transform.position);
 
@@ -84,7 +79,7 @@ public class ScriptItems : NetworkBehaviour
                     }
                     framesDélai = 0;
                 }
-                if (équipe == "B" && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
+                if (!(GetComponent<TypeÉquipe>().estÉquipeA) && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
                 {
                     CmdInstancierItem(Inventaire.itemB1, this.transform.position);
 
@@ -107,7 +102,7 @@ public class ScriptItems : NetworkBehaviour
             // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
             if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.Contains("2"))
             {
-                if (équipe == "A" && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
+                if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
                 {
                     CmdInstancierItem(Inventaire.itemA1, this.transform.position);
 
@@ -126,7 +121,7 @@ public class ScriptItems : NetworkBehaviour
                     }
                     framesDélai = 0;
                 }
-                if (équipe == "B" && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
+                if (!(GetComponent<TypeÉquipe>().estÉquipeA) && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
                 {
                     CmdInstancierItem(Inventaire.itemB1, this.transform.position);
 
@@ -149,7 +144,12 @@ public class ScriptItems : NetworkBehaviour
         }
     }
     [Command]
-    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE ***PAS***
+    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE
+    {
+        RpcModifierSprite(position, équipe);
+    }
+    [ClientRpc]
+    private void RpcModifierSprite(int position, char équipe)
     {
         if (position == 2)
         {
@@ -161,6 +161,7 @@ public class ScriptItems : NetworkBehaviour
             GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = null;
         }
     }
+
     [Command]
     public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE
     {
@@ -171,7 +172,6 @@ public class ScriptItems : NetworkBehaviour
     {
         switch (indiceItem)
         {
-
             case 0:
                 {
                     GameObject Crotte1 = (GameObject)Instantiate(Item.RetournerItemListe(0).ItemPhysique, position + transform.up * 2 + transform.right * -2 + transform.forward * 2.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));

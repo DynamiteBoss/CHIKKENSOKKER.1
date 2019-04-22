@@ -236,7 +236,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     {
         if (true/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/)   //TEMPORAIRE
         {
-            Debug.Log("Allo");
             if (matchEnCours)
             {
                 if (compteur3 == 0)
