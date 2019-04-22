@@ -69,11 +69,4 @@ public static class Inventaire
     {
         GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
     }
-
-    //A FAIRE SEULEMENT QUAND UN NOUVEL ITEM EST MIS OU ENLEVER D'UN INVENTAIRE
-
-    //AfficherInventaire('A', 1);
-    //AfficherInventaire('B', 1);    //temporaire en attendant parce que anyway on va pa pouvoir utiliser d'item si ya juste un player sur le jeu (quan Joueur1B existe pas ca fok)
-    //AfficherInventaire('A', 2);
-    //AfficherInventaire('B', 2);     //temporaire en attendant parce que anyway on va pa pouvoir utiliser d'item si ya juste un player sur le jeu (quan Joueur1B existe pas ca fok)
 }

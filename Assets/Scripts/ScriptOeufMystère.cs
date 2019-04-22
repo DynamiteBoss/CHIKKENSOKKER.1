@@ -46,11 +46,13 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemA2 = indice;
+                Inventaire.AfficherInventaire('A', 2);
                 //METTRE ITEM A2
             }
             else if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemA1 = indice;
+                Inventaire.AfficherInventaire('A', 1);
                 //METTRE ITEM A1
             }
         }
@@ -59,11 +61,13 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemB2 = indice;
+                Inventaire.AfficherInventaire('B', 2);
                 //METTRE ITEM B2
             }
             else if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemB1 = indice;
+                Inventaire.AfficherInventaire('B', 1);
                 //METTRE ITEM B1
             }
         }

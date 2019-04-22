@@ -149,7 +149,7 @@ public class ScriptItems : NetworkBehaviour
         }
     }
     [Command]
-    private void CmdModifierSprite(int position, char équipe)
+    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE ***PAS***
     {
         if (position == 2)
         {
@@ -162,7 +162,7 @@ public class ScriptItems : NetworkBehaviour
         }
     }
     [Command]
-    public void CmdInstancierItem(int indiceItem, Vector3 position)
+    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE
     {
         RpcInstancierItem(indiceItem, position);
     }
