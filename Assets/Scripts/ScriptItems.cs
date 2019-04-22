@@ -8,10 +8,6 @@ public class ScriptItems : NetworkBehaviour
 {
     int framesDélai = 0;
 
-    // allo 
-    public List<int> Inventaire = new List<int>();
-
-
     [SerializeField]
     string équipe;
 
@@ -67,69 +63,93 @@ public class ScriptItems : NetworkBehaviour
             }
 
             // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
-            if (Input.GetKeyDown("r") && this.Inventaire.Count != 0 && framesDélai > 60 && this.transform.gameObject.name.Contains("1"))
+            if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.Contains("1"))
             {
-                CmdInstancierItem(Inventaire[0], this.transform.position);
+                if (équipe == "A" && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
+                {
+                    CmdInstancierItem(Inventaire.itemA1, this.transform.position);
 
-                if (Inventaire.Count < 2)
-                {
-                    Inventaire.RemoveAt(0);
-                    if (équipe == "A") { CmdModifierSprite(1, 'A'); }
-                    else { CmdModifierSprite(1, 'B'); }
-                }
-                else
-                {
-                    int temp = Inventaire[1];
-                    Inventaire.RemoveAt(1);
-                    Inventaire.RemoveAt(0);
-                    Inventaire.Add(temp);
-                    if (équipe == "A")
+                    if (Inventaire.itemA2 < Inventaire.ITEMNUL && Inventaire.itemA2 >= 0)
                     {
+                        int temp = Inventaire.itemA2;
+                        Inventaire.itemA2 = Inventaire.ITEMNUL;
+                        Inventaire.itemA1 = temp;
                         CmdModifierSprite(1, 'A');
                         CmdModifierSprite(2, 'A');
                     }
                     else
                     {
+                        Inventaire.itemA1 = Inventaire.ITEMNUL;
+                        CmdModifierSprite(1, 'A');
+                    }
+                    framesDélai = 0;
+                }
+                if (équipe == "B" && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
+                {
+                    CmdInstancierItem(Inventaire.itemB1, this.transform.position);
+
+                    if (Inventaire.itemB2 < Inventaire.ITEMNUL && Inventaire.itemB2 >= 0)
+                    {
+                        int temp = Inventaire.itemB2;
+                        Inventaire.itemB2 = Inventaire.ITEMNUL;
+                        Inventaire.itemB1 = temp;
                         CmdModifierSprite(1, 'B');
                         CmdModifierSprite(2, 'B');
                     }
+                    else
+                    {
+                        Inventaire.itemB1 = Inventaire.ITEMNUL;
+                        CmdModifierSprite(1, 'B');
+                    }
+                    framesDélai = 0;
                 }
-                framesDélai = 0;
             }
-            // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
-            if (Input.GetKeyDown(KeyCode.Keypad1) && this.Inventaire.Count != 0 && framesDélai > 60 && this.transform.gameObject.name.Contains("2"))
+            // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
+            if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.Contains("2"))
             {
-                CmdInstancierItem(GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire[0], this.transform.position);
+                if (équipe == "A" && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
+                {
+                    CmdInstancierItem(Inventaire.itemA1, this.transform.position);
 
-                if (GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.Count < 2)
-                {
-                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.RemoveAt(0);
-                    if (équipe == "A") { CmdModifierSprite(1, 'A'); }
-                    else { CmdModifierSprite(1, 'B'); }
-                }
-                else
-                {
-                    int temp = GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire[1];
-                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.RemoveAt(1);
-                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.RemoveAt(0);
-                    GameObject.Find("Joueur1" + équipe).gameObject.GetComponent<ScriptItems>().Inventaire.Add(temp);
-                    if (équipe == "A")
+                    if (Inventaire.itemA2 < Inventaire.ITEMNUL && Inventaire.itemA2 >= 0)
                     {
+                        int temp = Inventaire.itemA2;
+                        Inventaire.itemA2 = Inventaire.ITEMNUL;
+                        Inventaire.itemA1 = temp;
                         CmdModifierSprite(1, 'A');
                         CmdModifierSprite(2, 'A');
                     }
                     else
                     {
+                        Inventaire.itemA1 = Inventaire.ITEMNUL;
+                        CmdModifierSprite(1, 'A');
+                    }
+                    framesDélai = 0;
+                }
+                if (équipe == "B" && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
+                {
+                    CmdInstancierItem(Inventaire.itemB1, this.transform.position);
+
+                    if (Inventaire.itemB2 < Inventaire.ITEMNUL && Inventaire.itemB2 >= 0)
+                    {
+                        int temp = Inventaire.itemB2;
+                        Inventaire.itemB2 = Inventaire.ITEMNUL;
+                        Inventaire.itemB1 = temp;
                         CmdModifierSprite(1, 'B');
                         CmdModifierSprite(2, 'B');
                     }
+                    else
+                    {
+                        Inventaire.itemB1 = Inventaire.ITEMNUL;
+                        CmdModifierSprite(1, 'B');
+                    }
+                    framesDélai = 0;
                 }
-                framesDélai = 0;
             }
         }
     }
     [Command]
-    private void CmdModifierSprite(int position, char équipe)
+    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE ***PAS***
     {
         if (position == 2)
         {
@@ -140,42 +160,9 @@ public class ScriptItems : NetworkBehaviour
         {
             GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = null;
         }
-        //switch (nbSprite)    //FAIRE QUE LE PLAYER 2 PUISSE UTILISER LES MEME ITEMS QUE LE PLAYER 1
-        //{
-        //    case 0:
-        //        AfficherSprite(position, équipe, "crotte3");
-        //        return;
-        //    case 1:
-        //        AfficherSprite(position, équipe, "crotte5");
-        //        return;
-        //    case 2:
-        //        AfficherSprite(position, équipe, "oeufXL");
-        //        return;
-        //    case 3:
-        //        AfficherSprite(position, équipe, "oeuf3");
-        //        return;
-        //    case 4:
-        //        AfficherSprite(position, équipe, "torpille");
-        //        return;
-        //    case 5:
-        //        AfficherSprite(position, équipe, "bombe");
-        //        return;
-        //    case 6:
-        //        AfficherSprite(position, équipe, "brouillé");
-        //        return;
-        //    case 7:
-        //        AfficherSprite(position, équipe, "versdeterre");
-        //        return;
-        //    default:
-        //        return;
-        //}
     }
-    //private void AfficherSprite(int position, char équipe, string nomSprite)
-    //{
-    //    GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
-    //}
     [Command]
-    public void CmdInstancierItem(int indiceItem, Vector3 position)
+    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE
     {
         RpcInstancierItem(indiceItem, position);
     }
@@ -278,9 +265,5 @@ public class ScriptItems : NetworkBehaviour
                     return;
                 }
         }
-    }
-    void OnInventaireChange(List<int> changement)
-    {
-        Inventaire = changement;
     }
 }

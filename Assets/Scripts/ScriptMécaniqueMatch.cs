@@ -64,8 +64,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     bool ajusteLumiere = false;
     bool modeNuitLocal;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         //TEMPORAIRE
@@ -240,7 +238,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)   //TEMPORAIRE
+        if (true/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/)   //TEMPORAIRE
         {
             Debug.Log("Allo");
             if (matchEnCours)

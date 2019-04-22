@@ -86,7 +86,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return GérerPositionsAtt();
                 break;
             case "Défendre":
-                return Vector3.one;// GérerComportementDef();
+                return GérerPositionsDef();
                 break;
             case "Avancer":
                 return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
@@ -102,7 +102,13 @@ public class ScriptMouvementAI : NetworkBehaviour
                 
         }
     }
-  private Vector3 DéterminerPosJoueurDefaut()
+
+    private Vector3 GérerPositionsDef()
+    {
+        return Vector3.one;
+    }
+
+    private Vector3 DéterminerPosJoueurDefaut()
     {
         int abscisse = 1;
         int ordonnée = 1;
@@ -115,7 +121,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             ordonnée = -1;
         }
         Vector3 posCible = new Vector3((10 * abscisse - DÉCALLAGE_DEMI_TERRAIN * constÉquipe), this.transform.position.y, 10 * ordonnée);
-        if (tag != "Player")
+        if (tag == "AI")
         {
             GameObject[] listeJoueurs = GameObject.FindGameObjectsWithTag("Player");
             List<GameObject> listeA = new List<GameObject>();
@@ -128,20 +134,20 @@ public class ScriptMouvementAI : NetworkBehaviour
                 }
                 else listeB.Add(x);
             }
-            if(GetComponent<TypeÉquipe>().estÉquipeA)
+            if (GetComponent<TypeÉquipe>().estÉquipeA)
             {
-                if(VérifierJoueurParZone(listeA,posCible))
+                if (VérifierJoueurParZone(listeA, posCible))
                 {
                     posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
-                    posCible.y = -10;
+                    posCible.z = -10;
                 }
             }
             else
             {
-                if(VérifierJoueurParZone(listeB,posCible))
+                if (VérifierJoueurParZone(listeB, posCible))
                 {
                     posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
-                    posCible.y = -10;
+                    posCible.z = -10;
                 }
             }
         }
@@ -150,17 +156,22 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private bool VérifierJoueurParZone(List<GameObject> listeJoueur,Vector3 milieuZone)
     {
-        bool estSeul = false;
-        for (int i = 0; i != listeJoueur.Capacity; i++)
+        bool estPasSeul = false;
+        for (int i = 0; i != listeJoueur.Count; i++)
         {
             if (listeJoueur[i].transform.position.x < milieuZone.x + rayonZoneJoueur && listeJoueur[i].transform.position.x > milieuZone.x - rayonZoneJoueur &&
-                listeJoueur[i].transform.position.y < milieuZone.y + rayonZoneJoueur && listeJoueur[i].transform.position.y > milieuZone.y - rayonZoneJoueur)
+                listeJoueur[i].transform.position.z < milieuZone.z + rayonZoneJoueur && listeJoueur[i].transform.position.z > milieuZone.z - rayonZoneJoueur)
             {
-                estSeul = false;
+                estPasSeul = true;
+                Debug.Log(estPasSeul);
             }
-            else estSeul = true;
+            else
+            {
+                estPasSeul = false;
+                Debug.Log(estPasSeul);
+            }
         }
-        return estSeul;
+        return estPasSeul;
     }
 
     private void OnTriggerEnter(Collider other)
