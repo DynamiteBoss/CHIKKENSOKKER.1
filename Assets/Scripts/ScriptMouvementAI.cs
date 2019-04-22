@@ -92,7 +92,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
                 break;
             case "Revenir":
-                return DéterminerPosJoueurDefaut();
+                return DéterminerPosRevenir();
                 break;
             default:
                 if (GameObject.FindGameObjectsWithTag("AI").OrderBy(x => (x.transform.position - Ballon.transform.position).magnitude).Where(x => x.GetComponentInChildren<ScriptMouvementAI>().enabled && x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA).First().transform == this.transform)
@@ -105,10 +105,14 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private Vector3 GérerPositionsDef()
     {
+
+
+
+
         return Vector3.one;
     }
 
-    private Vector3 DéterminerPosJoueurDefaut()
+    private Vector3 DéterminerPosRevenir()
     {
         int abscisse = 1;
         int ordonnée = 1;
@@ -159,8 +163,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         bool estPasSeul = false;
         for (int i = 0; i != listeJoueur.Count; i++)
         {
-            if (listeJoueur[i].transform.position.x < milieuZone.x + rayonZoneJoueur && listeJoueur[i].transform.position.x > milieuZone.x - rayonZoneJoueur &&
-                listeJoueur[i].transform.position.z < milieuZone.z + rayonZoneJoueur && listeJoueur[i].transform.position.z > milieuZone.z - rayonZoneJoueur)
+            if (EstDansPérimètre(listeJoueur[i].transform,milieuZone))
             {
                 estPasSeul = true;
                 Debug.Log(estPasSeul);
@@ -172,6 +175,11 @@ public class ScriptMouvementAI : NetworkBehaviour
             }
         }
         return estPasSeul;
+    }
+    private bool EstDansPérimètre(Transform joueur, Vector3 milieu)
+    {
+        return (joueur.position.x < milieu.x + rayonZoneJoueur && joueur.position.x > milieu.x - rayonZoneJoueur &&
+                joueur.position.z < milieu.z + rayonZoneJoueur && joueur.position.z > milieu.z - rayonZoneJoueur);
     }
 
     private void OnTriggerEnter(Collider other)
