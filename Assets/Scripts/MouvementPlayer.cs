@@ -10,7 +10,7 @@ public class MouvementPlayer : NetworkBehaviour
 
     string[] Controles = new string[] { "w", "a", "s", "d" };
     string[] ControlesInversés = new string[] { "w", "a", "s", "d" };
-    string[] ControlesOriginaux = new string[] { "d", "s", "a", "w" };
+    string[] ControlesOriginaux = new string[] { "d", "s", "w", "a" };
     bool joueur1EstPris = false;
     [SerializeField]
     public bool modeGlace;
@@ -42,8 +42,8 @@ public class MouvementPlayer : NetworkBehaviour
         //transform.position = new Vector3(transform.position.x, -1, transform.position.z);
         if (!isLocalPlayer)
         { return; }
-        if (modeInvincible) { GetComponentsInChildren<Rigidbody>()[1].isKinematic = true; }
-        else { GetComponentsInChildren<Rigidbody>()[1].isKinematic = false; }
+        //if (modeInvincible) { GetComponentsInChildren<Rigidbody>()[1].isKinematic = true; }           
+        //else { GetComponentsInChildren<Rigidbody>()[1].isKinematic = false; }                 //<-- Its breaky the fokine game, mon boy - Change moé ça OPC
 
         if (tag == "Player" && name.StartsWith("Joueur1"))
         {

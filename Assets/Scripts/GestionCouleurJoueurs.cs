@@ -11,9 +11,9 @@ public class GestionCouleurJoueurs : NetworkBehaviour
 
         if (this.transform.parent.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA)
         {
-            AppliquerCouleurÉquipe(Color.red);
+            AppliquerCouleurÉquipe(new Color(0.85f, 0.6f, 0.6f, 1));
         }
-        else AppliquerCouleurÉquipe(Color.blue);
+        else AppliquerCouleurÉquipe(new Color(0.6f, 0.6f, 0.85f, 1));
     }
 
     void AppliquerCouleurÉquipe(Color couleur)

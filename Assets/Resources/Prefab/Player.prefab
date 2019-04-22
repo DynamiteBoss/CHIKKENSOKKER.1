@@ -462,8 +462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cdc26b5b8ef1a4cb3cb0aa862ce37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inventaire: 
-  "\xE9quipe": 
 --- !u!114 &2690294916803732649
 MonoBehaviour:
   m_ObjectHideFlags: 0

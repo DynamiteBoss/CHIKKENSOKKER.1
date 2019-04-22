@@ -182,6 +182,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             this.transform.GetComponentInChildren<MouvementPlayer>().enabled = true;
             this.transform.GetComponentInChildren<MouvementManette>().enabled = true;
             this.enabled = false;
+            Ballon.isKinematic = true;
         }
     }
 

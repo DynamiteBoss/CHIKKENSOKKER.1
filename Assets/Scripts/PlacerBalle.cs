@@ -21,42 +21,43 @@ public class PlacerBalle : NetworkBehaviour
         }
         else if (other.transform.parent.tag == "Player")
         {
-            MettreBalleEnfant(other);
+            MettreBalleEnfant(other.transform);
             //CalculerDistanceBalle();
             //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
         else if(other.transform.parent.tag == "AI")
         {
-            
-            if(other.tag == "ZoneC")
+            if (other.tag == "ZoneC")
             {
                 TrouverJoueurÀChanger(other.transform.parent.gameObject);
-                MettreBalleEnfant(other);
+                MettreBalleEnfant(other.transform);
             }
         }
         else if (other.transform.parent.tag == "Gardien")
         {
-
+            
             if (other.tag == "ZoneC")
             {
                 TrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
-                MettreBalleEnfant(other);
+                MettreBalleEnfant(other.transform);
             }
         }
     }
-    private void MettreBalleEnfant(Collider other)
+    private void MettreBalleEnfant(Transform other)
     {
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
-        if(other.tag == "ZoneC" )
+        if(other.tag == "ZoneC")
         {
+            Debug.Log("NOM DU COLLIDER" + other.gameObject.name.ToString());
+            Debug.Log("PARENT: " + other.parent.name.ToString());
             estPlacer = true;
             //GetComponent<NetworkTransform>().enabled = false;
             this.transform.parent = other.transform.parent;
             transform.localScale = Vector3.one;
             
             this.transform.localPosition = new Vector3(0, 1.5f, 2);
-            GetComponent<SphereCollider>().enabled = false;
-            transform.GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<SphereCollider>().enabled = true;
+            transform.GetComponent<Rigidbody>().isKinematic = this.transform.parent != null;
             
             
         }

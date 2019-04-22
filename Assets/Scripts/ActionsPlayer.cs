@@ -238,11 +238,14 @@ public class ActionsPlayer : NetworkBehaviour
         if (other.transform.tag == "Player" && other.transform.GetComponent<CombinerMeshPlayer>().estÉquipeA != this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject && !estEnMouvementPlacage)
         {
             float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
-            JoueurÀPlaquer = other.transform.parent.gameObject;
+            if (other.transform.parent != this.transform.parent)
+                JoueurÀPlaquer = other.transform.parent.gameObject;
 
             if (JoueurÀPlaquer.transform.Find("Balle"))
             {
                 Balle = JoueurÀPlaquer.transform.Find("Balle").gameObject;
+                Balle.transform.parent = null;
+                Balle.GetComponent<Rigidbody>().AddForce(Mathf.Sin(direction) * 65.5f, 0, Mathf.Cos(direction) * 65.5f, ForceMode.Impulse);
             }
             JoueurÀPlaquer.GetComponent<Rigidbody>().isKinematic = false;
             FrapperAdversaire();

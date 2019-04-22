@@ -15,7 +15,7 @@ public class ItemBrouillé : MonoBehaviour
     public static void FaireEffetItem(GameObject joueur)  //y faut un joueur qui se fait donner le mode furax
     {
         joueur.GetComponent<MouvementPlayer>().modeFurax = true;
-        AttendrePourDésactivation(6, joueur);   // LE DÉSACTIVER APRES UN CERTAIN MOMENT (APRES UNE COROUTINE PEUT ETRE)
+        AttendrePourDésactivation(6, joueur);   // LE DÉSACTIVER APRES UN CERTAIN MOMENT (APRES UNE COROUTINE PEUT-ETRE)
     }
     static IEnumerator AttendrePourDésactivation(float durée, GameObject joueur)
     {

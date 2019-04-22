@@ -363,7 +363,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 3
 --- !u!33 &6481622337936525871
 MeshFilter:
@@ -594,8 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cdc26b5b8ef1a4cb3cb0aa862ce37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inventaire: 
-  "\xE9quipe": 
 --- !u!1 &5364301005658550830
 GameObject:
   m_ObjectHideFlags: 0
