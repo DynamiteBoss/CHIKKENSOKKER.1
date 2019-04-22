@@ -120,7 +120,10 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void PartirMatch()
     {
-        
+        PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
+        compteurSpawn = 0;
+        Balle = GameObject.FindGameObjectWithTag("Balle");
+
         GameObject[] liste = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
 
@@ -150,14 +153,17 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
         foreach(GameObject x in listeA)
         {
-            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
             compteurSpawn++;
+            //TxtFin.text = compteurSpawn.ToString();
         }
+        
         foreach(GameObject x in listeB)
         {
-            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position;
+            x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
             compteurSpawn++;
         }
+        
         
 
 
@@ -336,6 +342,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     private void FaireProgresserMatchUnPas()
     {
+        TxtTimer = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Temps").gameObject.GetComponentInChildren<Text>();
         chronomètre = String.Format("{0:m} : {1} ", (((int)timer) / 60).ToString(), ((int)timer % 60).ToString().Length == 1 ? "0" + ((int)timer % 60).ToString() : ((int)timer % 60).ToString());
         TxtTimer.text = chronomètre;
     }

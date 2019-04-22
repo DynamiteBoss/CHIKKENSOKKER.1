@@ -27,7 +27,11 @@ public class TypeÉquipe : NetworkBehaviour
                 }
                 else
                 {
-                    capsule.GetComponent<MeshRenderer>().material.color = Color.red;
+                    if(name == "Joueur2A")
+                    {
+                        capsule.GetComponent<MeshRenderer>().material.color = Color.red;
+                    }
+                   
                 }
 
             }
@@ -39,7 +43,11 @@ public class TypeÉquipe : NetworkBehaviour
                 }
                 else
                 {
-                    capsule.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    if(name == "Joueur2B")
+                    {
+                        capsule.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    }
+                    
                 }
             }
         }
