@@ -235,7 +235,7 @@ public class ActionsPlayer : NetworkBehaviour
     {
         //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
         //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
-        if (other.transform.tag == "Player" && other.transform.GetComponent<CombinerMeshPlayer>().estÉquipeA != this.transform.parent.GetComponent<CombinerMeshPlayer>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject && !estEnMouvementPlacage)
+        if (other.transform.tag == "Player" && other.transform.GetComponent<TypeÉquipe>().estÉquipeA != this.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject && !estEnMouvementPlacage)
         {
             float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
             if (other.transform.parent != this.transform.parent)
