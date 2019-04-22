@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 4
-  m_SendInterval: 0.04761905
+  m_SendInterval: 0.033333335
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 1
@@ -1215,8 +1215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cdc26b5b8ef1a4cb3cb0aa862ce37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inventaire: 
-  "\xE9quipe": 
 --- !u!114 &7314932539849920910
 MonoBehaviour:
   m_ObjectHideFlags: 0

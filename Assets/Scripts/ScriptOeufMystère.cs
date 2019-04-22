@@ -28,21 +28,19 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
+            AttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
         }
         if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
         {
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            CmdAttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
+            AttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
         }
         else{ }
         //GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-        Debug.Log(Inventaire.itemA1.ToString());
     }
-    [Command]
-    private void CmdAttribuerObjetJoueur(GameObject joueur, int indice)
+    private void AttribuerObjetJoueur(GameObject joueur, int indice)
     {
         GameObject player = GameObject.Find(joueur.name);
         if (player.GetComponent<TypeÉquipe>().estÉquipeA)
@@ -50,13 +48,13 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemA2 = indice;
-                Inventaire.CmdAfficherInventaire('A', 2);
+                Inventaire.AfficherInventaire('A', 2);
                 //METTRE ITEM A2
             }
             else if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemA1 = indice;
-                Inventaire.CmdAfficherInventaire('A', 1);
+                Inventaire.AfficherInventaire('A', 1);
                 //METTRE ITEM A1
             }
         }
@@ -65,13 +63,13 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemB2 = indice;
-                Inventaire.CmdAfficherInventaire('B', 2);
+                Inventaire.AfficherInventaire('B', 2);
                 //METTRE ITEM B2
             }
             else if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemB1 = indice;
-                Inventaire.CmdAfficherInventaire('B', 1);
+                Inventaire.AfficherInventaire('B', 1);
                 //METTRE ITEM B1
             }
         }

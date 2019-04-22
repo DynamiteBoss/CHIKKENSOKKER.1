@@ -13,6 +13,13 @@ public static class Inventaire
     [SyncVar(hook = "OnItemB1")] public static int itemB1 = 8;
     [SyncVar(hook = "OnItemB2")] public static int itemB2 = 8;
 
+    //  TEST
+    [SyncVar(hook = "OnObjet1A")] public static Sprite objet1A;
+    [SyncVar(hook = "OnObjet2A")] public static Sprite objet2A;
+    [SyncVar(hook = "OnObjet1B")] public static Sprite objet1B;
+    [SyncVar(hook = "OnObjet2B")] public static Sprite objet2B;
+    //  TEST 
+
     static void OnItemA1(int changement)
     {
         itemA1 = changement;
@@ -29,13 +36,23 @@ public static class Inventaire
     {
         itemB2 = changement;
     }
-    [Command]
-    public static void CmdAfficherInventaire(char équipe, int position)
+    static void OnObjetA1(Sprite changement)
     {
-        RpcAfficherInventaire(équipe, position);
+        objet1A = changement;
     }
-    [ClientRpc]
-    private static void RpcAfficherInventaire(char équipe, int position)
+    static void OnObjetA2(Sprite changement)
+    {
+        objet2A = changement;
+    }
+    static void OnObjetB1(Sprite changement)
+    {
+        objet1B = changement;
+    }
+    static void OnObjetB2(Sprite changement)
+    {
+        objet2B = changement;
+    }
+    public static void AfficherInventaire(char équipe, int position)
     {
         int valeurItemTemp = 8;
 
@@ -75,11 +92,14 @@ public static class Inventaire
     [Command]
     private static void CmdAfficherSprite(int position, char équipe, string nomSprite)
     {
-        RpcfficherSprite(position, équipe, nomSprite);   
-    }
-    [ClientRpc]
-    private static void RpcfficherSprite(int position, char équipe, string nomSprite)
-    {
-        GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
+        if (équipe == 'A') { if (position == 1) { objet1A = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
+        else if (équipe == 'B') { if (position == 1) { objet1B = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
+
+        GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = objet1A;
+        GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = objet2A;
+        GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = objet1B;
+        GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = objet2B;
+
+        //GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
     }
 }
