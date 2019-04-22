@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Équipe
 {
-    const int TAILLE = 5;
+    public const int TAILLE = 5;
     Joueur[] Joueurs { get; set; }
     public int NbJoueurs { get; private set; }
     GameObject joueur = Resources.Load<GameObject>("Prefabs/Joueur");

@@ -36,6 +36,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
@@ -85,13 +86,13 @@ public class ScriptMouvementAI : NetworkBehaviour
                 return GérerPositionsAtt();
                 break;
             case "Défendre":
-                return Vector3.one;// GérerComportementDef();
+                return GérerPositionsDef();
                 break;
             case "Avancer":
                 return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
                 break;
             case "Revenir":
-                return DéterminerPosJoueur();
+                return DéterminerPosJoueurDefaut();
                 break;
             default:
                 if (GameObject.FindGameObjectsWithTag("AI").OrderBy(x => (x.transform.position - Ballon.transform.position).magnitude).Where(x => x.GetComponentInChildren<ScriptMouvementAI>().enabled && x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA).First().transform == this.transform)
@@ -101,7 +102,13 @@ public class ScriptMouvementAI : NetworkBehaviour
                 
         }
     }
-  private Vector3 DéterminerPosJoueur()
+
+    private Vector3 GérerPositionsDef()
+    {
+        return Vector3.one;
+    }
+
+    private Vector3 DéterminerPosJoueurDefaut()
     {
         int abscisse = 1;
         int ordonnée = 1;
@@ -114,7 +121,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             ordonnée = -1;
         }
         Vector3 posCible = new Vector3((10 * abscisse - DÉCALLAGE_DEMI_TERRAIN * constÉquipe), this.transform.position.y, 10 * ordonnée);
-        if (tag != "Player")
+        if (tag == "AI")
         {
             GameObject[] listeJoueurs = GameObject.FindGameObjectsWithTag("Player");
             List<GameObject> listeA = new List<GameObject>();
@@ -127,24 +134,46 @@ public class ScriptMouvementAI : NetworkBehaviour
                 }
                 else listeB.Add(x);
             }
-            if(GetComponent<TypeÉquipe>().estÉquipeA)
+            if (GetComponent<TypeÉquipe>().estÉquipeA)
             {
-                for(int i = 0; i != listeA.Capacity;i++)
+                if (VérifierJoueurParZone(listeA, posCible))
                 {
-                    if (listeA[i].transform.position.x < posCible.x+rayonZoneJoueur && listeA[i].transform.position.x > posCible.x - rayonZoneJoueur &&
-                        listeA[i].transform.position.y < posCible.y + rayonZoneJoueur && listeA[i].transform.position.y > posCible.y - rayonZoneJoueur)
-                    {
-
-                    }
+                    posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
+                    posCible.z = -10;
                 }
             }
             else
             {
-
+                if (VérifierJoueurParZone(listeB, posCible))
+                {
+                    posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
+                    posCible.z = -10;
+                }
             }
         }
         return posCible;
     }
+
+    private bool VérifierJoueurParZone(List<GameObject> listeJoueur,Vector3 milieuZone)
+    {
+        bool estPasSeul = false;
+        for (int i = 0; i != listeJoueur.Count; i++)
+        {
+            if (listeJoueur[i].transform.position.x < milieuZone.x + rayonZoneJoueur && listeJoueur[i].transform.position.x > milieuZone.x - rayonZoneJoueur &&
+                listeJoueur[i].transform.position.z < milieuZone.z + rayonZoneJoueur && listeJoueur[i].transform.position.z > milieuZone.z - rayonZoneJoueur)
+            {
+                estPasSeul = true;
+                Debug.Log(estPasSeul);
+            }
+            else
+            {
+                estPasSeul = false;
+                Debug.Log(estPasSeul);
+            }
+        }
+        return estPasSeul;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other == Ballon)

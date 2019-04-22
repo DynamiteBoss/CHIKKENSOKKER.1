@@ -71,8 +71,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     bool ajusteLumiere = false;
     bool modeNuitLocal;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         //lis les valeurs dans le fichier texte OPTIONS
@@ -256,13 +254,16 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         }
         compteurSpawn = 0;
         Balle.transform.position = new Vector3(1, 0.5f, 5);
+        Balle.transform.parent = null;
+        Balle.GetComponent<Rigidbody>().isKinematic = false;
+        Balle.GetComponent<SphereCollider>().enabled = true;
+        Balle.GetComponent<PlacerBalle>().estPlacer = false;
     }
     // Update is called once per frame
     void Update()
     {
-        if (/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/true)
+        if (true/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/)   //TEMPORAIRE
         {
-            Debug.Log("Allo");
             if (matchEnCours)
             {
                 if (compteur3 == 0)

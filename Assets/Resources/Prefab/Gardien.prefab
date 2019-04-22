@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 7364827968385004067}
   - component: {fileID: 2531017340532627085}
   - component: {fileID: 3582380754724446831}
-  - component: {fileID: 8230732331076796978}
+  - component: {fileID: 963879141185230376}
   m_Layer: 0
   m_Name: "ZoneArr\xEAt"
   m_TagString: Untagged
@@ -288,7 +288,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8192396, y: 1, z: 1}
   m_Center: {x: -0.015649319, y: 0, z: 0}
---- !u!114 &8230732331076796978
+--- !u!114 &963879141185230376
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

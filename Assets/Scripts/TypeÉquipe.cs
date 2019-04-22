@@ -45,7 +45,6 @@ public class TypeÉquipe : NetworkBehaviour
         }
         else
         {
-            Debug.Log("PAS PLAYER");
             capsule.GetComponentInChildren<MeshRenderer>().enabled = false;
         }
     }
