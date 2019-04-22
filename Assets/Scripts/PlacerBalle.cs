@@ -57,7 +57,7 @@ public class PlacerBalle : NetworkBehaviour
             
             this.transform.localPosition = new Vector3(0, 1.5f, 2);
             GetComponent<SphereCollider>().enabled = false;
-            transform.GetComponent<Rigidbody>().isKinematic = this.transform.parent != null;
+            transform.GetComponent<Rigidbody>().isKinematic = true;
             
             
         }
@@ -169,7 +169,7 @@ public class PlacerBalle : NetworkBehaviour
         joueur.GetComponent<MouvementPlayer>().enabled = false;
         joueur.GetComponent<ScriptMouvementAI>().enabled = true;
         joueur.tag = "AI";
-        joueur.name = "AI"+équipe+grandeur;
+        joueur.name = "AI" + grandeur + équipe;
         joueur.GetComponentInChildren<Rigidbody>().isKinematic = true;
 
         gardien.name = tampon;
