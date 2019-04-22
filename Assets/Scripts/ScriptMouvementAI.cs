@@ -130,22 +130,39 @@ public class ScriptMouvementAI : NetworkBehaviour
             }
             if(GetComponent<TypeÉquipe>().estÉquipeA)
             {
-                for(int i = 0; i != listeA.Capacity;i++)
+                if(VérifierJoueurParZone(listeA,posCible))
                 {
-                    if (listeA[i].transform.position.x < posCible.x+rayonZoneJoueur && listeA[i].transform.position.x > posCible.x - rayonZoneJoueur &&
-                        listeA[i].transform.position.y < posCible.y + rayonZoneJoueur && listeA[i].transform.position.y > posCible.y - rayonZoneJoueur)
-                    {
-
-                    }
+                    posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
+                    posCible.y = -10;
                 }
             }
             else
             {
-
+                if(VérifierJoueurParZone(listeB,posCible))
+                {
+                    posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
+                    posCible.y = -10;
+                }
             }
         }
         return posCible;
     }
+
+    private bool VérifierJoueurParZone(List<GameObject> listeJoueur,Vector3 milieuZone)
+    {
+        bool estSeul = false;
+        for (int i = 0; i != listeJoueur.Capacity; i++)
+        {
+            if (listeJoueur[i].transform.position.x < milieuZone.x + rayonZoneJoueur && listeJoueur[i].transform.position.x > milieuZone.x - rayonZoneJoueur &&
+                listeJoueur[i].transform.position.y < milieuZone.y + rayonZoneJoueur && listeJoueur[i].transform.position.y > milieuZone.y - rayonZoneJoueur)
+            {
+                estSeul = false;
+            }
+            else estSeul = true;
+        }
+        return estSeul;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other == Ballon)
