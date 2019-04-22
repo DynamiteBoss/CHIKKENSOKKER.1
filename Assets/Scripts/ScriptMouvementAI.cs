@@ -108,9 +108,14 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private Vector3 GérerPositionsDef()
     {
+        
         if(tag=="AI")
         {
-            //if(EstPasSeulDansZone())
+            List<GameObject> listeÀAnalyser = this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA;
+            if (EstPasSeulDansZone(ListeProximitéA,transform.position))
+            {
+
+            }
         }
 
 
