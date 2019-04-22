@@ -19,7 +19,7 @@ public class ScriptOptionMenu : MonoBehaviour
         Bouton.onClick.AddListener(() => GérerMenuOptions());
     }
 
-    private void GérerMenuOptions()
+    public void GérerMenuOptions()
     {
         if (!menuOuvert)
         {

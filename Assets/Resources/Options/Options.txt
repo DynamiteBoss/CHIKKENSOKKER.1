@@ -1,0 +1,8 @@
+FréqObj : 
+0.2694444
+NbMaxObj : 
+3
+FréqPluie : 
+0.7777778
+FréqOrage : 
+0.5

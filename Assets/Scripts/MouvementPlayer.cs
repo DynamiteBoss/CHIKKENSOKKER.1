@@ -13,10 +13,10 @@ public class MouvementPlayer : NetworkBehaviour
     string[] ControlesOriginaux = new string[] { "d", "s", "a", "w" };
     bool joueur1EstPris = false;
     [SerializeField]
-    bool modeGlace;
+    public bool modeGlace;
 
     [SerializeField]
-    bool modeSaoul;
+    public bool modeSaoul;
 
     [SerializeField]
     public bool modeFurax;

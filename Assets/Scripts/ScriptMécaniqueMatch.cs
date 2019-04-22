@@ -5,11 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using UnityEngine.Networking;
 
 public class ScriptMécaniqueMatch : NetworkBehaviour
 {
     string[] tags = new string[] { "Player", "AI", "Gardien" };
+
+    const string CheminAccesPartielOpts = "/Resources/Options/Options.txt";
+
     GameObject Balle { get; set; }
     GameObject PnlFin { get; set; }
     Text TxtFin { get; set; }
@@ -35,14 +39,16 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     const float VitesseJourNuit = 100f;
 
     [SerializeField]
-    const float FrequenceObjet = 600f; //10 secondes
+    float FrequenceObjet = 600f; //10 secondes
+
+    float probabilitéOrage;
+    float probabilitéPluie;
 
     [SerializeField]
     const int NbFramesUpdate = 10;
 
     const float DimTerrainX = 42f;
     const float DimTerrainZ = 20f;
-    const int NbOeufMax = 3;
 
     Text TxtTimer { get; set; }
     [SyncVar(hook = "OnChronomètreChange")] public string chronomètre;
@@ -60,6 +66,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     List<GameObject> Joueur { get; set; }
     public int nbOeufs = 0;
+    int NbOeufMax = 3;
 
     bool ajusteLumiere = false;
     bool modeNuitLocal;
@@ -68,6 +75,23 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //lis les valeurs dans le fichier texte OPTIONS
+        using (StreamReader streamReader = new StreamReader(Application.dataPath + CheminAccesPartielOpts))
+        {
+            streamReader.ReadLine();
+            float.TryParse(streamReader.ReadLine().ToString(), out FrequenceObjet);
+            streamReader.ReadLine();
+            int.TryParse(streamReader.ReadLine().ToString(), out NbOeufMax);
+            streamReader.ReadLine();
+            float.TryParse(streamReader.ReadLine().ToString(), out probabilitéPluie);
+            streamReader.ReadLine();
+            float.TryParse(streamReader.ReadLine().ToString(), out probabilitéOrage);
+
+            streamReader.Close();
+        }
+
+
+
         //TEMPORAIRE
         GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
         GameObject OeufHasard2 = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
@@ -297,6 +321,16 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), positionObj, Quaternion.identity);
             NetworkServer.Spawn(OeufHasard);
             nbOeufs++;
+        }
+    }
+    [Command]
+    public void CmdPartirModePluie()
+    {
+        List<GameObject> listeJoueursLocale = GameObject.FindGameObjectsWithTag("Player").ToList();
+        listeJoueursLocale.AddRange(GameObject.FindGameObjectsWithTag("AI").ToList());              // inclus les AI
+        foreach (GameObject g in listeJoueursLocale)
+        {
+            g.GetComponentInChildren<MouvementPlayer>().modeGlace = true;
         }
     }
 
