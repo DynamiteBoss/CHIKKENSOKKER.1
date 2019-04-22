@@ -111,16 +111,16 @@ public class ScriptMouvementAI : NetworkBehaviour
         
         if(tag=="AI")
         {
-            List<GameObject> listeÀAnalyser = this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA;
+            List<GameObject> joueursÀAnalyser = this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA;
             if (EstPasSeulDansZone(ListeProximitéA,transform.position))
             {
-
+                Debug.Log("joueur" + name);
             }
         }
 
 
 
-        return Vector3.one;
+        return transform.position;
     }
 
     private Vector3 DéterminerPosRevenir()
