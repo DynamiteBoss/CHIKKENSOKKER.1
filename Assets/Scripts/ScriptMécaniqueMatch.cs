@@ -95,6 +95,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         //TEMPORAIRE
         GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
         GameObject OeufHasard2 = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
+        nbOeufs += 2;
         //TEMPORAIRE
 
         Balle = GameObject.FindGameObjectWithTag("Balle");

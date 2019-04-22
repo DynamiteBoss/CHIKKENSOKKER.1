@@ -144,22 +144,36 @@ public class ScriptItems : NetworkBehaviour
         }
     }
     [Command]
-    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE
+    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE PAS
     {
         RpcModifierSprite(position, équipe);
     }
     [ClientRpc]
     private void RpcModifierSprite(int position, char équipe)
     {
-        if (position == 2)
+        if (équipe == 'A')
         {
-            GameObject.Find("Objet" + (position - 1) + équipe).GetComponent<SpriteRenderer>().sprite = GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite;
-            GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = null;
+            if (position == 2)
+            {
+                Inventaire.objet1A = Inventaire.objet2A;
+                Inventaire.objet2A = null;
+            }
+            else { Inventaire.objet1A = null; }
         }
-        else
+        else if ( équipe == 'B')
         {
-            GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = null;
+            if (position == 2)
+            {
+                Inventaire.objet1B = Inventaire.objet2B;
+                Inventaire.objet2B = null;
+            }
+            else { Inventaire.objet1B = null; }
         }
+        
+        GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = Inventaire.objet1A;
+        GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = Inventaire.objet2A;
+        GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = Inventaire.objet1B;
+        GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = Inventaire.objet2B;
     }
 
     [Command]
