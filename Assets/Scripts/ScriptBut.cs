@@ -23,6 +23,9 @@ public class ScriptBut : NetworkBehaviour
     [SyncVar(hook = "OnTimeChange")]
     public float compteur = 0;
 
+    [SyncVar(hook = "OnPauseChange")]
+    public bool enPause;
+
     [SerializeField]
     bool estÉquipeA = true;
 
@@ -56,6 +59,7 @@ public class ScriptBut : NetworkBehaviour
             score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
 
             compteur = 0;
+            enPause = true;
             PlacerJoueur(liste1,liste);
             Invoke("RéactiverMouvement", 1f);
         }
@@ -140,6 +144,7 @@ public class ScriptBut : NetworkBehaviour
                 x.GetComponent<ContrôleGardien>().enabled = true;
             }
         }
+        enPause = false;
     }
     private void OnTriggerExit(Collider other)
     {
@@ -165,6 +170,10 @@ public class ScriptBut : NetworkBehaviour
     void OnTimeChange(float temps)
     {
         compteur = temps;
+    }
+    void OnPauseChange(bool changement)
+    {
+        enPause = changement;
     }
     // Update is called once per frame
     void Update()

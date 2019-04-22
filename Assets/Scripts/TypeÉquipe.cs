@@ -5,33 +5,45 @@ using UnityEngine.Networking;
 
 public class TypeÉquipe : NetworkBehaviour
 {
-    [SyncVar(hook ="OnEstÉquipeAChange")]public bool estÉquipeA;
+    GameObject Balle { get; set; }
+    GameObject Camera { get; set; }
+    [SyncVar(hook = "OnEstÉquipeAChange")] public bool estÉquipeA;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Balle = GameObject.FindGameObjectWithTag("Balle");
+        Camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
-
+    bool EstEnPause()
+    {
+        return Camera.GetComponent<ScriptMécaniqueMatch>().enPause || Camera.GetComponent<ScriptMenuPause>().enPause || Balle.GetComponent<ScriptBut>().enPause;
+    }
     // Update is called once per frame
     void Update()
     {
-        if(name.StartsWith("Player"))
+        if (name.StartsWith("Player"))
         {
             tag = "Player";
-            GetComponent<MouvementPlayer>().enabled = true;
-            GetComponent<ScriptMouvementAI>().enabled = false;
+            if (!EstEnPause())
+            {
+                GetComponent<MouvementPlayer>().enabled = true;
+                GetComponent<ScriptMouvementAI>().enabled = false;
+            }
         }
         else
         {
-            if(name.StartsWith("AI"))
+            if (name.StartsWith("AI"))
             {
                 tag = "AI";
-                GetComponent<ScriptMouvementAI>().enabled = true;
-                GetComponent<MouvementPlayer>().enabled = false;
+                if (!EstEnPause())
+                {
+                    GetComponent<ScriptMouvementAI>().enabled = true;
+                    GetComponent<MouvementPlayer>().enabled = false;
+                }
             }
             else
             {
-                if(name.StartsWith("Gardien"))
+                if (name.StartsWith("Gardien"))
                 {
                     tag = "Gardien";
 
@@ -50,11 +62,11 @@ public class TypeÉquipe : NetworkBehaviour
                 }
                 else
                 {
-                    if(name == "Joueur2A")
+                    if (name == "Joueur2A")
                     {
                         capsule.GetComponent<MeshRenderer>().material.color = Color.red;
                     }
-                   
+
                 }
 
             }
@@ -66,11 +78,11 @@ public class TypeÉquipe : NetworkBehaviour
                 }
                 else
                 {
-                    if(name == "Joueur2B")
+                    if (name == "Joueur2B")
                     {
                         capsule.GetComponent<MeshRenderer>().material.color = Color.yellow;
                     }
-                    
+
                 }
             }
         }

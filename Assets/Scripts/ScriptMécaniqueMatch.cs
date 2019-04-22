@@ -56,6 +56,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     Light LumierePrincipale { get; set; }
 
     [SyncVar (hook = "OnMatchEnCoursChange")]public bool matchEnCours = true;
+    [SyncVar(hook = "OnPauseChange")] public bool enPause;
+
 
     [SyncVar(hook = "OnTimerChange")] public float timer;
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
@@ -120,6 +122,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void PartirMatch()
     {
+        enPause = false;
         PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
         compteurSpawn = 0;
         Balle = GameObject.FindGameObjectWithTag("Balle");
@@ -195,6 +198,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void AttendreDébutMatch()
     {
+        enPause = true;
         GameObject[] liste = new GameObject[10];
         List<GameObject> listeCommune = new List<GameObject>();
 
@@ -440,5 +444,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnMatchEnCoursChange(bool changemment)
     {
         matchEnCours = changemment;
+    }
+    void OnPauseChange(bool changemment)
+    {
+        enPause = changemment;
     }
 }

@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class ScriptMenuPause : MonoBehaviour
 {
+    GameObject[] liste = new GameObject[10];
+    List<GameObject> listeCommune = new List<GameObject>();
+    string[] tags = new string[] { "Player", "AI", "Gardien" };
     bool menuOuvert = false;
     bool peutOuvrirMenu = true;
 
+    public bool enPause;
     float compteur = 0;
 
     GameObject[] JoueursPhysiques { get; set; }
@@ -22,6 +26,31 @@ public class ScriptMenuPause : MonoBehaviour
 
     public void DésactiverMouvement()
     {
+        foreach(string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach(GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+        foreach(GameObject x in listeCommune)
+        {
+            x.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            if(x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = false;
+            }
+            else if(x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = false;
+            }
+            else if(x.tag == tags[2])
+            {
+                x.GetComponent<ContrôleGardien>().enabled = false;
+            }
+        }
+        /*
         for (int i = 0; i < JoueursPhysiques.Length; i++)
         {
             JoueursPhysiques[i].GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -29,10 +58,36 @@ public class ScriptMenuPause : MonoBehaviour
             JoueursPhysiques[i].GetComponentInChildren<MouvementPlayer>().enabled = false;
 
         }
+        */
     }
 
     public void RéactiverMouvement()
     {
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+        foreach (GameObject x in listeCommune)
+        {
+            x.GetComponent<Rigidbody>().constraints = (RigidbodyConstraints)116;
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = true;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = true;
+            }
+            else if (x.tag == tags[2])
+            {
+                x.GetComponent<ContrôleGardien>().enabled = true;
+            }
+        }
+        /*
         for (int i = 0; i < JoueursPhysiques.Length; i++)
         {
             JoueursPhysiques[i].GetComponentInChildren<Rigidbody>().constraints = (RigidbodyConstraints)116;
@@ -40,6 +95,7 @@ public class ScriptMenuPause : MonoBehaviour
             JoueursPhysiques[i].transform.Find("ZoneContrôle").gameObject.SetActive(true);
             JoueursPhysiques[i].GetComponent<MouvementPlayer>().enabled = true;
         }
+        */
     }
 
     // Update is called once per frame
@@ -61,6 +117,7 @@ public class ScriptMenuPause : MonoBehaviour
                     menuOuvert = true;
                     peutOuvrirMenu = false;
                     DésactiverMouvement();
+                    enPause = true;
                 }
                 else
                 {
@@ -68,6 +125,7 @@ public class ScriptMenuPause : MonoBehaviour
                     menuOuvert = false;
                     peutOuvrirMenu = false;
                     RéactiverMouvement();
+                    enPause = false;
                 }
             }
         }
