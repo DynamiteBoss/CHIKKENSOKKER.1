@@ -16,6 +16,8 @@ public class ScriptMouvementAI : NetworkBehaviour
     Rigidbody Ballon { get; set; }
 
     GameObject But { get; set; }
+    List<GameObject> ListeProximitéA { get; set; }
+    List<GameObject> ListeProximitéB { get; set; }
 
     [SerializeField]
     int NbFramesAvantUpdate = 10;
@@ -36,7 +38,8 @@ public class ScriptMouvementAI : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ListeProximitéA = new List<GameObject>();
+        ListeProximitéB = new List<GameObject>();
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
@@ -105,7 +108,10 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private Vector3 GérerPositionsDef()
     {
-
+        if(tag=="AI")
+        {
+            if(EstPasSeulDansZone())
+        }
 
 
 
@@ -128,37 +134,37 @@ public class ScriptMouvementAI : NetworkBehaviour
         if (tag == "AI")
         {
             GameObject[] listeJoueurs = GameObject.FindGameObjectsWithTag("Player");
-            List<GameObject> listeA = new List<GameObject>();
-            List<GameObject> listeB = new List<GameObject>();
             foreach (GameObject x in listeJoueurs)
             {
                 if (x.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
-                    listeA.Add(x);
+                    ListeProximitéA.Add(x);
                 }
-                else listeB.Add(x);
+                else ListeProximitéB.Add(x);
             }
             if (GetComponent<TypeÉquipe>().estÉquipeA)
             {
-                if (VérifierJoueurParZone(listeA, posCible))
+                if (EstPasSeulDansZone(ListeProximitéA, posCible))
                 {
-                    posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
-                    posCible.z = -10;
+                    posCible = RelocaliserJoueurDef();
                 }
             }
             else
             {
-                if (VérifierJoueurParZone(listeB, posCible))
+                if (EstPasSeulDansZone(ListeProximitéB, posCible))
                 {
-                    posCible.x = (10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe);
-                    posCible.z = -10;
+                    posCible = RelocaliserJoueurDef();
                 }
             }
         }
         return posCible;
     }
+    private Vector3 RelocaliserJoueurDef()
+    {
+        return new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
+    }
 
-    private bool VérifierJoueurParZone(List<GameObject> listeJoueur,Vector3 milieuZone)
+    private bool EstPasSeulDansZone(List<GameObject> listeJoueur,Vector3 milieuZone)
     {
         bool estPasSeul = false;
         for (int i = 0; i != listeJoueur.Count; i++)
