@@ -64,8 +64,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     bool ajusteLumiere = false;
     bool modeNuitLocal;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         //TEMPORAIRE
