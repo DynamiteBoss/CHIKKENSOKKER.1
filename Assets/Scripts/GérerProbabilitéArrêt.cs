@@ -15,14 +15,15 @@ public class GérerProbabilitéArrêt : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("BALLE");
-        Debug.Log(Balle.transform.parent);
         if(Balle.transform.parent == null)
         {
-            if(other.transform.parent)
+         
+            if (other.gameObject ==  true)
             {
-                if(other.transform.parent == Balle)
+               
+                if (other.gameObject == Balle)
                 {
+                   
                     CalculerProbabilité(other);
                 }
             }
@@ -38,27 +39,34 @@ public class GérerProbabilitéArrêt : MonoBehaviour
     }
     void CalculerProbabilité(Collider other)
     {
+        
+        string numéro;
         string équipe;
         if(Gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
-            équipe = "2";
+            numéro = "2";
+            équipe = "A";
         }
         else
         {
-            équipe = "1";
+            numéro = "1";
+            équipe = "B";
         }
-        float distGB = Vector3.Distance(Gardien.transform.position, Balle.transform.position);
+        Vector3 distGB = (Gardien.transform.position - Balle.transform.position);
         Vector3 velo = Balle.GetComponent<Rigidbody>().velocity;
-        Debug.Log(Balle.GetComponent<Rigidbody>().velocity);
-        float distBB = Vector3.Distance(Balle.transform.position, Balle.transform.position + velo);
-        Ray a = new Ray(Balle.transform.position, Balle.transform.position + velo);
-        float angle = Mathf.Sqrt(Mathf.Pow(distGB, 2) + Mathf.Pow(distBB, 2));
+        //Debug.Log(Balle.GetComponent<Rigidbody>().velocity);
+        Vector3 distBB = ((Balle.transform.position + velo) - Balle.transform.position + velo);
+        Ray directionBalle = new Ray(Balle.transform.position, Balle.transform.position + velo);
+        float angle = Vector3.Angle(distGB, distBB);
+        Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo);
+        
 
         RaycastHit hit;
-        if(Physics.Raycast(a,out hit))
+        if(Physics.Raycast(directionBalle, out hit))
         {
-            if (hit.collider != null && hit.collider.transform.parent == GameObject.Find("But" + équipe))
+            if (hit.collider != null && (hit.collider.gameObject == GameObject.Find("But" + numéro) || hit.collider.gameObject == GameObject.Find("Gardien1" + équipe)))
             {
+                Debug.Log("Rentre dans Ray");
                 int chance;
                 float probabilité = Mathf.Round(angle / 5);
                 if(probabilité < 1)
@@ -69,10 +77,11 @@ public class GérerProbabilitéArrêt : MonoBehaviour
                 {
                     chance = (int)Random.Range(0, probabilité);
                 }
+                Debug.Log("chance"+chance);
 
                 if(chance == 1)
                 {
-                    if(équipe == "2")
+                    if(numéro == "2")
                     {
                         Gardien.transform.position = new Vector3(Balle.transform.position.x - 0.5f,Balle.transform.position.y, Balle.transform.position.z);
                     }

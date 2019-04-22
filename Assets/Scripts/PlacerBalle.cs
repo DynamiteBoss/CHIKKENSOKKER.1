@@ -176,6 +176,7 @@ public class PlacerBalle : NetworkBehaviour
         gardien.GetComponent<MouvementPlayer>().enabled = true;
         gardien.GetComponent<ContrôleGardien>().enabled = false;
         gardien.GetComponentInChildren<ActionPlaquageGardien>().enabled = false;
+        gardien.GetComponentInChildren<GérerProbabilitéArrêt>().enabled = false;
         gardien.tag = "Player";
     }
 }

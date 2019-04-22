@@ -222,11 +222,11 @@ public class ContrôleBallonV2 : NetworkBehaviour
         gardien.GetComponent<MouvementPlayer>().enabled = false;
         gardien.GetComponent<ContrôleGardien>().enabled = true;
         gardien.GetComponentInChildren<ActionPlaquageGardien>().enabled = true;
+        gardien.GetComponentInChildren<GérerProbabilitéArrêt>().enabled = true;
         gardien.tag = "Gardien";
 
         Balle.GetComponent<PlacerBalle>().AncienGardien = null;
     }
-
 
     IEnumerator AttendrePourDistanceBallon1(float durée, GameObject balle)
     {

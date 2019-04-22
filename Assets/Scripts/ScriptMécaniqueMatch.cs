@@ -55,7 +55,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     GameObject PnlNuit { get; set; }
     Light LumierePrincipale { get; set; }
 
-    bool matchEnCours = true;
+    [SyncVar (hook = "OnMatchEnCoursChange")]public bool matchEnCours = true;
 
     [SyncVar(hook = "OnTimerChange")] public float timer;
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
@@ -262,7 +262,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (true/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/)   //TEMPORAIRE
+        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)   //TEMPORAIRE
         {
             if (matchEnCours)
             {
@@ -307,7 +307,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         }
         else
         {
-            Debug.Log("Bye");
             AttendreDébutMatch();
         }
             
@@ -430,5 +429,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnCompteurSpawnChange(int changement)
     {
         compteurSpawn = changement;
+    }
+    void OnMatchEnCoursChange(bool changemment)
+    {
+        matchEnCours = changemment;
     }
 }
