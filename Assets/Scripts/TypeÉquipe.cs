@@ -15,6 +15,24 @@ public class TypeÉquipe : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(name.StartsWith("Player"))
+        {
+            tag = "Player";
+        }
+        else
+        {
+            if(name.StartsWith("AI"))
+            {
+                tag = "AI";
+            }
+            else
+            {
+                if(name.StartsWith("Gardien"))
+                {
+                    tag = "Gardien";
+                }
+            }
+        }
         GameObject capsule = transform.Find("CapsuleIdentité").gameObject;
         if (tag == "Player")
         {
