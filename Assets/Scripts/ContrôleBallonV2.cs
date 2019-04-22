@@ -255,7 +255,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                 x.enabled = true;
             }
         }
-        Balle.GetComponent<Rigidbody>().isKinematic = false;
+        //Balle.GetComponent<Rigidbody>().isKinematic = false;
         
         //ZoneC.GetComponent<BoxCollider>().enabled = true;
     }
