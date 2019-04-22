@@ -18,18 +18,23 @@ public class TypeÉquipe : NetworkBehaviour
         if(name.StartsWith("Player"))
         {
             tag = "Player";
+            GetComponent<MouvementPlayer>().enabled = true;
+            GetComponent<ScriptMouvementAI>().enabled = false;
         }
         else
         {
             if(name.StartsWith("AI"))
             {
                 tag = "AI";
+                GetComponent<ScriptMouvementAI>().enabled = true;
+                GetComponent<MouvementPlayer>().enabled = false;
             }
             else
             {
                 if(name.StartsWith("Gardien"))
                 {
                     tag = "Gardien";
+
                 }
             }
         }
