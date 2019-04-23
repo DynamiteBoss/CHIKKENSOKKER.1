@@ -112,8 +112,8 @@ public class PlacerBalle : NetworkBehaviour
             }
             int grandeur = liste2.Count;
             int aléatoire = Random.Range(1, grandeur);
-            tampon = liste2[aléatoire].name;
-            ChangerAIÀJoueur(aI, liste2[aléatoire], tampon);
+            tampon = liste2[aléatoire-1].name;
+            ChangerAIÀJoueur(aI, liste2[aléatoire-1], tampon);
 
         }
     }

@@ -3,23 +3,51 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-public class ScriptMenuPause : MonoBehaviour
+public class ScriptMenuPause : NetworkBehaviour
 {
-    public Vector3 velocité;
-    public Vector3 angularVelocité;
+    [SyncVar(hook = "OnVelocitéChange")] public Vector3 velocité;
+    [SyncVar(hook = "OnAngularVelocitéChange")] public Vector3 angularVelocité;
     GameObject Balle { get; set; }
     GameObject[] liste = new GameObject[10];
     List<GameObject> listeCommune = new List<GameObject>();
     string[] tags = new string[] { "Player", "AI", "Gardien" };
-    bool menuOuvert = false;
-    bool peutOuvrirMenu = true;
+    [SyncVar(hook = "OnMenuOuvertChange")] public bool menuOuvert = false;
+    [SyncVar(hook = "OnPeutOuvrirMenuChange")] public bool peutOuvrirMenu = true;
 
-    public bool enPause;
-    float compteur = 0;
+    [SyncVar(hook = "OnEnPauseChange")] public bool enPause;
+    [SyncVar(hook = "OnCompteurChange")] public float compteur = 0;
 
     GameObject[] JoueursPhysiques { get; set; }
     Rigidbody[] JoueursPhysique { get; set; }
+
+    void OnEnPauseChange(bool changement)
+    {
+        enPause = changement;
+    }
+    void OnMenuOuvertChange(bool changement)
+    {
+        menuOuvert = changement;
+    }
+    void OnPeutOuvrirMenuChange(bool changement)
+    {
+        peutOuvrirMenu = changement;
+    }
+    void OnCompteurChange(float changement)
+    {
+        compteur = changement;
+    }
+    void OnVelocitéChange(Vector3 changement)
+    {
+        velocité = changement;
+    }
+    void OnAngularVelocitéChange(Vector3 changement)
+    {
+        angularVelocité = changement;
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +55,11 @@ public class ScriptMenuPause : MonoBehaviour
         JoueursPhysiques = GameObject.FindGameObjectsWithTag("Player");
         Balle = GameObject.FindGameObjectWithTag("Balle");
     }
-
-    public void DésactiverMouvement()
+    [Command]
+    public void CmdDésactiverMouvement()
     {
+        RpcDésactiverMouvement();
+        /*
         foreach(string x in tags)
         {
             liste = GameObject.FindGameObjectsWithTag(x);
@@ -62,7 +92,6 @@ public class ScriptMenuPause : MonoBehaviour
         Balle.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
 
-        Debug.Log("Velo = " + velocité);
         
         /*
         for (int i = 0; i < JoueursPhysiques.Length; i++)
@@ -74,9 +103,45 @@ public class ScriptMenuPause : MonoBehaviour
         }
         */
     }
-
-    public void RéactiverMouvement()
+    [ClientRpc]
+    void RpcDésactiverMouvement()
     {
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+        foreach (GameObject x in listeCommune)
+        {
+            x.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            x.GetComponent<ContrôleBallonV2>().enabled = false;
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = false;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = false;
+            }
+            else if (x.tag == tags[2])
+            {
+                x.GetComponent<ContrôleGardien>().enabled = false;
+            }
+        }
+        velocité = Balle.GetComponent<Rigidbody>().velocity;
+        angularVelocité = Balle.GetComponent<Rigidbody>().angularVelocity;
+
+        Balle.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        Balle.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    }
+    [Command]
+    public void CmdRéactiverMouvement()
+    {
+        RpcRéactiverMouvement();
+        /*
         foreach (string x in tags)
         {
             liste = GameObject.FindGameObjectsWithTag(x);
@@ -114,7 +179,65 @@ public class ScriptMenuPause : MonoBehaviour
         }
         */
     }
+    [ClientRpc]
+    void RpcRéactiverMouvement()
+    {
+        foreach (string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach (GameObject z in liste)
+            {
+                listeCommune.Add(z);
+            }
+        }
+        foreach (GameObject x in listeCommune)
+        {
+            x.GetComponent<ContrôleBallonV2>().enabled = true;
+            x.GetComponent<Rigidbody>().constraints = (RigidbodyConstraints)116;
+            if (x.tag == tags[0])
+            {
+                x.GetComponent<MouvementPlayer>().enabled = true;
+            }
+            else if (x.tag == tags[1])
+            {
+                x.GetComponent<ScriptMouvementAI>().enabled = true;
+            }
+            else if (x.tag == tags[2])
+            {
+                x.GetComponent<ContrôleGardien>().enabled = true;
+            }
+        }
+        Balle.GetComponent<Rigidbody>().velocity = velocité;
+    }
 
+    [ClientRpc]
+    void RpcOuverturePause()
+    {
+        SceneManager.LoadSceneAsync("SceneMenuPause", LoadSceneMode.Additive);
+        menuOuvert = true;
+        peutOuvrirMenu = false;
+        CmdDésactiverMouvement();
+        enPause = true;
+    }
+    [Command]
+    void CmdOuverturePause()
+    {
+        RpcOuverturePause();
+    }
+    [ClientRpc]
+    void RpcFermeturePause()
+    {
+        SceneManager.UnloadSceneAsync("SceneMenuPause");
+        menuOuvert = false;
+        peutOuvrirMenu = false;
+        CmdRéactiverMouvement();
+        enPause = false;
+    }
+    [Command]
+    void CmdFermeturePause()
+    {
+        RpcFermeturePause();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -130,19 +253,23 @@ public class ScriptMenuPause : MonoBehaviour
             {
                 if (!menuOuvert)
                 {
+                    CmdOuverturePause();
+                    /*
                     SceneManager.LoadSceneAsync("SceneMenuPause", LoadSceneMode.Additive);
                     menuOuvert = true;
                     peutOuvrirMenu = false;
                     DésactiverMouvement();
-                    enPause = true;
+                    enPause = true;*/
                 }
                 else
                 {
+                    CmdFermeturePause();
+                    /*
                     SceneManager.UnloadSceneAsync("SceneMenuPause");
                     menuOuvert = false;
                     peutOuvrirMenu = false;
                     RéactiverMouvement();
-                    enPause = false;
+                    enPause = false;*/
                 }
             }
         }

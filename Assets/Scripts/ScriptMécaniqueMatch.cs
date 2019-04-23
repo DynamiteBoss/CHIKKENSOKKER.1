@@ -283,35 +283,38 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                     PartirMatch();
                     compteur3++;
                 }
-                ++compteur;
-                ++compteur2;
-                timer -= Time.deltaTime;
-                if (compteur == NbFramesUpdate + 1)
+                if(!EstEnPause())
                 {
-                    compteur = 0;
-                    if (timer > 0)
+                    ++compteur;
+                    ++compteur2;
+                    timer -= Time.deltaTime;
+                    if (compteur == NbFramesUpdate + 1)
                     {
-                        FaireProgresserMatchUnPas();
-                    }
-                    else
-                    {
-                        TerminerMatch();
-                    }
-                    if (ajusteLumiere)
-                        AjusterModeNuit();
+                        compteur = 0;
+                        if (timer > 0)
+                        {
+                            FaireProgresserMatchUnPas();
+                        }
+                        else
+                        {
+                            TerminerMatch();
+                        }
+                        if (ajusteLumiere)
+                            AjusterModeNuit();
 
-                }
-                if (compteur2 % 20 == 0)
-                {
-                    if (EstEnModeNuit != modeNuitLocal)
-                    {
-                        modeNuitLocal = EstEnModeNuit;
-                        ajusteLumiere = true;
                     }
-                    if (compteur2 == FrequenceObjet)
+                    if (compteur2 % 20 == 0)
                     {
-                        compteur2 = 0;
-                        CmdFaireApparaitreObjet();
+                        if (EstEnModeNuit != modeNuitLocal)
+                        {
+                            modeNuitLocal = EstEnModeNuit;
+                            ajusteLumiere = true;
+                        }
+                        if (compteur2 == FrequenceObjet)
+                        {
+                            compteur2 = 0;
+                            CmdFaireApparaitreObjet();
+                        }
                     }
                 }
             }
@@ -322,6 +325,13 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         }
             
 
+    }
+    bool EstEnPause()
+    {
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+
+        return camera.GetComponent<ScriptMécaniqueMatch>().enPause || camera.GetComponent<ScriptMenuPause>().enPause || balle.GetComponent<ScriptBut>().enPause;
     }
     [Command]
     public void CmdFaireApparaitreObjet()
