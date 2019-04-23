@@ -19,7 +19,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     Text TxtFin { get; set; }
     [SerializeField]
     const float DuréeMatch = 10f;
-    const float DuréeMatchVrai = 18f;
+    const float DuréeMatchVrai = 180f;
 
     [SerializeField]
     const float DuréePluie = 30f;
@@ -273,7 +273,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (true/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/)   //TEMPORAIRE
+        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)   //TEMPORAIRE
         {
             if (matchEnCours)
             {
