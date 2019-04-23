@@ -52,9 +52,9 @@ public class ScriptBut : NetworkBehaviour
             Ballon.transform.parent = null;
 
             if (other.name == NomBut1)
-                ++NbButsA;
-            else if (other.name == NomBut2)
                 ++NbButsB;
+            else if (other.name == NomBut2)
+                ++NbButsA;
 
             score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
 

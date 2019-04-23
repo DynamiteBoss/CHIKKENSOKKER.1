@@ -19,7 +19,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     Text TxtFin { get; set; }
     [SerializeField]
     const float DuréeMatch = 10f;
-    const float DuréeMatchVrai = 180f;
+    const float DuréeMatchVrai = 18f;
 
     [SerializeField]
     const float DuréePluie = 30f;
@@ -354,6 +354,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     private void TerminerMatch()
     {
+        PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
+        TxtFin = PnlFin.transform.Find("TxtFin").gameObject.GetComponentInChildren<Text>();
         matchEnCours = false;
         string message;
         int butA = Balle.GetComponent<ScriptBut>().NbButsA;
