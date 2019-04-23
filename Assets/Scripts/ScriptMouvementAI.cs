@@ -111,7 +111,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         Vector3 posCible = new Vector3();
         if (EstPasSeulDansZone(ListeProximitéA, transform.position))
         {
-            posCible = ;
+            posCible = transform.position;
         }
         return Vector3.one;
     }
