@@ -28,19 +28,25 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            AttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
+            CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
         }
         if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
         {
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            AttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
+            CmdAttribuerObjetJoueur(other.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));
         }
         else{ }
         //GetComponent<NetworkIdentity>().RemoveClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
     }
-    private void AttribuerObjetJoueur(GameObject joueur, int indice)
+    [Command]
+    private void CmdAttribuerObjetJoueur(GameObject joueur, int indice)
+    {
+        RpcAttribuerObjetJoueur(joueur, indice);      
+    }
+    [ClientRpc]
+    private void RpcAttribuerObjetJoueur(GameObject joueur, int indice)
     {
         GameObject player = GameObject.Find(joueur.name);
         if (player.GetComponent<TypeÉquipe>().estÉquipeA)

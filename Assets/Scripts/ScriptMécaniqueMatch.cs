@@ -93,9 +93,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
 
         //TEMPORAIRE
-        GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
-        GameObject OeufHasard2 = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
-        nbOeufs += 2;
+        //GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
+        //GameObject OeufHasard2 = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
+        //nbOeufs += 2;
         //TEMPORAIRE
 
         Balle = GameObject.FindGameObjectWithTag("Balle");
@@ -335,6 +335,11 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     [Command]
     public void CmdFaireApparaitreObjet()
+    {
+        RpcFaireApparaitreObjet();
+    }
+    [ClientRpc]
+    public void RpcFaireApparaitreObjet()
     {
         Vector3 positionObj = new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ));
         if (nbOeufs < NbOeufMax)
