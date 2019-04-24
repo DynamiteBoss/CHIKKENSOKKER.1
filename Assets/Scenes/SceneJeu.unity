@@ -852,6 +852,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddae06b11c8dd9c4ea70960a2b95e8ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  "velocit\xE9": {x: 0, y: 0, z: 0}
+  "angularVelocit\xE9": {x: 0, y: 0, z: 0}
+  menuOuvert: 0
+  peutOuvrirMenu: 1
+  enPause: 0
+  compteur: 0
 --- !u!114 &282840816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,7 +871,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EstEnModeNuit: 0
+  FrequenceObjet: 600
   "chronom\xE8tre": '3 : 00'
+  matchEnCours: 1
+  enPause: 0
   timer: 180
   compteur: 0
   compteur2: 0
@@ -1650,7 +1659,6 @@ GameObject:
   - component: {fileID: 1162426239}
   - component: {fileID: 1162426238}
   - component: {fileID: 1162426237}
-  - component: {fileID: 1162426241}
   m_Layer: 0
   m_Name: But2
   m_TagString: But
@@ -1730,24 +1738,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1162426241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162426236}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compteurSpawn: 0
-  NbButsA: 0
-  NbButsB: 0
-  score: 0  -  0
-  compteur: 0
-  "est\xC9quipeA": 0
 --- !u!1 &1207860430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,7 +2053,6 @@ GameObject:
   - component: {fileID: 1451368538}
   - component: {fileID: 1451368537}
   - component: {fileID: 1451368536}
-  - component: {fileID: 1451368540}
   m_Layer: 0
   m_Name: But1
   m_TagString: But
@@ -2143,24 +2132,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1451368540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1451368535}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f304157b2c9cded4d8083305d684e1c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compteurSpawn: 0
-  NbButsA: 0
-  NbButsB: 0
-  score: 0  -  0
-  compteur: 0
-  "est\xC9quipeA": 0
 --- !u!1 &1456089679
 GameObject:
   m_ObjectHideFlags: 0

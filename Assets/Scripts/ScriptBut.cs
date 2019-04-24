@@ -26,6 +26,9 @@ public class ScriptBut : NetworkBehaviour
     [SyncVar(hook = "OnPauseChange")]
     public bool enPause;
 
+    [SyncVar(hook = "OnButChange")]
+    public bool butEffectuer;
+
     [SerializeField]
     bool estÉquipeA = true;
 
@@ -44,13 +47,14 @@ public class ScriptBut : NetworkBehaviour
     {
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
-            Ballon = this.gameObject;
+            butEffectuer = true;
+            /*Ballon = this.gameObject;
             GameObject[] liste = new GameObject[10];
             List<GameObject> liste1 = new List<GameObject>();
             compteur = 0;
             Ballon.transform.position = new Vector3(1, 0.5f, 5);
             Ballon.GetComponent<Rigidbody>().isKinematic = true;
-            Ballon.transform.parent = null;
+            Ballon.transform.parent = null;*/
 
             if (other.name == NomBut1)
                 ++NbButsB;
@@ -58,15 +62,16 @@ public class ScriptBut : NetworkBehaviour
                 ++NbButsA;
 
             score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
-
+            /*
             compteur = 0;
             enPause = true;
             PlacerJoueur(liste1,liste);
-            Invoke("RéactiverMouvement", 1f);
+            Invoke("RéactiverMouvement", 1f);*/
         }
 
         // Ajouter un "Point" à l'équipe 1
     }
+    
     void PlacerJoueur(List<GameObject> liste1, GameObject[] liste)
     {
         List<GameObject> listeA = new List<GameObject>();
@@ -118,6 +123,7 @@ public class ScriptBut : NetworkBehaviour
             }
         }
     }
+  
     void RéactiverMouvement()
     {
         GameObject[] liste = new GameObject[10];
@@ -146,6 +152,7 @@ public class ScriptBut : NetworkBehaviour
             }
         }
         enPause = false;
+        butEffectuer = false;
     }
     private void OnTriggerExit(Collider other)
     {
@@ -176,9 +183,40 @@ public class ScriptBut : NetworkBehaviour
     {
         enPause = changement;
     }
+    void OnButChange(bool changement)
+    {
+        butEffectuer = changement;
+    }
     // Update is called once per frame
     void Update()
     {
         compteur += Time.deltaTime;
+        if(butEffectuer)
+        {
+            ButRéaliser();
+        }
+
+    }
+    [Command]
+    void CmdButRéaliser()
+    {
+        //RpcButRéaliser();
+    }
+  
+    void ButRéaliser()
+    {
+        Ballon = this.gameObject;
+        GameObject[] liste = new GameObject[10];
+        List<GameObject> liste1 = new List<GameObject>();
+        compteur = 0;
+        Ballon.transform.position = new Vector3(1, 0.5f, 5);
+        Ballon.GetComponent<Rigidbody>().isKinematic = true;
+        Ballon.transform.parent = null;
+        Ballon.GetComponent<SphereCollider>().enabled = true;
+
+        compteur = 0;
+        enPause = true;
+        PlacerJoueur(liste1, liste);
+        Invoke("RéactiverMouvement", 1f);
     }
 }
