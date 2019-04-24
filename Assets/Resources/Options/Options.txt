@@ -1,8 +1,8 @@
 FréqObj : 
-0.2694444
+1
 NbMaxObj : 
 3
 FréqPluie : 
-0.7777778
+0.5
 FréqOrage : 
 0.5
