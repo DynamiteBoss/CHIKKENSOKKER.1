@@ -29,7 +29,7 @@ public class PlacerBalle : NetworkBehaviour
         {
             if (other.tag == "ZoneC")
             {
-                TrouverJoueurÀChanger(other.transform.parent.gameObject);
+                CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
                 MettreBalleEnfant(other.transform);
             }
         }
@@ -88,7 +88,13 @@ public class PlacerBalle : NetworkBehaviour
                 transform.localPosition = new Vector3(-0.1f, 1.5f, 2);
         }*/
     }
-    void TrouverJoueurÀChanger(GameObject aI)
+    [Command]
+    void CmdTrouverJoueurÀChanger(GameObject aI)
+    {
+        RpcTrouverJoueurÀChanger(aI);
+    }
+    [ClientRpc]
+    void RpcTrouverJoueurÀChanger(GameObject aI)
     {
         string tampon;
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
@@ -132,7 +138,7 @@ public class PlacerBalle : NetworkBehaviour
     [Command]
     void CmdTrouverJoueurÀChangerGardien(GameObject gardien)
     {
-        RpcTrouverJoueurÀChanger(gardien);
+        RpcTrouverJoueurÀChangerGardien(gardien);
         /*
         AncienGardien = gardien;
         string tampon;
@@ -167,7 +173,7 @@ public class PlacerBalle : NetworkBehaviour
 
     }
     [ClientRpc]
-    void RpcTrouverJoueurÀChanger(GameObject gardien)
+    void RpcTrouverJoueurÀChangerGardien(GameObject gardien)
     {
 
         AncienGardien = gardien;
