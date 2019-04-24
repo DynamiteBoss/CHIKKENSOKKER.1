@@ -142,11 +142,13 @@ public class PlacerBalle : NetworkBehaviour
         string équipe;
 
         foreach (GameObject x in listeAI)
-        {
+        {/*
             if(gardien.GetComponent<TypeÉquipe>().estÉquipeA == x.GetComponent<TypeÉquipe>().estÉquipeA)
             {
                 listeAIMonÉquipe.Add(x);
             }
+            */
+            listeAIMonÉquipe.Add(x);
         }
         if(gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
@@ -157,7 +159,7 @@ public class PlacerBalle : NetworkBehaviour
             équipe = "B";
         }
         GameObject joueur = GameObject.Find("Joueur1" + équipe);
-        int grandeur = listeAIMonÉquipe.Count + 1;
+        int grandeur = listeAIMonÉquipe.Count / 2 + 1;
         tampon = joueur.name;
 
         ChangerGardienÀJoueur(joueur, gardien, tampon,grandeur,équipe);
