@@ -92,6 +92,11 @@ public static class Inventaire
     [Command]
     private static void CmdAfficherSprite(int position, char équipe, string nomSprite)
     {
+        RpcAfficherSprite(position, équipe, nomSprite);
+    }
+    [ClientRpc]
+    private static void RpcAfficherSprite(int position, char équipe, string nomSprite)
+    {
         if (équipe == 'A') { if (position == 1) { objet1A = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
         else if (équipe == 'B') { if (position == 1) { objet1B = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
 
@@ -101,5 +106,6 @@ public static class Inventaire
         GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = objet2B;
 
         //GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
+
     }
 }
