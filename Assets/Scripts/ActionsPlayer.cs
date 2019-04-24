@@ -16,12 +16,13 @@ public class ActionsPlayer : NetworkBehaviour
     [SerializeField]
     public static Vector3[] PositionJoueursAlliés { get; set; }
     public static GameObject[] JoueursAlliés { get; set; }
-
-    const float ForceMaxPasse = 5f;
-    const float DistPasseForceMax = 10f;
-    const float DistMaxPasse = 40f;
+    float direction { get; set; }
+    const float ForceMaxPasse = 50f;
+    const float DistPasseForceMax = 50f;
+    const float DistMaxPasse = 75f;
     const float ForceLobe = 2.5f;
 
+    int compteurBoucle = 0;
     float compteur = 0;
 
     bool estEnMouvementPlacage = false;
@@ -94,13 +95,13 @@ public class ActionsPlayer : NetworkBehaviour
                         {
                             //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                             compteur = 0;
-                            FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
+                            CmdFairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                             StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                                                                                                           //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                         }
                         else
                         {
-
+                            //ChangerAIÀJoueur(TrouverJoueurPasse(TrouverPosJoueurPasse(direction)), this.transform.gameObject, this.transform.gameObject.name);
                         }
                     }
                 }
@@ -120,7 +121,7 @@ public class ActionsPlayer : NetworkBehaviour
                     {
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
-                        FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
+                        CmdFairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                         StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                                                                                                       //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                     }
@@ -128,6 +129,7 @@ public class ActionsPlayer : NetworkBehaviour
             }
         }
     }
+
     private Vector3 TrouverPosJoueurPasse(float direction)
     {
         /*Vector du But de l'autre team*/
@@ -136,6 +138,7 @@ public class ActionsPlayer : NetworkBehaviour
 
         for (int i = 1; i < JoueursAlliés.Length; i++)
         {
+            PositionJoueursAlliés[i] += PositionJoueursAlliés[i] == this.transform.parent.position ? Vector3.up : Vector3.zero;
             posJoueurÀPasser = (CalculerAngle(posJoueurÀPasser, direction) < CalculerAngle(PositionJoueursAlliés[i], direction)) ? posJoueurÀPasser : PositionJoueursAlliés[i];
         }
         if ((posJoueurÀPasser - this.transform.parent.position).magnitude < 2)
@@ -159,6 +162,7 @@ public class ActionsPlayer : NetworkBehaviour
         }
     }
 
+    //[ClientRpc]
     private void FaireRencensementJoueurs()
     {
         //for (int i = 0; i < GameObject.FindGameObjectsWithTag("Player").Length; i++)
@@ -169,6 +173,13 @@ public class ActionsPlayer : NetworkBehaviour
         PositionJoueursAlliés = new Vector3[JoueursAlliés.Length];
 
         JoueursAlliés = GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.parent.GetComponent<TypeÉquipe>()).ToArray();
+        foreach (GameObject g in JoueursAlliés)
+        {
+
+            PositionJoueursAlliés[compteurBoucle] = g.transform.position;
+            compteurBoucle++;
+        }
+        compteurBoucle = 0;
 
         //JoueursAlliés = GameObject.FindGameObjectsWithTag("Player").ToList().SkipWhile(g => g.transform.Find("Balle").gameObject != null).ToArray();
 
@@ -179,36 +190,21 @@ public class ActionsPlayer : NetworkBehaviour
         Vector3 dirPasse = joueurÀPasser - this.transform.parent.position;
         Vector3 rotationJoueur = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
 
-        return Vector3.Angle(rotationJoueur, dirPasse) / 180f * Mathf.PI;
+        return Vector3.Angle(rotationJoueur, dirPasse) / 180f * Mathf.PI; 
     }
 
     void RetirerJoueurPossessionBallon()
     {
-        GameObject[] ancienTabJoueur = (GameObject[])JoueursAlliés.Clone();
-        for (int i = 0; i < JoueursAlliés.Length; i++)
-        {
-            if (JoueursAlliés[i] == this.gameObject)
-            {
-                JoueursAlliés = new GameObject[(GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.parent.GetComponent<TypeÉquipe>()).ToArray().Length - 1)];
-                int indexTableauCopie = 0;
-
-                for (int j = 0; j < JoueursAlliés.Length; j++)
-                {
-                    if (j != i)
-                    {
-                        JoueursAlliés[indexTableauCopie] = ancienTabJoueur[j];
-                        indexTableauCopie++;
-                    }
-                }
-                break;
-            }
-        }
+        JoueursAlliés = new GameObject[GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.parent.GetComponent<TypeÉquipe>()).Count() - 1];
+        GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.parent.GetComponent<TypeÉquipe>()).Except(new GameObject[]{ this.transform.parent.gameObject }).ToArray();
     }
 
-    public void FairePasse(Vector3 positionJoueurVisé)
+    //[Command]
+    public void CmdFairePasse(Vector3 positionJoueurVisé)
     {
         Transform balle = gameObject.transform.parent.Find("Balle");
         Vector3 vecteurPasse = new Vector3(positionJoueurVisé.x - this.transform.parent.position.x, .5f, positionJoueurVisé.z - this.transform.parent.position.z);
+        Debug.Log(positionJoueurVisé.ToString());
         if (balle != null)
         {
             balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
@@ -222,6 +218,20 @@ public class ActionsPlayer : NetworkBehaviour
             Debug.DrawRay(new Vector3(this.transform.parent.position.x, 2.425f, this.transform.parent.position.z), vecteurPasse, Color.red, 2);
             //Debug.DrawLine(new Vector3(this.transform.parent.position.x, 2.425f, this.transform.parent.position.z), new Vector3(this.transform.position.x - positionJoueurVisé.x, 0, this.transform.position.z - positionJoueurVisé.z) * 100, Color.blue, 2);
         }
+    }
+    void ChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
+    {
+
+        joueur.GetComponent<MouvementPlayer>().enabled = false;
+        joueur.GetComponent<ScriptMouvementAI>().enabled = true;
+        joueur.tag = "AI";
+        joueur.name = aI.name;
+        joueur.GetComponentInChildren<Rigidbody>().isKinematic = true;
+
+        aI.name = tampon;
+        aI.GetComponent<MouvementPlayer>().enabled = true;
+        aI.GetComponent<ScriptMouvementAI>().enabled = false;
+        aI.tag = "Player";
     }
 
     IEnumerator AttendrePourDistanceBallon(float durée)
@@ -237,7 +247,6 @@ public class ActionsPlayer : NetworkBehaviour
         //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
         if (other.transform.tag == "Player" && other.transform.GetComponent<TypeÉquipe>().estÉquipeA != this.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject && !estEnMouvementPlacage)
         {
-            float direction = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
             if (other.transform.parent != this.transform.parent)
                 JoueurÀPlaquer = other.transform.parent.gameObject;
 

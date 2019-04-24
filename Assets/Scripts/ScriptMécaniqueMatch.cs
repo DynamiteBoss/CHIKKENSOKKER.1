@@ -283,7 +283,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("AI").Length > 3)   //TEMPORAIRE
+        if (true || (GameObject.FindGameObjectsWithTag("AI").Length > 3))   //TEMPORAIRE
         {
             if (matchEnCours)
             {
@@ -351,6 +351,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), positionObj, Quaternion.identity);
             NetworkServer.Spawn(OeufHasard);
+            OeufHasard.GetComponentInChildren<AudioSource>().Play();
             nbOeufs++;
         }
     }
