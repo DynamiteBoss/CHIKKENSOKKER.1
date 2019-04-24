@@ -10,6 +10,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     Vector3 PointÀAller { get; set; }
 
     Vector3 positionTactique;
+    Vector3 posBalle { get; set; }
 
     Vector3 Positionement { get; set; }
 
@@ -50,6 +51,8 @@ public class ScriptMouvementAI : NetworkBehaviour
         LimitesZ = new int[2] { LIMITE_BAS, LIMITE_HAUT };
         ListeProximitéA = new List<GameObject>();
         ListeProximitéB = new List<GameObject>();
+        posBalle = GameObject.FindGameObjectWithTag("Balle").GetComponent<Transform>().position;
+        Debug.Log(posBalle);
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
@@ -126,6 +129,10 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             Debug.Log("STOP");
             posCible = transform.position;
+        }
+        else
+        {
+            
         }
         return posCible ;
     }
