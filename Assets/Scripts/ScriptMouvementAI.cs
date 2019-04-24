@@ -33,11 +33,20 @@ public class ScriptMouvementAI : NetworkBehaviour
     string ModePositionnement;
     int noComportement;
     short constÉquipe;
+    int[] LimitesX { get; set; }
+    int [] LimitesZ { get; set; }
+    const int LIMITE_HAUT = 17;
+    const int LIMITE_BAS = -17;
+    const int LIMITE_GAUCHE = -39;
+    const int LIMITE_DROITE = 39;
 
     const float VitDeplacement = 7.5f;
     // Start is called before the first frame update
     void Start()
     {
+        PointÀAller = new Vector3();
+        LimitesX = new int[2] { LIMITE_GAUCHE, LIMITE_DROITE };
+        LimitesZ = new int[2] { LIMITE_BAS, LIMITE_HAUT };
         ListeProximitéA = new List<GameObject>();
         ListeProximitéB = new List<GameObject>();
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
@@ -233,10 +242,33 @@ public class ScriptMouvementAI : NetworkBehaviour
         PointÀAller = (GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
             .OrderByDescending(x => x.transform.position.x * constÉquipe).First().transform.position);
         PointÀAller += (positionTactique + new Vector3(constÉquipe /** (10/PointÀAller.x)*/, 0, 0));
+        VérifierCible();
         return PointÀAller;
         
     }
 
+    private void VérifierCible()
+    {
+        float nouveauX = PointÀAller.x;
+        float nouveauZ = PointÀAller.z ;
+        if(PointÀAller.x > LIMITE_DROITE)
+        {
+            nouveauX = LIMITE_DROITE;
+        }
+        if (PointÀAller.x < LIMITE_GAUCHE)
+        {
+            nouveauX = LIMITE_GAUCHE;
+        }
+        if (PointÀAller.z > LIMITE_HAUT)
+        {
+            nouveauZ = LIMITE_HAUT;
+        }
+        if (PointÀAller.z < LIMITE_BAS)
+        {
+            nouveauZ = LIMITE_BAS;
+        }
+        PointÀAller = new Vector3(nouveauX, transform.position.y, nouveauZ);
+    }
     private void DéplacerJoueurVersPoint(Vector3 pointDéplacement)
     {
         if ((this.transform.position - (Ballon.transform.position + Vector3.up)).magnitude > 1)
