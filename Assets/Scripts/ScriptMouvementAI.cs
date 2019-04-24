@@ -120,12 +120,12 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private Vector3 GérerPositionsDef()
     {
-        Vector3 posCible = new Vector3();
-        if (EstPasSeulDansZone(ListeProximitéA, transform.position))
+        Vector3 posCible = Vector3.one;
+        if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
         {
             posCible = transform.position;
         }
-        return Vector3.one;
+        return posCible ;
     }
 
     private Vector3 DéterminerPosRevenir()
