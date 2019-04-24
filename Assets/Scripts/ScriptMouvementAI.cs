@@ -16,6 +16,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     Rigidbody Ballon { get; set; }
 
     GameObject But { get; set; }
+    Vector3 PositionDéfenseDéfaut { get; set; }
     List<GameObject> ListeProximitéA { get; set; }
     List<GameObject> ListeProximitéB { get; set; }
 
@@ -123,6 +124,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         Vector3 posCible = Vector3.one;
         if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
         {
+            Debug.Log("STOP");
             posCible = transform.position;
         }
         return posCible ;
@@ -146,7 +148,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             GameObject[] listeJoueurs = GameObject.FindGameObjectsWithTag("Player");
             GameObject[] listeAI = GameObject.FindGameObjectsWithTag("AI");
             GameObject[] listeTous = listeJoueurs.Concat(listeAI).ToArray();
-            foreach (GameObject x in listeJoueurs)
+            foreach (GameObject x in listeTous)
             {
                 if (x.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
@@ -169,6 +171,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 }
             }
         }
+        PositionDéfenseDéfaut = posCible;
         return posCible;
     }
     private Vector3 RelocaliserJoueurDef()
@@ -185,11 +188,6 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 estPasSeul = true;
                 
-            }
-            else
-            {
-                estPasSeul = false;
-               
             }
         }
         return estPasSeul;
