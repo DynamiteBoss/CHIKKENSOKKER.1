@@ -24,7 +24,7 @@ public class ScriptAnimationPattes : MonoBehaviour
     {
         //PatteGauche = this.transform.GetComponentInChildren<>
         //PatteDroite = this.gameObject.GetComponents<GameObject>().First(x => x.name.StartsWith("Corps")).transform.Find("PatteDroite").gameObject;
-        Debug.Log(PatteGauche.transform.parent.parent.position.ToString());
+        //Debug.Log(PatteGauche.transform.parent.parent.position.ToString());
         positionAvant = this.transform.position;
     }
 

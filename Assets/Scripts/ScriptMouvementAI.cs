@@ -59,7 +59,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             positionTactique = new Vector3(-7, 0, -5);
         }
-        Debug.Log(noComportement);
+        //Debug.Log(noComportement);
 
        
         constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
@@ -76,8 +76,11 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             compteurFrames = 0;
             PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
+            
             Debug.DrawLine(this.transform.position + Vector3.up, PointÀAller, Color.gray, 17f / 60f);
+            /*
             Debug.Log(TrouverCorportementDéplacement());
+            */
         }
     }
 
@@ -172,12 +175,12 @@ public class ScriptMouvementAI : NetworkBehaviour
             if (EstDansPérimètre(listeJoueur[i].transform,milieuZone))
             {
                 estPasSeul = true;
-                Debug.Log(estPasSeul);
+                
             }
             else
             {
                 estPasSeul = false;
-                Debug.Log(estPasSeul);
+               
             }
         }
         return estPasSeul;

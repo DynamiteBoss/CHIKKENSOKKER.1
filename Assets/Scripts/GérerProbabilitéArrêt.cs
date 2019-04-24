@@ -58,7 +58,7 @@ public class GérerProbabilitéArrêt : MonoBehaviour
         Vector3 distBB = ((Balle.transform.position + velo) - Balle.transform.position + velo);
         Ray directionBalle = new Ray(Balle.transform.position, Balle.transform.position + velo);
         float angle = Vector3.Angle(distGB, distBB);
-        Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo);
+        //Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo);
         
 
         RaycastHit hit;
@@ -66,7 +66,7 @@ public class GérerProbabilitéArrêt : MonoBehaviour
         {
             if (hit.collider != null && (hit.collider.gameObject == GameObject.Find("But" + numéro) || hit.collider.gameObject == GameObject.Find("Gardien1" + équipe)))
             {
-                Debug.Log("Rentre dans Ray");
+                //Debug.Log("Rentre dans Ray");
                 int chance;
                 float probabilité = Mathf.Round(angle / 5);
                 if(probabilité < 1)
@@ -77,7 +77,7 @@ public class GérerProbabilitéArrêt : MonoBehaviour
                 {
                     chance = (int)Random.Range(0, probabilité);
                 }
-                Debug.Log("chance"+chance);
+                //Debug.Log("chance"+chance);
 
                 if(chance == 1)
                 {

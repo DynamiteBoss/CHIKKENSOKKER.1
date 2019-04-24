@@ -93,7 +93,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void RpcTirer1()
     {
         Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-        Debug.Log(direction);
+        //Debug.Log(direction);
         Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
     }
 

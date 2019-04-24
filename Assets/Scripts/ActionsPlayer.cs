@@ -146,7 +146,7 @@ public class ActionsPlayer : NetworkBehaviour
         {
             posJoueurÀPasser = ((posJoueurÀPasser - this.transform.parent.position).normalized * ForceLobe) + this.transform.parent.position + Vector3.up * ForceLobe;
         }
-        Debug.Log(posJoueurÀPasser.ToString());
+        //Debug.Log(posJoueurÀPasser.ToString());
         return posJoueurÀPasser;
     }
 
