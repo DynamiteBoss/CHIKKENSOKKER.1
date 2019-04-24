@@ -13,6 +13,9 @@ public class ScriptItems : NetworkBehaviour
     }
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         framesDélai++;
         if (isLocalPlayer && tag == "Player")
         {
@@ -56,93 +59,62 @@ public class ScriptItems : NetworkBehaviour
                 CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
                 framesDélai = 0;
             }
+        }
 
-            // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
-            if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.Contains("1"))
-            {
-                if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
-                {
-                    CmdInstancierItem(Inventaire.itemA1, this.transform.position);
-
-                    if (Inventaire.itemA2 < Inventaire.ITEMNUL && Inventaire.itemA2 >= 0)
-                    {
-                        int temp = Inventaire.itemA2;
-                        Inventaire.itemA2 = Inventaire.ITEMNUL;
-                        Inventaire.itemA1 = temp;
-                        CmdModifierSprite(1, 'A');
-                        CmdModifierSprite(2, 'A');
-                    }
-                    else
-                    {
-                        Inventaire.itemA1 = Inventaire.ITEMNUL;
-                        CmdModifierSprite(1, 'A');
-                    }
-                    framesDélai = 0;
-                }
-                if (!(GetComponent<TypeÉquipe>().estÉquipeA) && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
-                {
-                    CmdInstancierItem(Inventaire.itemB1, this.transform.position);
-
-                    if (Inventaire.itemB2 < Inventaire.ITEMNUL && Inventaire.itemB2 >= 0)
-                    {
-                        int temp = Inventaire.itemB2;
-                        Inventaire.itemB2 = Inventaire.ITEMNUL;
-                        Inventaire.itemB1 = temp;
-                        CmdModifierSprite(1, 'B');
-                        CmdModifierSprite(2, 'B');
-                    }
-                    else
-                    {
-                        Inventaire.itemB1 = Inventaire.ITEMNUL;
-                        CmdModifierSprite(1, 'B');
-                    }
-                    framesDélai = 0;
-                }
-            }
-            // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
-            if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.Contains("2"))
-            {
-                if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
-                {
-                    CmdInstancierItem(Inventaire.itemA1, this.transform.position);
-
-                    if (Inventaire.itemA2 < Inventaire.ITEMNUL && Inventaire.itemA2 >= 0)
-                    {
-                        int temp = Inventaire.itemA2;
-                        Inventaire.itemA2 = Inventaire.ITEMNUL;
-                        Inventaire.itemA1 = temp;
-                        CmdModifierSprite(1, 'A');
-                        CmdModifierSprite(2, 'A');
-                    }
-                    else
-                    {
-                        Inventaire.itemA1 = Inventaire.ITEMNUL;
-                        CmdModifierSprite(1, 'A');
-                    }
-                    framesDélai = 0;
-                }
-                if (!(GetComponent<TypeÉquipe>().estÉquipeA) && Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
-                {
-                    CmdInstancierItem(Inventaire.itemB1, this.transform.position);
-
-                    if (Inventaire.itemB2 < Inventaire.ITEMNUL && Inventaire.itemB2 >= 0)
-                    {
-                        int temp = Inventaire.itemB2;
-                        Inventaire.itemB2 = Inventaire.ITEMNUL;
-                        Inventaire.itemB1 = temp;
-                        CmdModifierSprite(1, 'B');
-                        CmdModifierSprite(2, 'B');
-                    }
-                    else
-                    {
-                        Inventaire.itemB1 = Inventaire.ITEMNUL;
-                        CmdModifierSprite(1, 'B');
-                    }
-                    framesDélai = 0;
-                }
-            }
+        // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
+        if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1"))
+        {
+            FaireOpérationJoueur(this.transform.gameObject.name[this.transform.gameObject.name.Length-1]);
+        }
+        // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
+        if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2"))
+        {
+            FaireOpérationJoueur(this.transform.gameObject.name[this.transform.gameObject.name.Length - 1]);
         }
     }
+
+    private void FaireOpérationJoueur(char équipeVraie)
+    {
+        if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
+        {
+            CmdInstancierItem(Inventaire.itemA1, this.transform.position);
+
+            if (Inventaire.itemA2 < Inventaire.ITEMNUL && Inventaire.itemA2 >= 0)
+            {
+                int temp = Inventaire.itemA2;
+                Inventaire.itemA2 = Inventaire.ITEMNUL;
+                Inventaire.itemA1 = temp;
+                CmdModifierSprite(1, 'A');
+                CmdModifierSprite(2, 'A');
+            }
+            else
+            {
+                Inventaire.itemA1 = Inventaire.ITEMNUL;
+                CmdModifierSprite(1, 'A');
+            }
+            framesDélai = 0;
+        }
+        else if (Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
+        {
+            CmdInstancierItem(Inventaire.itemB1, this.transform.position);
+
+            if (Inventaire.itemB2 < Inventaire.ITEMNUL && Inventaire.itemB2 >= 0)
+            {
+                int temp = Inventaire.itemB2;
+                Inventaire.itemB2 = Inventaire.ITEMNUL;
+                Inventaire.itemB1 = temp;
+                CmdModifierSprite(1, 'B');
+                CmdModifierSprite(2, 'B');
+            }
+            else
+            {
+                Inventaire.itemB1 = Inventaire.ITEMNUL;
+                CmdModifierSprite(1, 'B');
+            }
+            framesDélai = 0;
+        }
+    }
+
     [Command]
     private void CmdModifierSprite(int position, char équipe)  //CA MARCHE PAS
     {
@@ -168,8 +140,10 @@ public class ScriptItems : NetworkBehaviour
                 Inventaire.objet2B = null;
             }
             else { Inventaire.objet1B = null; }
+
         }
-        
+
+        Debug.Log("Le Sprite a été modifié pour l'équipe" + équipe);
         GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = Inventaire.objet1A;
         GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = Inventaire.objet2A;
         GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = Inventaire.objet1B;
@@ -177,13 +151,15 @@ public class ScriptItems : NetworkBehaviour
     }
 
     [Command]
-    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE
+    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE juste pour le host
     {
         RpcInstancierItem(indiceItem, position);
+        Debug.Log(string.Format("Instanciation de l'item {0} par {1}", Inventaire.EnTexte(indiceItem), isLocalPlayer? "leu joueur local" : "leu client"));
     }
     [ClientRpc]
     private void RpcInstancierItem(int indiceItem, Vector3 position)
     {
+        Debug.Log("Instanciaton de l'item" + Inventaire.EnTexte(indiceItem) + "à la position " + position.ToString());
         switch (indiceItem)
         {
             case 0:
@@ -278,6 +254,7 @@ public class ScriptItems : NetworkBehaviour
                 {
                     return;
                 }
+
         }
     }
 }

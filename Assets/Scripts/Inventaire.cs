@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public static class Inventaire 
+public class Inventaire 
 {
     public const int ITEMNUL = 8;
 
@@ -39,31 +39,32 @@ public static class Inventaire
     static void OnObjet1A(Sprite changement)
     {
         objet1A = changement;
-        GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = objet1A;
     }
     static void OnObjet2A(Sprite changement)
     {
         objet2A = changement;
-        GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = objet2A;
     }
     static void OnObjet1B(Sprite changement)
     {
         objet1B = changement;
-        GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = objet1B;
-
     }
     static void OnObjet2B(Sprite changement)
     {
         objet2B = changement;
-        GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = objet2B;
-
     }
-    public static void AfficherInventaire(char équipe, int position)
+    [Command]
+    public static void CmdAfficherInventaire(char équipe, int position)
+    {
+        RpcAfficherInventaire(équipe, position);
+    }
+
+    [ClientRpc]
+    public static void RpcAfficherInventaire(char équipe, int position)
     {
         int valeurItemTemp = 8;
 
         if (équipe == 'A') { if (position == 1) { valeurItemTemp = itemA1; } else { valeurItemTemp = itemA2; } }
-        if (équipe == 'B') { if (position == 1) { valeurItemTemp = itemB1; } else { valeurItemTemp = itemB2; } }
+        else if (équipe == 'B') { if (position == 1) { valeurItemTemp = itemB1; } else { valeurItemTemp = itemB2; } }
 
         switch (valeurItemTemp)
         {
@@ -98,9 +99,66 @@ public static class Inventaire
     [Command]
     private static void CmdAfficherSprite(int position, char équipe, string nomSprite)
     {
-        if (équipe == 'A') { if (position == 1) { objet1A = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
-        else if (équipe == 'B') { if (position == 1) { objet1B = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
+        RpcAfficherSprite(position, équipe, nomSprite);
+    }
+    [ClientRpc]
+    private static void RpcAfficherSprite(int position, char équipe, string nomSprite)
+    {
+        if (équipe == 'A')
+        {
+            if (position == 1)
+            {
+                objet1A = Resources.Load<Sprite>("Image/" + nomSprite);
+                GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = objet1A;
+                Debug.Log("Le Sprite" + nomSprite + "a été affiché en 1A");
+            }
+            else
+            {
+                objet2A = Resources.Load<Sprite>("Image/" + nomSprite);
+                GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = objet2A;
+                Debug.Log("Le Sprite" + nomSprite + "a été affiché en 2A");
+            }
+        }
+        else if (équipe == 'B')
+        {
+            if (position == 1)
+            {
+                objet1B = Resources.Load<Sprite>("Image/" + nomSprite);
+                GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = objet1B;
+                Debug.Log("Le Sprite" + nomSprite + "a été affiché en 1B");
+            }
+            else
+            {
+                objet2B = Resources.Load<Sprite>("Image/" + nomSprite);
+                GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = objet2B;
+                Debug.Log("Le Sprite" + nomSprite + "a été affiché en 2B");
 
+            }
+        }
         //GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);    }
+    }
+    public static string EnTexte(int valeur)
+    {
+        switch (valeur)
+        {
+            case 0:
+                return "crotte3";
+            case 1:
+                return "crotte5";
+            case 2:
+                return "oeufXL";
+            case 3:
+                return "oeuf3";
+            case 4:
+                return "torpille";
+            case 5:
+                return "bombe";
+            case 6:
+                return "brouillé";
+            case 7:
+                return "versdeterre";
+            default:
+                return "xd";
+        }
     }
 }
