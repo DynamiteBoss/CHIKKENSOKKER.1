@@ -336,11 +336,6 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [Command]
     public void CmdFaireApparaitreObjet()
     {
-        RpcFaireApparaitreObjet();
-    }
-    [ClientRpc]
-    public void RpcFaireApparaitreObjet()
-    {
         Vector3 positionObj = new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ));
         if (nbOeufs < NbOeufMax)
         {

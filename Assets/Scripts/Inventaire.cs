@@ -36,21 +36,27 @@ public static class Inventaire
     {
         itemB2 = changement;
     }
-    static void OnObjetA1(Sprite changement)
+    static void OnObjet1A(Sprite changement)
     {
         objet1A = changement;
+        GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = objet1A;
     }
-    static void OnObjetA2(Sprite changement)
+    static void OnObjet2A(Sprite changement)
     {
         objet2A = changement;
+        GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = objet2A;
     }
-    static void OnObjetB1(Sprite changement)
+    static void OnObjet1B(Sprite changement)
     {
         objet1B = changement;
+        GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = objet1B;
+
     }
-    static void OnObjetB2(Sprite changement)
+    static void OnObjet2B(Sprite changement)
     {
         objet2B = changement;
+        GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = objet2B;
+
     }
     public static void AfficherInventaire(char équipe, int position)
     {
@@ -99,11 +105,6 @@ public static class Inventaire
     {
         if (équipe == 'A') { if (position == 1) { objet1A = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
         else if (équipe == 'B') { if (position == 1) { objet1B = Resources.Load<Sprite>("Image/" + nomSprite); } else { objet2A = Resources.Load<Sprite>("Image/" + nomSprite); } }
-
-        GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = objet1A;
-        GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = objet2A;
-        GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = objet1B;
-        GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = objet2B;
 
         //GameObject.Find("Objet" + position + équipe).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Image/" + nomSprite);
 

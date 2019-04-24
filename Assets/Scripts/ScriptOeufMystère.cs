@@ -43,11 +43,6 @@ public class ScriptOeufMystère : NetworkBehaviour
     [Command]
     private void CmdAttribuerObjetJoueur(GameObject joueur, int indice)
     {
-        RpcAttribuerObjetJoueur(joueur, indice);      
-    }
-    [ClientRpc]
-    private void RpcAttribuerObjetJoueur(GameObject joueur, int indice)
-    {
         GameObject player = GameObject.Find(joueur.name);
         if (player.GetComponent<TypeÉquipe>().estÉquipeA)
         {
