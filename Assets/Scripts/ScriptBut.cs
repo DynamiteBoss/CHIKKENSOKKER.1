@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 
 public class ScriptBut : NetworkBehaviour
 {
+    const int IndiceMax = 8;
+    float compteur2 = 0;
     string[] tags = new string[] { "Player", "AI", "Gardien" };
     public int compteurSpawn = 0;
     const float TEMPS_MIN = 1f;
@@ -16,6 +18,9 @@ public class ScriptBut : NetworkBehaviour
     public int NbButsA = 0;
     [SyncVar(hook = "OnButChangeB")]
     public int NbButsB = 0;
+
+    [SyncVar(hook = "OnRandomChangeB")]
+    public int random;
 
     [SyncVar(hook ="OnScoreChange")]
     public string score = 0 + "  -  " + 0;
@@ -170,6 +175,11 @@ public class ScriptBut : NetworkBehaviour
         NbButsB = but;
        // InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
     }
+    void OnRandomChangeB(int changement)
+    {
+        random = changement;
+        
+    }
     void OnScoreChange(string change)
     {
         score = change;
@@ -196,6 +206,11 @@ public class ScriptBut : NetworkBehaviour
             ButRéaliser();
         }
 
+        compteur2 += Time.deltaTime;
+        if(compteur2 >= 4f)
+        {
+            random = UnityEngine.Random.Range(0, IndiceMax);
+        }
     }
     [Command]
     void CmdButRéaliser()
