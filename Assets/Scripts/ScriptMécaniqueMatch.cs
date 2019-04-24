@@ -372,13 +372,13 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         int butB = Balle.GetComponent<ScriptBut>().NbButsB;
         if (butA < butB)
         {
-            message = "L'équipe B remporte la partie " + butB + " - " + butA;
+            message = "L'équipe A remporte la partie " + butB + " - " + butA;
         }
         else
         {
             if (butA > butB)
             {
-                message = "L'équipe A remporte la partie " + butB + " - " + butA;
+                message = "L'équipe B remporte la partie " + butB + " - " + butA;
             }
             else
             {

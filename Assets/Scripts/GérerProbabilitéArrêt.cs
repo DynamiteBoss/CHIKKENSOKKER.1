@@ -64,7 +64,7 @@ public class GérerProbabilitéArrêt : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(directionBalle, out hit))
         {
-            if (hit.collider != null && (hit.collider.gameObject == GameObject.Find("But" + numéro) || hit.collider.gameObject == GameObject.Find("Gardien1" + équipe)))
+            if (hit.collider != null && (hit.collider.gameObject == GameObject.Find("But" + numéro) || hit.collider.gameObject == GameObject.Find("Gardien1" + équipe) || hit.collider.transform.parent == GameObject.Find("Gardien1" + équipe)))
             {
                 //Debug.Log("Rentre dans Ray");
                 int chance;
