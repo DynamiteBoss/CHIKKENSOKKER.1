@@ -1,5 +1,5 @@
 FréqObj : 
-0.005555556
+1
 NbMaxObj : 
 3
 FréqPluie : 

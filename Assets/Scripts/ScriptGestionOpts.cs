@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class ScriptGestionOpts : MonoBehaviour
 {
-    const string CheminAccesPartielOpts = "/Resources/Options/Options";
+    string CheminAccesPartielOpts = Application.dataPath.ToString() + "/Resources/Options/Options";
 
     int compteur = 25;
 
@@ -18,7 +18,7 @@ public class ScriptGestionOpts : MonoBehaviour
 
     bool aÉtéModifié = false;
 
-    //string cheminAcces = Application.dataPath + "/Resources/Options.txt"; //https://stackoverflow.com/questions/50716171/unity-read-text-file-from-resources-folder
+    //string cheminAcces =   + "/Resources/Options.txt"; //https://stackoverflow.com/questions/50716171/unity-read-text-file-from-resources-folder
 
     Options Opts { get; set; }
 
@@ -110,8 +110,8 @@ public class ScriptGestionOpts : MonoBehaviour
     }
     private void ÉcrireFichierOpts(Options opts)
     {
-        // FileStream StreamerFichier = File.Open(Application.dataPath + "/Resources/Options.txt", FileMode.OpenOrCreate);
-        using (StreamWriter streamWriter = new StreamWriter(Application.dataPath + CheminAccesPartielOpts + "Temporaires.txt", false))
+        // FileStream StreamerFichier = File.Open(  + "/Resources/Options.txt", FileMode.OpenOrCreate);
+        using (StreamWriter streamWriter = new StreamWriter( CheminAccesPartielOpts + "Temporaires.txt", false))
         {
             aÉtéModifié = true;
             //A REVOIR
@@ -201,13 +201,13 @@ public class ScriptGestionOpts : MonoBehaviour
 
     public void Annuler()
     {
-        File.Delete(Application.dataPath + CheminAccesPartielOpts + "Temporaires.txt");
+        File.Delete(CheminAccesPartielOpts + "Temporaires.txt");
         SceneManager.UnloadSceneAsync("SceneOptionMenu");
     }
     public void Appliquer()
     {
-        File.Replace(Application.dataPath + CheminAccesPartielOpts + "Temporaires.txt", Application.dataPath + CheminAccesPartielOpts + ".txt", Application.dataPath + CheminAccesPartielOpts + "BKP.txt", true);
-        File.Delete(Application.dataPath + CheminAccesPartielOpts + "Temporaires.txt");
+        File.Replace(CheminAccesPartielOpts + "Temporaires.txt",   CheminAccesPartielOpts + ".txt",   CheminAccesPartielOpts + "BKP.txt", true);
+        File.Delete(CheminAccesPartielOpts + "Temporaires.txt");
         SceneManager.UnloadSceneAsync("SceneOptionMenu");
     }
 }
