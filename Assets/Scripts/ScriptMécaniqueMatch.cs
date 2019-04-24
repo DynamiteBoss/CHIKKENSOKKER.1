@@ -39,16 +39,20 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     const float VitesseJourNuit = 100f;
 
     [SerializeField]
-    float FrequenceObjet = 600f; //10 secondes
+    float FrequenceObjetMax = 1200f; //20 secondes
+    [SerializeField]
+    float FrequenceObjetMin = 180f;
 
     float probabilitéOrage;
     float probabilitéPluie;
 
+    float frequenceObjet = 1200f;
+
     [SerializeField]
     const int NbFramesUpdate = 10;
 
-    const float DimTerrainX = 42f;
-    const float DimTerrainZ = 20f;
+    const float DimTerrainX = 38f;
+    const float DimTerrainZ = 16f;
 
     Text TxtTimer { get; set; }
     [SyncVar(hook = "OnChronomètreChange")] public string chronomètre;
@@ -79,7 +83,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         using (StreamReader streamReader = new StreamReader(Application.dataPath + CheminAccesPartielOpts))
         {
             streamReader.ReadLine();
-            float.TryParse(streamReader.ReadLine().ToString(), out FrequenceObjet);
+            float.TryParse(streamReader.ReadLine().ToString(), out frequenceObjet);
             streamReader.ReadLine();
             int.TryParse(streamReader.ReadLine().ToString(), out NbOeufMax);
             streamReader.ReadLine();
@@ -89,6 +93,12 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
             streamReader.Close();
         }
+
+        if (frequenceObjet <= 0.05f)
+        {
+            frequenceObjet = FrequenceObjetMax - FrequenceObjetMax * frequenceObjet + FrequenceObjetMin;
+        }
+
 
 
 
@@ -273,6 +283,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (true/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/)   //TEMPORAIRE
         {
             if (matchEnCours)
@@ -310,7 +321,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                             modeNuitLocal = EstEnModeNuit;
                             ajusteLumiere = true;
                         }
-                        if (compteur2 == FrequenceObjet)
+                        if (compteur2 >= frequenceObjet)
                         {
                             compteur2 = 0;
                             CmdFaireApparaitreObjet();

@@ -21,7 +21,12 @@ public class PlacerBalle : NetworkBehaviour
         }
         else if (other.transform.parent.tag == "Player")
         {
-            MettreBalleEnfant(other.transform);
+            if (other.tag == "ZoneC")
+            {
+                GameObject parent = other.transform.parent.gameObject;
+                CmdMettreBalleEnfant(parent);
+            }
+            
             //CalculerDistanceBalle();
             //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
         }
@@ -29,8 +34,9 @@ public class PlacerBalle : NetworkBehaviour
         {
             if (other.tag == "ZoneC")
             {
+                GameObject parent = other.transform.parent.gameObject;
                 CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
-                MettreBalleEnfant(other.transform);
+                CmdMettreBalleEnfant(parent);
             }
         }
         else if (other.transform.parent.tag == "Gardien")
@@ -38,27 +44,32 @@ public class PlacerBalle : NetworkBehaviour
 
             if (other.tag == "ZoneC")
             {
+                GameObject parent = other.transform.parent.gameObject;
                 CmdTrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
-                MettreBalleEnfant(other.transform);
+                CmdMettreBalleEnfant(parent);
             }
         }
     }
-    private void MettreBalleEnfant(Transform other)
+    [Command]
+    void CmdMettreBalleEnfant(GameObject other)
     {
+        RpcMettreBalleEnfant(other);
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
-        if (other.tag == "ZoneC")
-        {
+        
+        
+            /*
             estPlacer = true;
             //GetComponent<NetworkTransform>().enabled = false;
-            this.transform.parent = other.transform.parent;
+            this.transform.parent = other.transform;
             transform.localScale = Vector3.one;
 
             this.transform.localPosition = new Vector3(0, 1.5f, 2);
             GetComponent<SphereCollider>().enabled = false;
             transform.GetComponent<Rigidbody>().isKinematic = true;
+            */
 
 
-        }
+        
 
 
 
@@ -72,6 +83,18 @@ public class PlacerBalle : NetworkBehaviour
             other.GetComponent<SphereCollider>().enabled = false;
         }
         */
+    }
+    [ClientRpc]
+    void RpcMettreBalleEnfant(GameObject other)
+    {
+        estPlacer = true;
+        //GetComponent<NetworkTransform>().enabled = false;
+        this.transform.parent = other.transform;
+        transform.localScale = Vector3.one;
+
+        this.transform.localPosition = new Vector3(0, 1.5f, 2);
+        GetComponent<SphereCollider>().enabled = false;
+        transform.GetComponent<Rigidbody>().isKinematic = true;
     }
     private void CalculerDistanceBalle()
     {
