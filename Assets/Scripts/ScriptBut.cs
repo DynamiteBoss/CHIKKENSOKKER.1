@@ -44,6 +44,7 @@ public class ScriptBut : NetworkBehaviour
     {
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
+            Ballon = this.gameObject;
             GameObject[] liste = new GameObject[10];
             List<GameObject> liste1 = new List<GameObject>();
             compteur = 0;
@@ -179,9 +180,5 @@ public class ScriptBut : NetworkBehaviour
     void Update()
     {
         compteur += Time.deltaTime;
-    }
-    void DéplacerÉquipe()
-    {
-
     }
 }
