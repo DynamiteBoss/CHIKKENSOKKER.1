@@ -302,7 +302,7 @@ public class ActionsPlayer : NetworkBehaviour
         this.GetComponentInParent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player
         this.transform.parent.GetComponent<Rigidbody>().isKinematic = true;
         this.transform.parent.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = true;
-        this.transform.parent.Find("Corps").transform.rotation = Quaternion.identity;
+        this.transform.parent.Find("Corps").transform.rotation = new Quaternion(0,0,0,0);
 
         estEnMouvementPlacage = false;
     }

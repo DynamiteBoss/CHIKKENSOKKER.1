@@ -54,10 +54,11 @@ public class ActionPlaquageGardien : MonoBehaviour
     {
         var tourner = Gardien.transform.forward;
         Rigidbody corps = Gardien.GetComponent<Rigidbody>();
+        GameObject body = Gardien.transform.Find("Corps").gameObject;
         corps.isKinematic = false;
         corps.AddForce(tourner*25f, ForceMode.Impulse);
 
-        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f,corps));         //attendre un certain temps
+        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f,corps,body));         //attendre un certain temps
         
     }
     private void FrapperAdversaire()
@@ -89,7 +90,7 @@ public class ActionPlaquageGardien : MonoBehaviour
         JoueurÀPlaquer.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon du player attaqué
         JoueurÀPlaquer.GetComponent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player attaquésd
     }
-    IEnumerator AttendreDéactivationScriptPlaqueur(float durée,Rigidbody corps)
+    IEnumerator AttendreDéactivationScriptPlaqueur(float durée,Rigidbody corps,GameObject body)
     {
         this.GetComponentInParent<ContrôleGardien>().enabled = false;    //désactiver le mouvement du player
         yield return new WaitForSeconds(durée / 3);
@@ -97,7 +98,9 @@ public class ActionPlaquageGardien : MonoBehaviour
         yield return new WaitForSeconds(2 * durée / 3);
      
         this.GetComponentInParent<ContrôleGardien>().enabled = true;    //réactiver le mouvement du player
+        this.transform.rotation = Quaternion.identity;
         corps.isKinematic = true;
+        body.transform.rotation = new Quaternion(0,0,0,0);
     }
     // Update is called once per frame
     void Update()

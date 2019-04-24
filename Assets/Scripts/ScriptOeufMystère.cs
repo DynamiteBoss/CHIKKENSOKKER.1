@@ -31,8 +31,8 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            int random = UnityEngine.Random.Range(0, IndiceMax);
-            indice = random;
+            //int random = UnityEngine.Random.Range(0, IndiceMax);
+            indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
             //indice = UnityEngine.Random.Range(0, IndiceMax);
             AttribuerObjetJoueur(other.transform.parent.parent.gameObject, indice);    
         }
@@ -41,8 +41,8 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            int random = UnityEngine.Random.Range(0, IndiceMax);
-            indice = random;
+            //int random = UnityEngine.Random.Range(0, IndiceMax);
+            indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
             //ndice = UnityEngine.Random.Range(0, IndiceMax);
             AttribuerObjetJoueur(other.transform.parent.gameObject, indice);
         }

@@ -284,6 +284,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void Update()
     {
         if (true || (GameObject.FindGameObjectsWithTag("AI").Length > 3))   //TEMPORAIRE
+
         {
             if (matchEnCours)
             {

@@ -7,15 +7,19 @@ using UnityEngine.Networking;
 
 public class ScriptMouvementAI : NetworkBehaviour
 {
+    bool estDansZoneFill { get; set; }
     Vector3 PointÀAller { get; set; }
 
     Vector3 positionTactique;
+    Vector3 posBalle { get; set; }
 
     Vector3 Positionement { get; set; }
 
     Rigidbody Ballon { get; set; }
 
     GameObject But { get; set; }
+    Vector3 PositionDéfenseDéfaut { get; set; }
+    Vector3 PositionDéfenseFill { get; set; }
     List<GameObject> ListeProximitéA { get; set; }
     List<GameObject> ListeProximitéB { get; set; }
 
@@ -44,11 +48,13 @@ public class ScriptMouvementAI : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        estDansZoneFill = false;
         PointÀAller = new Vector3();
         LimitesX = new int[2] { LIMITE_GAUCHE, LIMITE_DROITE };
         LimitesZ = new int[2] { LIMITE_BAS, LIMITE_HAUT };
         ListeProximitéA = new List<GameObject>();
         ListeProximitéB = new List<GameObject>();
+        posBalle = GameObject.FindGameObjectWithTag("Balle").GetComponent<Transform>().position;
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
@@ -72,6 +78,22 @@ public class ScriptMouvementAI : NetworkBehaviour
 
        
         constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
+        TrouverPositionDefDeBase();
+        PositionDéfenseFill = new Vector3();
+    }
+    private void TrouverPositionDefDeBase()
+    {
+        int abscisse = 1;
+        int ordonnée = 1;
+        if (noComportement == 2 || noComportement == 3)
+        {
+            abscisse = -1;
+        }
+        if (noComportement == 3 || noComportement == 4)
+        {
+            ordonnée = -1;
+        }
+        PositionDéfenseDéfaut = new Vector3((10 * abscisse - DÉCALLAGE_DEMI_TERRAIN * constÉquipe), this.transform.position.y, 10 * ordonnée);
     }
     // Update is called once per frame
     void Update()
@@ -121,32 +143,28 @@ public class ScriptMouvementAI : NetworkBehaviour
     private Vector3 GérerPositionsDef()
     {
         Vector3 posCible = Vector3.one;
-        if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
-        {
-            posCible = transform.position;
-        }
+        //if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
+        //{
+        //    posCible = transform.position;
+        //}
+        //else
+        //{
+        //    posCible = PositionDéfenseDéfaut;//(PositionDéfenseDéfaut + 0.25f * posBalle);
+        //}
         return posCible ;
     }
 
     private Vector3 DéterminerPosRevenir()
     {
-        int abscisse = 1;
-        int ordonnée = 1;
-        if (noComportement == 2 || noComportement == 3)
-        {
-            abscisse = -1;
-        }
-        if (noComportement == 3 || noComportement == 4)
-        {
-            ordonnée = -1;
-        }
-        Vector3 posCible = new Vector3((10 * abscisse - DÉCALLAGE_DEMI_TERRAIN * constÉquipe), this.transform.position.y, 10 * ordonnée);
+        //PositionDéfenseDéfaut = posCible;
         if (tag == "AI")
         {
-            GameObject[] listeJoueurs = GameObject.FindGameObjectsWithTag("Player");
-            GameObject[] listeAI = GameObject.FindGameObjectsWithTag("AI");
-            GameObject[] listeTous = listeJoueurs.Concat(listeAI).ToArray();
-            foreach (GameObject x in listeJoueurs)
+            GameObject[] tabJoueurs = GameObject.FindGameObjectsWithTag("Player");
+            GameObject[] tabAI = GameObject.FindGameObjectsWithTag("AI");
+            GameObject[] tabTous = tabJoueurs.Concat(tabAI).ToArray();
+            List<GameObject> listeJoueursA = new List<GameObject>();
+            List<GameObject> listeJoueursB = new List<GameObject>();
+            foreach (GameObject x in tabTous)
             {
                 if (x.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
@@ -154,22 +172,40 @@ public class ScriptMouvementAI : NetworkBehaviour
                 }
                 else ListeProximitéB.Add(x);
             }
+            foreach(GameObject x in tabJoueurs)
+            {
+                if (x.GetComponent<TypeÉquipe>().estÉquipeA)
+                {
+                    listeJoueursA.Add(x);
+                }
+                else listeJoueursB.Add(x);
+            }
             if (GetComponent<TypeÉquipe>().estÉquipeA)
             {
-                if (EstPasSeulDansZone(ListeProximitéA, posCible))
+                if (EstPasSeulDansZone(listeJoueursA, PositionDéfenseDéfaut))
                 {
-                    posCible = RelocaliserJoueurDef();
+                    PositionDéfenseFill = RelocaliserJoueurDef();
+                    estDansZoneFill = true;
                 }
+                else estDansZoneFill = false;
             }
             else
             {
-                if (EstPasSeulDansZone(ListeProximitéB, posCible))
+                if (EstPasSeulDansZone(listeJoueursB, PositionDéfenseDéfaut))
                 {
-                    posCible = RelocaliserJoueurDef();
+                    PositionDéfenseFill = RelocaliserJoueurDef();
+                    estDansZoneFill = true;
                 }
+                else estDansZoneFill = false;
             }
+            if (estDansZoneFill)
+            {
+                return PositionDéfenseFill;
+            }
+            else return PositionDéfenseDéfaut;
         }
-        return posCible;
+        //PositionDéfenseDéfaut = posCible;
+        return PositionDéfenseDéfaut;
     }
     private Vector3 RelocaliserJoueurDef()
     {
@@ -185,11 +221,6 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 estPasSeul = true;
                 
-            }
-            else
-            {
-                estPasSeul = false;
-               
             }
         }
         return estPasSeul;
