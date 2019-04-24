@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
- class AI : JoueurV2
+public class AI : JoueurV2
 {
-    public AI(string nom, string équipe, GameObject prefab) : base(nom, équipe, prefab)
+
+    public AI(string nom, string équipe, GameObject prefab) : base(nom,équipe,prefab)
     {
 
     }

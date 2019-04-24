@@ -7,6 +7,11 @@ using UnityEngine.Networking;
 public class MouvementPlayer : NetworkBehaviour
 {
     const float VitesseModeFurax = 1.3f;
+    const int LIMITE_HAUT = 17;
+    const int LIMITE_BAS = -17;
+    const int LIMITE_GAUCHE = -39;
+    const int LIMITE_DROITE= 39;
+
 
     string[] Controles = new string[] { "w", "a", "s", "d" };
     string[] ControlesInversés = new string[] { "w", "a", "s", "d" };
@@ -72,6 +77,18 @@ public class MouvementPlayer : NetworkBehaviour
             Controles = modeSaoul ? ControlesOriginaux : ControlesInversés;
         }
     }
+    private bool EstHorsLimite(int limite, float coordonnéeÀVéfifier)
+    {
+        if(limite>0)
+        {
+            return (coordonnéeÀVéfifier + (2) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f) > limite);
+        }
+        else
+        {
+            return (coordonnéeÀVéfifier + (2) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f) < limite);
+        }
+        
+    }
     void DépacerAWSD()
     {
         autreValeur = false;
@@ -80,11 +97,13 @@ public class MouvementPlayer : NetworkBehaviour
             if (Input.GetKey(Controles[1]) || Input.GetKey(Controles[2]) || Input.GetKey(Controles[3]))
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
+                if (EstHorsLimite(LIMITE_HAUT,transform.position.z)) return;
                 transform.Translate(new Vector3(0, 0, 2) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
             }
             else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
+                if (EstHorsLimite(LIMITE_HAUT, transform.position.z)) return;
                 transform.Translate(new Vector3(0, 0, 2) * 5.5f * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
                 autreValeur = true;
             }
@@ -94,11 +113,13 @@ public class MouvementPlayer : NetworkBehaviour
             if (autreValeur)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.1f);
+                if (EstHorsLimite(LIMITE_GAUCHE, transform.position.x)) return;
                 transform.Translate(new Vector3(-2, 0, 0) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
             }
             else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.right), 0.1f);
+                if (EstHorsLimite(LIMITE_GAUCHE, transform.position.x)) return;
                 transform.Translate(new Vector3(-2, 0, 0) * 5.5f * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
                 autreValeur = true;
             }
@@ -108,11 +129,13 @@ public class MouvementPlayer : NetworkBehaviour
             if (autreValeur)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.1f);
+                if (EstHorsLimite(LIMITE_BAS, transform.position.z)) return;
                 transform.Translate(new Vector3(0, 0, -2) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
             }
             else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-Vector3.forward), 0.1f);
+                if (EstHorsLimite(LIMITE_BAS, transform.position.z)) return;
                 transform.Translate(new Vector3(0, 0, -2) * 5.5f * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
                 autreValeur = true;
             }
@@ -123,11 +146,13 @@ public class MouvementPlayer : NetworkBehaviour
             if (autreValeur)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+                if (EstHorsLimite(LIMITE_DROITE, transform.position.x)) return;
                 transform.Translate(new Vector3(2, 0, 0) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
             }
             else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+                if (EstHorsLimite(LIMITE_DROITE, transform.position.x)) return;
                 transform.Translate(new Vector3(2, 0, 0) * 5.5f * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f), Space.World);
                 autreValeur = true;
             }
