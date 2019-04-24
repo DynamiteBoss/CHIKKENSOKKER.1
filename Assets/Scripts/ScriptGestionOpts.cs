@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class ScriptGestionOpts : MonoBehaviour
 {
-    string CheminAccesPartielOpts = Application.dataPath.ToString() + "/Resources/Options/Options";
+    string CheminAccesPartielOpts = /*Application.dataPath.ToString() + */"..Assets/Resources/Options/Options";
 
     int compteur = 25;
 

@@ -23,15 +23,17 @@ public class ScriptOeufMystère : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Tête" && other.transform.parent.transform.parent.tag == "Player")
+        if (other.name == "Tête" && other.transform.parent.parent.tag == "Player")
         {
+            Debug.Log("Contact tête");
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));    
+            CmdAttribuerObjetJoueur(other.transform.parent.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));    
         }
         else if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
         {
+            Debug.Log("Corps, ect");
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
@@ -43,6 +45,12 @@ public class ScriptOeufMystère : NetworkBehaviour
     [Command]
     private void CmdAttribuerObjetJoueur(GameObject joueur, int indice)
     {
+        RpcAttribuerObjetJoueur(joueur, indice);
+    }
+    [ClientRpc]
+    private void RpcAttribuerObjetJoueur(GameObject joueur, int indice)
+    {
+        Debug.Log("Rentre la collision");
         GameObject player = GameObject.Find(joueur.name);
         if (player.GetComponent<TypeÉquipe>().estÉquipeA)
         {

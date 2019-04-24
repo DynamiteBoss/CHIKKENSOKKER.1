@@ -78,6 +78,23 @@ public class ScriptItems : NetworkBehaviour
 
     private void FaireOpérationJoueur()
     {
+        /*string équipe;
+        if(GetComponent<TypeÉquipe>().estÉquipeA)
+        {
+            if (Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
+            {
+                Debug.Log("A");
+                équipe = "A";
+            }
+        }
+        else
+        {
+            if (Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
+            {
+                Debug.Log("B");
+                équipe = "B";
+            }
+        }*/
         if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
         {
             CmdInstancierItem(Inventaire.itemA1, this.transform.position);
@@ -96,7 +113,6 @@ public class ScriptItems : NetworkBehaviour
                 CmdModifierSprite(1, 'A');
             }
             framesDélai = 0;
-            Debug.Log("AENIS"); //
         }
         else if (Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
         {
@@ -116,7 +132,6 @@ public class ScriptItems : NetworkBehaviour
                 CmdModifierSprite(1, 'B');
             }
             framesDélai = 0;
-            Debug.Log("BENIS"); //
         }
     }
 

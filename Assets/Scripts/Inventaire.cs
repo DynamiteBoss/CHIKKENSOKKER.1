@@ -63,8 +63,27 @@ public class Inventaire
     {
         int valeurItemTemp = 8;
 
-        if (équipe == 'A') { if (position == 1) { valeurItemTemp = itemA1; } else { valeurItemTemp = itemA2; } }
-        else if (équipe == 'B') { if (position == 1) { valeurItemTemp = itemB1; } else { valeurItemTemp = itemB2; } }
+        if (équipe == 'A')
+        { if (position == 1)
+            {
+                valeurItemTemp = itemA1;
+            }
+            else
+            {
+                valeurItemTemp = itemA2;
+            }
+        }
+        else if (équipe == 'B')
+        {
+            if (position == 1)
+            {
+                valeurItemTemp = itemB1;
+            }
+            else
+            {
+                valeurItemTemp = itemB2;
+            }
+        }
 
         switch (valeurItemTemp)
         {

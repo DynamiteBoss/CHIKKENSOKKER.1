@@ -46,7 +46,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     float probabilitéOrage;
     float probabilitéPluie;
 
-    float frequenceObjet = 1200f;
+    float frequenceObjet = 200f/*1200f*/;
 
     [SerializeField]
     const int NbFramesUpdate = 10;
@@ -283,7 +283,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("AI").Length > 3 /*true*/)   //TEMPORAIRE
+        if (/*GameObject.FindGameObjectsWithTag("AI").Length > 3*/ true)   //TEMPORAIRE
         {
             if (matchEnCours)
             {
