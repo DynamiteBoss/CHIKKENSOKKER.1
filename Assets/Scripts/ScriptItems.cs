@@ -14,7 +14,10 @@ public class ScriptItems : NetworkBehaviour
     void Update()
     {
         if (!isLocalPlayer)
+        {
             return;
+        }
+            
 
         framesDélai++;
         if (isLocalPlayer && tag == "Player")
@@ -62,18 +65,18 @@ public class ScriptItems : NetworkBehaviour
         }
 
         // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
-        if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1"))
-        {
-            FaireOpérationJoueur(this.transform.gameObject.name[this.transform.gameObject.name.Length-1]);
+        if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
+        { 
+            FaireOpérationJoueur();
         }
         // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
-        if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2"))
+        if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2") && isLocalPlayer)
         {
-            FaireOpérationJoueur(this.transform.gameObject.name[this.transform.gameObject.name.Length - 1]);
+            FaireOpérationJoueur();
         }
     }
 
-    private void FaireOpérationJoueur(char équipeVraie)
+    private void FaireOpérationJoueur()
     {
         if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
         {
@@ -93,6 +96,7 @@ public class ScriptItems : NetworkBehaviour
                 CmdModifierSprite(1, 'A');
             }
             framesDélai = 0;
+            Debug.Log("AENIS"); //
         }
         else if (Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
         {
@@ -112,6 +116,7 @@ public class ScriptItems : NetworkBehaviour
                 CmdModifierSprite(1, 'B');
             }
             framesDélai = 0;
+            Debug.Log("BENIS"); //
         }
     }
 
