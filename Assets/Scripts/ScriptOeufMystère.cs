@@ -28,9 +28,9 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
-            CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));                      
+            CmdAttribuerObjetJoueur(other.transform.parent.transform.parent.gameObject, UnityEngine.Random.Range(0, IndiceMax));    
         }
-        if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
+        else if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
         {
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;        // PROBLEME AVEC SA CA VA PA CHERCHER A LA BONNE PLACE (((JE PENSE)))
@@ -49,14 +49,17 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemA2 = indice;
-                Inventaire.AfficherInventaire('A', 2);
+                Inventaire.CmdAfficherInventaire('A', 2);
                 //METTRE ITEM A2
+                Debug.Log("L'item A2 a été changé en " + Inventaire.EnTexte(indice));
+
             }
             else if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemA1 = indice;
-                Inventaire.AfficherInventaire('A', 1);
+                Inventaire.CmdAfficherInventaire('A', 1);
                 //METTRE ITEM A1
+                Debug.Log("L'item A1 a été changé en " + Inventaire.EnTexte(indice));
             }
         }
         else
@@ -64,14 +67,16 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemB2 = indice;
-                Inventaire.AfficherInventaire('B', 2);
+                Inventaire.CmdAfficherInventaire('B', 2);
+                Debug.Log("L'item B2 a été changé en " + Inventaire.EnTexte(indice));
                 //METTRE ITEM B2
             }
             else if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemB1 = indice;
-                Inventaire.AfficherInventaire('B', 1);
+                Inventaire.CmdAfficherInventaire('B', 1);
                 //METTRE ITEM B1
+                Debug.Log("L'item B1 a été changé en " + Inventaire.EnTexte(indice));
             }
         }
     }
