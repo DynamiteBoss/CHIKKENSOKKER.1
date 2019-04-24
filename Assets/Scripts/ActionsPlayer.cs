@@ -269,10 +269,16 @@ public class ActionsPlayer : NetworkBehaviour
 
     private void FairePlacage()
     {
+       
+        this.transform.parent.GetComponent<Rigidbody>().isKinematic = false;
+        this.transform.parent.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = false;
+        
+        
         float rad = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
         this.transform.parent.GetComponent<Rigidbody>().isKinematic = false;
         this.transform.parent.GetComponent<Rigidbody>().AddForce(Mathf.Sin(rad) * 65.5f, 0, Mathf.Cos(rad) * 65.5f, ForceMode.Impulse);
         this.transform.parent.GetComponent<Rigidbody>().drag = 10;
+        //this.transform.parent.transform.position = new Vector3(0, 0, 0);
     }
 
     IEnumerator AttendreDéactivationScriptPlaqueur(float durée, float direction)
@@ -286,6 +292,9 @@ public class ActionsPlayer : NetworkBehaviour
         this.transform.parent.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon
         this.GetComponentInParent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player
         this.transform.parent.GetComponent<Rigidbody>().isKinematic = true;
+        this.transform.parent.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = true;
+        this.transform.parent.Find("Corps").transform.rotation = Quaternion.identity;
+
         estEnMouvementPlacage = false;
     }
     IEnumerator AttendreDéactivationScriptPlaqué(float durée, float direction)
