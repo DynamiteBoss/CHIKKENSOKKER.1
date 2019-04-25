@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class PlacerBalle : NetworkBehaviour
 {
+    public Vector3 positionJouer;
     public GameObject AncienGardien = null;
     public GameObject dernierPosseseur;
     const int NOMBRE_PLAYER_MAX = 4;
@@ -263,6 +264,7 @@ public class PlacerBalle : NetworkBehaviour
         gardien.GetComponent<ContrôleGardien>().enabled = false;
         gardien.GetComponentInChildren<ActionPlaquageGardien>().enabled = false;
         gardien.GetComponentInChildren<GérerProbabilitéArrêt>().enabled = false;
+        gardien.transform.Find("ZoneArrêt").GetComponent<BoxCollider>().enabled = false;
         gardien.tag = "Player";
     }
 }

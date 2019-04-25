@@ -7,7 +7,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
 {
     const float TEMPS_MIN = 1f;
     const float FORCE = 60f;
-
+    GameObject Gardien { get; set; }
     GameObject ZoneC { get; set; }
     BoxCollider [] Liste { get; set; }
     GameObject Balle { get; set; }
@@ -178,11 +178,12 @@ public class ContrôleBallonV2 : NetworkBehaviour
         Balle.GetComponent<SphereCollider>().enabled = true;
         Invoke("AttendrePourDistanceBallon", 0.5f);
         Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
+        Balle.GetComponent<PlacerBalle>().positionJouer = this.transform.position;
 
-        if(Balle.GetComponent<PlacerBalle>().AncienGardien != null)
+        if (Balle.GetComponent<PlacerBalle>().AncienGardien != null)
         {
             GameObject gardien = Balle.GetComponent<PlacerBalle>().AncienGardien;
-
+            Gardien = gardien;
 
             GameObject[] listeAI = new GameObject[8];
             List<GameObject> listeAIMonÉquipe = new List<GameObject>();
@@ -208,8 +209,14 @@ public class ContrôleBallonV2 : NetworkBehaviour
             ChangerJoueurÀGardien(joueur,gardien, équipe);
             Balle.GetComponent<PlacerBalle>().dernierPosseseur = GameObject.Find("Joueur1" + équipe);
             //tampon = joueur.name;
+            
         }
         //AttendrePourDistanceBallon1(4, balle);
+    }
+    void RéactiverSave()
+    {
+        Gardien.GetComponentInChildren<GérerProbabilitéArrêt>().enabled = true;
+        Gardien.transform.Find("ZoneArrêt").GetComponent<BoxCollider>().enabled = true;
     }
     void ChangerJoueurÀGardien(GameObject joueur,GameObject gardien,string équipe)
     {
@@ -219,13 +226,15 @@ public class ContrôleBallonV2 : NetworkBehaviour
         joueur.tag = "Player";
 
         gardien.name = "Gardien1" + équipe;
+        gardien.transform.Find("ZoneArrêt").GetComponent<GérerProbabilitéArrêt>().enabled = false;
         gardien.GetComponent<MouvementPlayer>().enabled = false;
         gardien.GetComponent<ContrôleGardien>().enabled = true;
         gardien.GetComponentInChildren<ActionPlaquageGardien>().enabled = true;
-        gardien.GetComponentInChildren<GérerProbabilitéArrêt>().enabled = true;
+        
         gardien.tag = "Gardien";
 
         Balle.GetComponent<PlacerBalle>().AncienGardien = null;
+        Invoke("RéactiverSave", 0.5f);
     }
 
     IEnumerator AttendrePourDistanceBallon1(float durée, GameObject balle)

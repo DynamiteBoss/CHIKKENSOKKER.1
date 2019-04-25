@@ -68,6 +68,7 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     void CalculerProbabilité(Collider other)
     {
         
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         if (Gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
             numéro = "2";
@@ -78,34 +79,31 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
             numéro = "1";
             équipe = "B";
         }
-        Vector3 distGB = (Gardien.transform.position - Balle.transform.position);
-        Vector3 velo = Balle.GetComponent<Rigidbody>().velocity;
+        Vector3 distGJ = (Gardien.transform.position - balle.GetComponent<PlacerBalle>().positionJouer);
+        Vector3 velo = balle.GetComponent<Rigidbody>().velocity;
         //Debug.Log(Balle.GetComponent<Rigidbody>().velocity);
-        Vector3 distBB = ((Balle.transform.position + velo) - Balle.transform.position + velo);
+        Vector3 distBB = (balle.transform.position - (balle.GetComponent<PlacerBalle>().positionJouer));
         //Ray directionBalle = new Ray(Balle.transform.position, Balle.transform.position + velo);
         //Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo * 3, Color.red, 1);
-        float angle = Vector3.Angle(distGB, distBB);
-        //Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo);
+        float angle = Vector3.Angle(distGJ, distBB);
+        
+        //Debug.DrawRay(balle.transform.position, balle.GetComponent<PlacerBalle>().positionJouer,Color.blue,3f);
         float probabilité;
         Debug.Log(angle);
-        if (angle >= 59)
+        if (angle >= 19)
         {
             probabilité = 0.95f;
         }
         else
         {
-            if(angle <= 20f)
-            {
-                probabilité = 0.1f;
-            }
-            else
-            probabilité = angle / 60f;
+          
+            probabilité = angle / 20;
         }
         chance = Random.Range(0f, 1f);
         Debug.Log(chance);
         Debug.Log(probabilité);
         //Debug.Log("chance"+chance);
-        if (/*chance >= probabilité*/true)
+        if (chance >= probabilité)
         {
             bool type;   
            
@@ -118,7 +116,7 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
                 type = false;
                 //Gardien.transform.position = new Vector3(Balle.transform.position.x + 0.5f, Balle.transform.position.y, Balle.transform.position.z);
             }
-            CmdPlacerGardien(type);
+            PlacerGardien(type);
         }
         else
         {
@@ -180,10 +178,10 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     [Command]
     void CmdPlacerGardien(bool équipe)
     {
-        RpcPlacerGardien(équipe);
+        //RpcPlacerGardien(équipe);
     }
-    [ClientRpc]
-    void RpcPlacerGardien(bool équipe)
+
+    void PlacerGardien(bool équipe)
     {
         GameObject gardien = this.transform.parent.gameObject;
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");

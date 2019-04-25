@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using UnityEngine.Networking;
@@ -283,7 +282,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if /*(true ||*/ (GameObject.FindGameObjectsWithTag("AI").Length > 3)   //TEMPORAIRE
+        if (/*true || */(GameObject.FindGameObjectsWithTag("AI").Length > 3))   //TEMPORAIRE
 
         {
             if (matchEnCours)
