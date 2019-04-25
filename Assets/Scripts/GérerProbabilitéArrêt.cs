@@ -23,20 +23,23 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(Balle.transform.parent == null)
-        {
-         
-            if (other.gameObject ==  true)
+        //if (this.transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
+        //{
+            if (Balle.transform.parent == null)
             {
-               
-                if (other.gameObject == Balle)
+
+                if (other.gameObject == true)
                 {
-                   
-                    CalculerProbabilité(other);
+
+                    if (other.gameObject == Balle)
+                    {
+
+                        CalculerProbabilité(other);
+                    }
                 }
             }
-        }
-        
+        //}
+
     }
     void OnChanceChange(float changement)
     {
@@ -64,8 +67,8 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     }
     void CalculerProbabilité(Collider other)
     {
-       
-        if(Gardien.GetComponent<TypeÉquipe>().estÉquipeA)
+        
+        if (Gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
             numéro = "2";
             équipe = "A";
@@ -85,30 +88,37 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         //Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo);
         float probabilité;
         Debug.Log(angle);
-        if (angle >= 29f)
+        if (angle >= 59)
         {
             probabilité = 0.95f;
         }
         else
         {
-            probabilité = angle / 30f;
+            if(angle <= 20f)
+            {
+                probabilité = 0.1f;
+            }
+            else
+            probabilité = angle / 60f;
         }
         chance = Random.Range(0f, 1f);
         Debug.Log(chance);
         Debug.Log(probabilité);
         //Debug.Log("chance"+chance);
-        if(probabilité >= chance)
+        if (/*chance >= probabilité*/true)
         {
-            Gardien.GetComponent<ContrôleGardien>().enabled = false;
-
+            bool type;   
+           
             if (numéro == "2")
             {
-                Gardien.transform.position = new Vector3(Balle.transform.position.x - 0.5f, Balle.transform.position.y, Balle.transform.position.z);
+                type = true;//Gardien.transform.position = new Vector3(Balle.transform.position.x - 0.5f, Balle.transform.position.y, Balle.transform.position.z);
             }
             else
             {
-                Gardien.transform.position = new Vector3(Balle.transform.position.x + 0.5f, Balle.transform.position.y, Balle.transform.position.z);
+                type = false;
+                //Gardien.transform.position = new Vector3(Balle.transform.position.x + 0.5f, Balle.transform.position.y, Balle.transform.position.z);
             }
+            CmdPlacerGardien(type);
         }
         else
         {
@@ -167,5 +177,27 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
 
 
     }
-  
+    [Command]
+    void CmdPlacerGardien(bool équipe)
+    {
+        RpcPlacerGardien(équipe);
+    }
+    [ClientRpc]
+    void RpcPlacerGardien(bool équipe)
+    {
+        GameObject gardien = this.transform.parent.gameObject;
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        gardien.GetComponent<ContrôleGardien>().enabled = false;
+        if (équipe)
+        {
+
+            gardien.transform.position = new Vector3(balle.transform.position.x - 0.5f, balle.transform.position.y, balle.transform.position.z);
+        }
+        else
+        {
+            gardien.transform.position = new Vector3(balle.transform.position.x + 0.5f, balle.transform.position.y, balle.transform.position.z);
+        }
+    }
+
+
 }
