@@ -67,6 +67,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [SyncVar(hook = "OnCompteur2Change")] public int compteur2 = 0;
     [SyncVar(hook = "OnCompteur3Change")] public int compteur3 = 0;
     [SyncVar(hook = "OnCompteurSpawnChange")] public int compteurSpawn = 0;
+    [SyncVar(hook = "OnChanceArrêtSpawnChange")] public float chanceArrêt;
 
 
     List<GameObject> Joueur { get; set; }
@@ -129,6 +130,11 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
         LumierePrincipale = GameObject.Find("LumierePrincipale").GetComponentInChildren<Light>();
         modeNuitLocal = EstEnModeNuit;
+    }
+    public float CalculerChance()
+    {
+        chanceArrêt = UnityEngine.Random.Range(0f, 1f);
+        return chanceArrêt;
     }
     void PartirMatch()
     {
@@ -472,5 +478,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnPauseChange(bool changemment)
     {
         enPause = changemment;
+    }
+    void OnChanceArrêtSpawnChange(float changement)
+    {
+        chanceArrêt = changement;
     }
 }

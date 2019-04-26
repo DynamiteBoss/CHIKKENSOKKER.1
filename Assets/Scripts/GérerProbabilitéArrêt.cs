@@ -25,19 +25,20 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     {
         //if (this.transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
         //{
-            if (Balle.transform.parent == null)
+        if (Balle.transform.parent == null)
+        {
+
+            if (other.gameObject == true)
             {
 
-                if (other.gameObject == true)
+                if (other.gameObject == Balle)
                 {
 
-                    if (other.gameObject == Balle)
-                    {
-
-                        CalculerProbabilité(other);
-                    }
+                    CalculerProbabilité(other);
+                    chance = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScriptMécaniqueMatch>().CalculerChance();
                 }
             }
+        }
         //}
 
     }
@@ -67,7 +68,7 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     }
     void CalculerProbabilité(Collider other)
     {
-        
+
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         if (Gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
@@ -86,7 +87,7 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         //Ray directionBalle = new Ray(Balle.transform.position, Balle.transform.position + velo);
         //Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo * 3, Color.red, 1);
         float angle = Vector3.Angle(distGJ, distBB);
-        
+
         //Debug.DrawRay(balle.transform.position, balle.GetComponent<PlacerBalle>().positionJouer,Color.blue,3f);
         float probabilité;
         Debug.Log(angle);
@@ -96,17 +97,17 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         }
         else
         {
-          
+
             probabilité = angle / 20;
         }
-        chance = Random.Range(0f, 1f);
-        Debug.Log(chance);
+       
+
         Debug.Log(probabilité);
         //Debug.Log("chance"+chance);
         if (chance >= probabilité)
         {
-            bool type;   
-           
+            bool type;
+
             if (numéro == "2")
             {
                 type = true;//Gardien.transform.position = new Vector3(Balle.transform.position.x - 0.5f, Balle.transform.position.y, Balle.transform.position.z);
