@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemOeufBrun : MonoBehaviour
@@ -22,7 +23,7 @@ public class ItemOeufBrun : MonoBehaviour
     {
         if (other.transform.tag == "Player" /* ET QU'IL EST DE L'ÉQUIPE ADVERSE */)
         {
-
+            this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("PouKehh")).First());
         }
     }
 }

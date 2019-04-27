@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ItemCrotte : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class ItemCrotte : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-
+            this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Caca2")).First()); //Fait jouer le son de caca quand qqun pile dessus
         }
     }
 }

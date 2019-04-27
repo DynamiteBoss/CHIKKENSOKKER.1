@@ -11,7 +11,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 {
     string[] tags = new string[] { "Player", "AI", "Gardien" };
 
-    const string CheminAccesPartielOpts = "/Resources/Options/Options.txt";
+    const string CheminAccesPartielOpts = "Assets/Resources/Options/Options.txt";
 
     GameObject Balle { get; set; }
     GameObject PnlFin { get; set; }
@@ -80,7 +80,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void Start()
     {
         //lis les valeurs dans le fichier texte OPTIONS
-        using (StreamReader streamReader = new StreamReader(Application.dataPath + CheminAccesPartielOpts))
+        using (StreamReader streamReader = new StreamReader(CheminAccesPartielOpts))
         {
             streamReader.ReadLine();
             float.TryParse(streamReader.ReadLine().ToString(), out frequenceObjet);

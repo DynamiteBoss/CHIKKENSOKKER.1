@@ -9,6 +9,7 @@ public class Options
     float fréquencePluie_ = 0.5f;
     float fréquenceOrage_ = 0.5f;
     float fréquenceObjets_ = 0.5f;
+    float volumeSon_ = 1f;
     //EN RAJOUTER D'AUTRES PLOX
     //[ex : Mod Contrôles-->    if(Input.GetKeyDown() == Options.ToucheTirer)    ]
 
@@ -18,15 +19,15 @@ public class Options
         FréquencePluie = fréquencePluie_;
         FréquenceOrage = fréquenceOrage_;
         FréquenceObjets = fréquenceObjets_;
-
+        VolumeSon = volumeSon_;
     }
-    public Options(int nbObjMax, float freqObj, float freqPluie, float freqOrage)
+    public Options(int nbObjMax, float freqObj, float freqPluie, float freqOrage, float volumeSon)
     {
         NbObjetsMax = nbObjMax;
         FréquencePluie = freqPluie;
         FréquenceOrage = freqOrage;
         FréquenceObjets = freqObj;
-
+        VolumeSon = volumeSon;
     }
     public float FréquenceOrage
     {
@@ -79,7 +80,18 @@ public class Options
                 nbObjetsMax_ = value;
         }
     }
-
+    public float VolumeSon
+    {
+        get
+        {
+            return volumeSon_;
+        }
+        set
+        {
+            if (value >= 0 && value <= 1)
+                volumeSon_ = value;
+        }
+    }
 }
 
 //using System.Collections;

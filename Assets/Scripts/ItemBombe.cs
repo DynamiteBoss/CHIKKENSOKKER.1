@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemBombe : MonoBehaviour
@@ -54,9 +55,14 @@ public class ItemBombe : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+        if (this.GetComponentInChildren<GestionAudio>())
+            this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Explosion")).First()); //Fait jouer le son explosion
+
         if (other.transform.tag == "Player" && !explosée)  //si a touche un player AVANT de toucher a terre apres/avant son arc de cercle, ELLE EXPLOSE TOUT DE SUITE
         {
             Explose(12);
+
+
         }
         if (!(other.transform.tag == "Player") && !explosée) //si a touche a terre ou a un mur
         {

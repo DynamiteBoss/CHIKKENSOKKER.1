@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class ScriptGestionOpts : MonoBehaviour
 {
-    string CheminAccesPartielOpts = /*Application.dataPath.ToString() + */"..Assets/Resources/Options/Options";
+    string CheminAccesPartielOpts = /*Application.dataPath.ToString() + */"Assets/Resources/Options/Options";
 
     int compteur = 25;
 
@@ -37,6 +37,7 @@ public class ScriptGestionOpts : MonoBehaviour
     Slider SldFréquencePluie { get; set; }
     Slider SldFréquenceOrages { get; set; }
     Slider SldNbMaxObjets { get; set; }
+    Slider SldVolumeSon { get; set; }
 
     Text TxtNbManettes { get; set; }
     Text TxtAdresseIP { get; set; }
@@ -46,6 +47,7 @@ public class ScriptGestionOpts : MonoBehaviour
     Text TxtValeurFreqPluie { get; set; }
     Text TxtValeurFreqOrages { get; set; }
     Text TxtValeurFreqObj { get; set; }
+    Text TxtValeurVolumeSon { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -67,11 +69,13 @@ public class ScriptGestionOpts : MonoBehaviour
         SldFréquencePluie = PnlOptsMod.Find("SldFréquencePluie").GetComponentInChildren<Slider>();
         SldFréquenceOrages = PnlOptsMod.Find("SldFréquenceOrages").GetComponentInChildren<Slider>();
         SldNbMaxObjets = PnlOptsMod.Find("SldNbMaxObjets").GetComponentInChildren<Slider>();
+        SldVolumeSon = PnlOptsMod.Find("SldVolumeSon").GetComponentInChildren<Slider>();
 
         TxtValeurFreqObj = SldFréquenceObjets.transform.Find("TxtValeur").gameObject.GetComponent<Text>();
         TxtValeurFreqPluie = SldFréquencePluie.transform.Find("TxtValeur").gameObject.GetComponent<Text>();
         TxtValeurFreqOrages = SldFréquenceOrages.transform.Find("TxtValeur").gameObject.GetComponent<Text>();
         TxtValeurNbObj = SldNbMaxObjets.transform.Find("TxtValeur").gameObject.GetComponent<Text>();
+        TxtValeurVolumeSon = SldVolumeSon.transform.Find("TxtValeur").gameObject.GetComponent<Text>();
 
         TxtCheminAcces = PnlOptsNonMod.transform.Find("TxtCheminAcces").gameObject.GetComponent<Text>();
 
@@ -79,6 +83,7 @@ public class ScriptGestionOpts : MonoBehaviour
         SldFréquencePluie.onValueChanged.AddListener((x) => ModifierFréquencePluie(x));
         SldFréquenceOrages.onValueChanged.AddListener((x) => ModifierFréquenceOrages(x));
         SldNbMaxObjets.onValueChanged.AddListener((x) => ModifierNbObjetsMax((int)x));
+        SldVolumeSon.onValueChanged.AddListener((x) => ModifierVolumeSon(x));
 
         BtnAppliquer.onClick.AddListener(() => Appliquer());
         BtnAnnuler.onClick.AddListener(() => Annuler());
@@ -87,25 +92,31 @@ public class ScriptGestionOpts : MonoBehaviour
     private void ModifierFréquenceObjets(float valeur)
     {
         Opts.FréquenceObjets = valeur;
-        TxtValeurFreqObj.text = Math.Round(valeur, 2).ToString();
+        TxtValeurFreqObj.text = (Math.Round(valeur, 3) * 100).ToString();
         ÉcrireFichierOpts(Opts);
     }
     private void ModifierFréquencePluie(float valeur)
     {
         Opts.FréquencePluie = valeur;
-        TxtValeurFreqPluie.text = Math.Round(valeur, 2).ToString();
+        TxtValeurFreqPluie.text = (Math.Round(valeur, 3) * 100).ToString();
         ÉcrireFichierOpts(Opts);
     }
     private void ModifierFréquenceOrages(float valeur)
     {
         Opts.FréquenceOrage = valeur;
-        TxtValeurFreqOrages.text = Math.Round(valeur, 2).ToString();
+        TxtValeurFreqOrages.text = (Math.Round(valeur, 3) * 100).ToString();
         ÉcrireFichierOpts(Opts);
     }
     private void ModifierNbObjetsMax(int valeur)
     {
         Opts.NbObjetsMax = valeur;
         TxtValeurNbObj.text = valeur.ToString();
+        ÉcrireFichierOpts(Opts);
+    }
+    private void ModifierVolumeSon(float valeur)
+    {
+        Opts.VolumeSon = valeur;
+        TxtValeurVolumeSon.text = (Math.Round(valeur, 3) * 100).ToString();
         ÉcrireFichierOpts(Opts);
     }
     private void ÉcrireFichierOpts(Options opts)
@@ -119,8 +130,9 @@ public class ScriptGestionOpts : MonoBehaviour
             streamWriter.WriteLine("FréqObj : " + Environment.NewLine + "{0}" + Environment.NewLine +
                                    "NbMaxObj : " + Environment.NewLine + "{1}" + Environment.NewLine +
                                    "FréqPluie : " + Environment.NewLine + "{2}" + Environment.NewLine +
-                                   "FréqOrage : " + Environment.NewLine + "{3}"
-                                   ,opts.FréquenceObjets, opts.NbObjetsMax, opts.FréquencePluie, opts.FréquenceOrage);
+                                   "FréqOrage : " + Environment.NewLine + "{3}" + Environment.NewLine +
+                                   "VolumeSon : " + Environment.NewLine + "{4}"
+                                   , opts.FréquenceObjets, opts.NbObjetsMax, opts.FréquencePluie, opts.FréquenceOrage, opts.VolumeSon);
         }
 
     }

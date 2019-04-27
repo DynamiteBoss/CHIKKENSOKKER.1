@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using System;
 
 public class ScriptMenuPause : NetworkBehaviour
 {
@@ -21,6 +22,7 @@ public class ScriptMenuPause : NetworkBehaviour
 
     GameObject[] JoueursPhysiques { get; set; }
     Rigidbody[] JoueursPhysique { get; set; }
+    AudioSource[] Sons { get; set; }
 
     void OnEnPauseChange(bool changement)
     {
@@ -54,6 +56,8 @@ public class ScriptMenuPause : NetworkBehaviour
     {
         JoueursPhysiques = GameObject.FindGameObjectsWithTag("Player");
         Balle = GameObject.FindGameObjectWithTag("Balle");
+
+        Sons = GameObject.FindObjectsOfType<AudioSource>();
     }
     [Command]
     public void CmdDésactiverMouvement()
@@ -218,7 +222,17 @@ public class ScriptMenuPause : NetworkBehaviour
         peutOuvrirMenu = false;
         CmdDésactiverMouvement();
         enPause = true;
+        PauserSons();
     }
+
+    private void PauserSons()
+    {
+        foreach(AudioSource s in Sons)
+        {
+            s.Pause();
+        }
+    }
+
     [Command]
     void CmdOuverturePause()
     {
@@ -232,7 +246,17 @@ public class ScriptMenuPause : NetworkBehaviour
         peutOuvrirMenu = false;
         CmdRéactiverMouvement();
         enPause = false;
+        RésumerSons();
     }
+
+    private void RésumerSons()
+    {
+        foreach (AudioSource s in Sons)
+        {
+            s.UnPause();
+        }
+    }
+
     [Command]
     void CmdFermeturePause()
     {

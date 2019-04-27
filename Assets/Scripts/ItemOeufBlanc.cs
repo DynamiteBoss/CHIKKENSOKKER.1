@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ItemOeufBlanc : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class ItemOeufBlanc : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-
+            this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("PouKehh")).First());
         }
     }
 }
