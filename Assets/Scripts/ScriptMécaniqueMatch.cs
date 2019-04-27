@@ -44,8 +44,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     float probabilitéOrage;
     float probabilitéPluie;
+    float volume;
 
-    float frequenceObjet = 200f/*1200f*/;
+    float frequenceObjet = 1200f/*1200f*/;
 
     [SerializeField]
     const int NbFramesUpdate = 10;
@@ -57,6 +58,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [SyncVar(hook = "OnChronomètreChange")] public string chronomètre;
     GameObject PnlNuit { get; set; }
     Light LumierePrincipale { get; set; }
+    AudioSource Musique { get; set; }
 
     [SyncVar (hook = "OnMatchEnCoursChange")]public bool matchEnCours = true;
     [SyncVar(hook = "OnPauseChange")] public bool enPause;
@@ -90,6 +92,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             float.TryParse(streamReader.ReadLine().ToString(), out probabilitéPluie);
             streamReader.ReadLine();
             float.TryParse(streamReader.ReadLine().ToString(), out probabilitéOrage);
+            streamReader.ReadLine();
+            float.TryParse(streamReader.ReadLine().ToString(), out volume);
+
 
             streamReader.Close();
         }
@@ -98,8 +103,10 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             frequenceObjet = FrequenceObjetMax - FrequenceObjetMax * frequenceObjet + FrequenceObjetMin;
         }
-
-
+        /*
+        Musique = this.GetComponentInChildren<AudioSource>();
+        Musique.volume = volume;
+        GetComponent<GestionAudio>().FaireJouerMusique(Musique);*/
 
 
         //TEMPORAIRE
