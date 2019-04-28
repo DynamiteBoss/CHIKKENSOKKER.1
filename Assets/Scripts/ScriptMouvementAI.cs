@@ -101,25 +101,24 @@ public class ScriptMouvementAI : NetworkBehaviour
         ++compteurFrames;
         DéplacerJoueur();
         RotaterJoueur();
-
         DéplacerJoueurVersPoint(PointÀAller);
         if (compteurFrames++ == 17)
         {
             compteurFrames = 0;
-            PointÀAller = TrouverPointDéplacement();
+            PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
             Debug.DrawLine(this.transform.position + Vector3.up, PointÀAller, Color.gray, 17f / 60f);
-            //if(Comportement == "Défendre" )
-            //{
-            //    PointÀAller = DéterminerPosRevenir();
-            //}
+            if (Comportement == "Défendre")
+            {
+                PointÀAller = DéterminerPosRevenir();
+            }
             /*
             Debug.Log(TrouverCorportementDéplacement());
             */
         }
     }
-    private Vector3 TrouverPointDéplacement()
+    private Vector3 TrouverPointDéplacement(string comportement)
     {
-        switch (Comportement)
+        switch (comportement)
         {
             case "Attaquer":
                 return GérerPositionsAtt();
@@ -307,35 +306,40 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
     }
 
-    private void TrouverCorportementDéplacement()
+    private String TrouverCorportementDéplacement()
     {
-
+        string comportement;
         if (Ballon.transform.parent != null)
         {
             if (Ballon.transform.parent.position.x * constÉquipe <= 0)
             {
                 if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
-                    Comportement =  "Avancer";
+                    comportement =  "Avancer";
                 }
                 else
                 {
-                    Comportement = "Défendre";
+                    comportement = "Défendre";
                 }
             }
             else
             {
                 if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
-                    Comportement = "Attaquer";
+                    comportement = "Attaquer";
                 }
                 else
                 {
-                    Comportement = "Revenir";
+                    comportement = "Revenir";
                 }
             }
         }
-        Comportement = "Default";
+        else
+        {
+            comportement = "Default";
+        }
+        Comportement = comportement;
+        return comportement;
     }
 
     private void EffectuerMiseÀJour()
