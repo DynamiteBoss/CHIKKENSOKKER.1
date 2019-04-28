@@ -78,7 +78,7 @@ public class ActionsPlayer : NetworkBehaviour
             {
                 if (transform.parent.name.StartsWith("Joueur1"))
                 {
-                    if (Input.GetKeyDown("e") && !possessionBallon)
+                    if ((Input.GetKeyDown("e") || Input.GetButtonDown("SquareBtn1")) && !possessionBallon)
                     {
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
