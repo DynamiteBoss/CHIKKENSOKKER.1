@@ -95,7 +95,7 @@ public class ActionsPlayer : NetworkBehaviour
                         {
                             //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                             compteur = 0;
-                            CmdFairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
+                            FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                             StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                                                                                                           //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                         }
@@ -121,7 +121,7 @@ public class ActionsPlayer : NetworkBehaviour
                     {
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
-                        CmdFairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
+                        FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                         StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                                                                                                       //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                     }
@@ -181,6 +181,7 @@ public class ActionsPlayer : NetworkBehaviour
         }
         compteurBoucle = 0;
 
+
         //JoueursAlliés = GameObject.FindGameObjectsWithTag("Player").ToList().SkipWhile(g => g.transform.Find("Balle").gameObject != null).ToArray();
 
     }
@@ -202,20 +203,60 @@ public class ActionsPlayer : NetworkBehaviour
     [Command]
     public void CmdFairePasse(Vector3 positionJoueurVisé)
     {
-        RpcFairePasse(positionJoueurVisé);
+        //RpcFairePasse(positionJoueurVisé);
     }
-    [ClientRpc]
-    public void RpcFairePasse(Vector3 positionJoueurVisé)
+   // [ClientRpc]
+    public void FairePasse(Vector3 positionJoueurVisé)
     {
+        GameObject visé;
+        string équipe;
+        if(transform.parent.GetComponent<TypeÉquipe>().estÉquipeA)
+        {
+            équipe = "A";
+        }
+        else
+        {
+            équipe = "B";
+        }
+
+        GameObject[] liste = GameObject.FindGameObjectsWithTag("AI");
+        List<GameObject> bonneListe = new List<GameObject>();
+        foreach(GameObject x in liste)
+        {
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA == transform.parent.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                bonneListe.Add(x);
+            }
+        }
+        visé = bonneListe[0];
+        float distance = Vector3.Distance(bonneListe[0].transform.position, transform.parent.transform.position); 
+        foreach (GameObject x in bonneListe)
+        {
+            
+            float test = Vector3.Distance(x.transform.position, transform.parent.transform.position);
+            if(test < distance)
+            {
+                distance = test;
+                visé = x;
+            }
+        }
+
+
         Transform balle = gameObject.transform.parent.Find("Balle");
-        Vector3 vecteurPasse = new Vector3(positionJoueurVisé.x - this.transform.parent.position.x, .5f, positionJoueurVisé.z - this.transform.parent.position.z);
-        Debug.Log(positionJoueurVisé.ToString());
+        Vector3 vecteurPasse = new Vector3(visé.transform.position.x - this.transform.parent.position.x, .5f, visé.transform.position.z - this.transform.parent.position.z);
+        Debug.Log(visé.ToString());
         if (balle != null)
         {
             balle.transform.GetComponent<Rigidbody>().isKinematic = false;
-            StartCoroutine(AttendrePourDistanceBallon(0.6f));
-            balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
+            balle.GetComponent<PlacerBalle>().estPlacer = false;
+            balle.GetComponent<SphereCollider>().enabled = true;
+            balle.GetComponent<PlacerBalle>().dernierPosseseur = transform.parent.gameObject;
+            balle.GetComponent<PlacerBalle>().positionJouer = transform.parent.transform.position;
+            
+            StartCoroutine(AttendrePourDistanceBallon(0.6f));
+           
+           
             //balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(Mathf.Sin(CalculerAngle(positionJoueurVisé)), 0, Mathf.Cos(CalculerAngle(positionJoueurVisé))/*new Vector3(this.transform.position.x - positionJoueurVisé.x, 0.2f, this.transform.position.z - positionJoueurVisé.z*/) * 10f, ForceMode.Impulse);
             balle.GetComponent<Rigidbody>().AddForce(vecteurPasse.magnitude > DistPasseForceMax ? ((vecteurPasse).normalized * ForceMaxPasse) : vecteurPasse, ForceMode.Impulse);
 
