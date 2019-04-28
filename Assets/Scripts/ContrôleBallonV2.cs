@@ -42,7 +42,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                 {
                     if(name.StartsWith("Joueur1"))
                     {
-                        if (Input.GetKeyDown(KeyCode.Space) && compteur1 >= TEMPS_MIN)
+                        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("CircleBtn1")) && compteur1 >= TEMPS_MIN)
                         {
                             CmdTirerBalle1();
                             CmdTirerBalle();
@@ -51,7 +51,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                     }
                     else
                     {
-                        if (Input.GetKeyDown(KeyCode.Keypad3) && compteur1 >= TEMPS_MIN)
+                        if ((Input.GetKeyDown(KeyCode.Keypad3) || Input.GetButtonDown("CircleBtn2")) && compteur1 >= TEMPS_MIN)
                         {
                             CmdTirerBalle1();
                             CmdTirerBalle();

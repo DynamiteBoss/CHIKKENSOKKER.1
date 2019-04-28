@@ -78,7 +78,7 @@ public class ActionsPlayer : NetworkBehaviour
             {
                 if (transform.parent.name.StartsWith("Joueur1"))
                 {
-                    if ((Input.GetKeyDown("e") || Input.GetButtonDown("SquareBtn1")) && !possessionBallon)
+                    if ((Input.GetKeyDown("e") || Input.GetButtonDown("TriangleBtn1")) && !possessionBallon)
                     {
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
@@ -89,7 +89,7 @@ public class ActionsPlayer : NetworkBehaviour
                     }
 
 
-                    if (Input.GetKeyDown("q") && compteur >= 0.95f)
+                    if ((Input.GetKeyDown("q") || Input.GetButtonDown("XBtn1")) && compteur >= 0.95f)
                     {
                         if (possessionBallon)
                         {
@@ -107,7 +107,7 @@ public class ActionsPlayer : NetworkBehaviour
                 }
                 else
                 {
-                    if (Input.GetKeyDown(KeyCode.Keypad1) && !possessionBallon)
+                    if ((Input.GetKeyDown(KeyCode.Keypad1) || Input.GetButtonDown("TriangleBtn2")) && !possessionBallon)
                     {
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
@@ -117,7 +117,7 @@ public class ActionsPlayer : NetworkBehaviour
                                                                                                    //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Keypad2) && compteur >= 0.95f && possessionBallon)
+                    if ((Input.GetKeyDown(KeyCode.Keypad2) || Input.GetButtonDown("XBtn1")) && compteur >= 0.95f && possessionBallon)
                     {
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
