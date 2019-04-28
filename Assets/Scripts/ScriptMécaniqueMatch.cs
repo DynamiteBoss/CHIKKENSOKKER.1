@@ -133,6 +133,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
 
         TxtTimer = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Temps").gameObject.GetComponentInChildren<Text>();
+        TxtTimer.text = "En attente de joueurs";
         PnlNuit = GameObject.Find("Interface").transform.Find("PnlNuit").gameObject;
 
         LumierePrincipale = GameObject.Find("LumierePrincipale").GetComponentInChildren<Light>();

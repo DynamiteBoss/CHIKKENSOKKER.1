@@ -54,6 +54,7 @@ public class MouvementPlayer : NetworkBehaviour
         {
             if (!modeGlace && !modePluie)
             {
+                DéplacerManette(1);
                 DépacerAWSD();
             }
             else
@@ -67,7 +68,11 @@ public class MouvementPlayer : NetworkBehaviour
             joueur1EstPris = true;
         }
         if (tag == "Player" && name.StartsWith("Joueur2"))
+        {
             DéplacerFlèche();
+            DéplacerManette(2);
+        }
+
         else { }
 
 
@@ -88,6 +93,40 @@ public class MouvementPlayer : NetworkBehaviour
             return (coordonnéeÀVéfifier + (2) * valVitDiago * Time.deltaTime * (modeFurax ? VitesseModeFurax : 1f) < limite);
         }
         
+    }
+    void DéplacerManette(int number)
+    {
+        float k = Input.GetAxis("LeftJoystickHorizontal" + number.ToString());
+        {
+            if (k > 0)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(1, 0)), 0.1f);
+            }
+            else
+            {
+                if (k < 0)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(-1, 0)), 0.1f);
+                }
+            }
+            transform.Translate(new Vector3(2 * k, 0, 0) * 5.5f * Time.deltaTime, Space.World);
+        }
+
+        float j = Input.GetAxis("LeftJoystickVertical" + number.ToString());
+        {
+            if (j > 0)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(0, 0, 1)), 0.1f);
+            }
+            else
+            {
+                if (j < 0)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(0, 0, -1)), 0.1f);
+                }
+            }
+            transform.Translate(new Vector3(0, 0, 2 * j) * 5.5f * Time.deltaTime, Space.World);
+        }
     }
     void DépacerAWSD()
     {

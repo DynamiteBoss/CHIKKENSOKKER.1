@@ -138,11 +138,13 @@ public class NetworkManagerPerso : NetworkManager
         if (compteurB < 6)
         {
             prefab.GetComponent<TypeÉquipe>().estÉquipeA = true;
+            prefab.GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
             message = joueur.NomJoueur + "A";
         }
         else
         {
             prefab.GetComponent<TypeÉquipe>().estÉquipeA = false;
+            prefab.GetComponent<NetworkIdentity>().AssignClientAuthority(conn);
             message = joueur.NomJoueur + "B";
         }
 

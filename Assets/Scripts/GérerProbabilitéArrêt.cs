@@ -15,11 +15,21 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     GameObject Gardien { get; set; }
     GameObject Balle { get; set; }
     bool déplacerGardien = false;
+    [SyncVar(hook = "OnAnciennePositionChange")]
+    Vector3 AnciennePosition;
     // Start is called before the first frame update
     void Start()
     {
         Balle = GameObject.FindGameObjectWithTag("Balle");
         Gardien = this.transform.parent.gameObject;
+    }
+    void OnAnciennePositionChange(Vector3 changement)
+    {
+        if(transform.parent.gameObject.GetComponent<NetworkIdentity>().isLocalPlayer)
+        {
+            AnciennePosition = changement;
+        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -33,9 +43,21 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
 
                 if (other.gameObject == Balle)
                 {
+                    //GetComponent<NetworkIdentity>().RebuildObservers(true);
+                   // GetComponent<NetworkIdentity>().AssignClientAuthority(GetComponent<NetworkIdentity>().connectionToClient);
+                    if(!isLocalPlayer)
+                    {
+                        chance = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScriptMécaniqueMatch>().CalculerChance();
+                        CalculerProbabilité();
 
-                    CalculerProbabilité(other);
-                    chance = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScriptMécaniqueMatch>().CalculerChance();
+                    }
+                    else
+                    {
+                        chance = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScriptMécaniqueMatch>().CalculerChance();
+                        CmdCalculerProbabilité();
+                    }
+                    
+                   
                 }
             }
         }
@@ -66,7 +88,70 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         }
         */
     }
-    void CalculerProbabilité(Collider other)
+    [Command]
+    void CmdCalculerProbabilité()
+    {
+        RpcCalculerProbabilité();
+    }
+    [ClientRpc]
+    void RpcCalculerProbabilité()
+    {
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        if (Gardien.GetComponent<TypeÉquipe>().estÉquipeA)
+        {
+            numéro = "2";
+            équipe = "A";
+        }
+        else
+        {
+            numéro = "1";
+            équipe = "B";
+        }
+        Vector3 distGJ = (Gardien.transform.position - balle.GetComponent<PlacerBalle>().positionJouer);
+        Vector3 velo = balle.GetComponent<Rigidbody>().velocity;
+        //Debug.Log(Balle.GetComponent<Rigidbody>().velocity);
+        Vector3 distBB = (balle.transform.position - (balle.GetComponent<PlacerBalle>().positionJouer));
+        //Ray directionBalle = new Ray(Balle.transform.position, Balle.transform.position + velo);
+        //Debug.DrawRay(Balle.transform.position, Balle.transform.position + velo * 3, Color.red, 1);
+        float angle = Vector3.Angle(distGJ, distBB);
+
+        //Debug.DrawRay(balle.transform.position, balle.GetComponent<PlacerBalle>().positionJouer,Color.blue,3f);
+        float probabilité;
+        Debug.Log(angle);
+        if (angle >= 19)
+        {
+            probabilité = 0.95f;
+        }
+        else
+        {
+
+            probabilité = angle / 20;
+        }
+
+
+        Debug.Log(probabilité);
+        //Debug.Log("chance"+chance);
+        if (chance >= probabilité)
+        {
+            bool type;
+
+            if (numéro == "2")
+            {
+                type = true;//Gardien.transform.position = new Vector3(Balle.transform.position.x - 0.5f, Balle.transform.position.y, Balle.transform.position.z);
+            }
+            else
+            {
+                type = false;
+                //Gardien.transform.position = new Vector3(Balle.transform.position.x + 0.5f, Balle.transform.position.y, Balle.transform.position.z);
+            }
+            PlacerGardien(type);
+        }
+        else
+        {
+
+        }
+    }
+    void CalculerProbabilité()
     {
 
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
@@ -186,17 +271,31 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
     {
         GameObject gardien = this.transform.parent.gameObject;
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        AnciennePosition = balle.transform.position;
+       // balle.transform.parent = gardien.transform;
+
         gardien.GetComponent<ContrôleGardien>().enabled = false;
         if (équipe)
         {
+            balle.transform.position = new Vector3(gardien.transform.position.x + 0.75f, balle.transform.position.y, gardien.transform.position.z);
 
-            gardien.transform.position = new Vector3(balle.transform.position.x - 0.5f, balle.transform.position.y, balle.transform.position.z);
+           // gardien.transform.position = anciennePosition;
         }
         else
         {
-            gardien.transform.position = new Vector3(balle.transform.position.x + 0.5f, balle.transform.position.y, balle.transform.position.z);
-        }
-    }
+            balle.transform.position = new Vector3(gardien.transform.position.x - 0.75f, balle.transform.position.y, gardien.transform.position.z);
 
+          //  gardien.transform.position = anciennePosition;
+        }
+        Invoke("GérerSaut", 0.1f);
+    }
+    void GérerSaut()
+    {
+        GameObject gardien = this.transform.parent.gameObject;
+
+        gardien.transform.position = AnciennePosition;
+       
+
+    }
 
 }
