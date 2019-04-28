@@ -22,7 +22,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     Vector3 PositionDéfenseFill { get; set; }
     List<GameObject> ListeProximitéA { get; set; }
     List<GameObject> ListeProximitéB { get; set; }
-
+    string Comportement { get; set; }
     [SerializeField]
     int NbFramesAvantUpdate = 10;
 
@@ -79,7 +79,7 @@ public class ScriptMouvementAI : NetworkBehaviour
        
         constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
         TrouverPositionDefDeBase();
-        PositionDéfenseFill = new Vector3();
+        PositionDéfenseFill = new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
     }
     private void TrouverPositionDefDeBase()
     {
@@ -106,18 +106,20 @@ public class ScriptMouvementAI : NetworkBehaviour
         if (compteurFrames++ == 17)
         {
             compteurFrames = 0;
-            PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
-            
+            PointÀAller = TrouverPointDéplacement();
             Debug.DrawLine(this.transform.position + Vector3.up, PointÀAller, Color.gray, 17f / 60f);
+            //if(Comportement == "Défendre" )
+            //{
+            //    PointÀAller = DéterminerPosRevenir();
+            //}
             /*
             Debug.Log(TrouverCorportementDéplacement());
             */
         }
     }
-
-    private Vector3 TrouverPointDéplacement(string comportement)
+    private Vector3 TrouverPointDéplacement()
     {
-        switch (comportement)
+        switch (Comportement)
         {
             case "Attaquer":
                 return GérerPositionsAtt();
@@ -136,21 +138,24 @@ public class ScriptMouvementAI : NetworkBehaviour
                     return Ballon.transform.position;
                 else
                     return positionTactique * constÉquipe - Vector3.right * 20 * constÉquipe;
-                
         }
     }
 
     private Vector3 GérerPositionsDef()
     {
         Vector3 posCible = Vector3.one;
-        //if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
-        //{
-        //    posCible = transform.position;
-        //}
-        //else
-        //{
-        //    posCible = PositionDéfenseDéfaut;//(PositionDéfenseDéfaut + 0.25f * posBalle);
-        //}
+        if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
+        {
+            posCible = transform.position;
+        }
+        else
+        {
+            if(estDansZoneFill)
+            {
+                posCible = PositionDéfenseFill;
+            }
+            else posCible = PositionDéfenseDéfaut;//(PositionDéfenseDéfaut + 0.25f * posBalle);
+        }
         return posCible ;
     }
 
@@ -184,7 +189,6 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 if (EstPasSeulDansZone(listeJoueursA, PositionDéfenseDéfaut))
                 {
-                    PositionDéfenseFill = RelocaliserJoueurDef();
                     estDansZoneFill = true;
                 }
                 else estDansZoneFill = false;
@@ -193,7 +197,6 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 if (EstPasSeulDansZone(listeJoueursB, PositionDéfenseDéfaut))
                 {
-                    PositionDéfenseFill = RelocaliserJoueurDef();
                     estDansZoneFill = true;
                 }
                 else estDansZoneFill = false;
@@ -206,10 +209,6 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
         //PositionDéfenseDéfaut = posCible;
         return PositionDéfenseDéfaut;
-    }
-    private Vector3 RelocaliserJoueurDef()
-    {
-        return new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
     }
 
     private bool EstPasSeulDansZone(List<GameObject> listeJoueur,Vector3 milieuZone)
@@ -308,7 +307,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
     }
 
-    private string TrouverCorportementDéplacement()
+    private void TrouverCorportementDéplacement()
     {
 
         if (Ballon.transform.parent != null)
@@ -317,26 +316,26 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
-                    return "Avancer";
+                    Comportement =  "Avancer";
                 }
                 else
                 {
-                    return "Défendre";
+                    Comportement = "Défendre";
                 }
             }
             else
             {
                 if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
-                    return "Attaquer";
+                    Comportement = "Attaquer";
                 }
                 else
                 {
-                    return "Revenir";
+                    Comportement = "Revenir";
                 }
             }
         }
-        return "Default";
+        Comportement = "Default";
     }
 
     private void EffectuerMiseÀJour()
