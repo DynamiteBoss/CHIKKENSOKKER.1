@@ -199,20 +199,25 @@ public class ActionsPlayer : NetworkBehaviour
         GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.parent.GetComponent<TypeÉquipe>()).Except(new GameObject[]{ this.transform.parent.gameObject }).ToArray();
     }
 
-    //[Command]
+    [Command]
     public void CmdFairePasse(Vector3 positionJoueurVisé)
+    {
+        RpcFairePasse(positionJoueurVisé);
+    }
+    [ClientRpc]
+    public void RpcFairePasse(Vector3 positionJoueurVisé)
     {
         Transform balle = gameObject.transform.parent.Find("Balle");
         Vector3 vecteurPasse = new Vector3(positionJoueurVisé.x - this.transform.parent.position.x, .5f, positionJoueurVisé.z - this.transform.parent.position.z);
         Debug.Log(positionJoueurVisé.ToString());
         if (balle != null)
         {
-            balle.transform.GetComponentInChildren<Rigidbody>().isKinematic = false;
+            balle.transform.GetComponent<Rigidbody>().isKinematic = false;
             StartCoroutine(AttendrePourDistanceBallon(0.6f));
             balle.GetComponent<SphereCollider>().enabled = true;
             balle.transform.parent = null;
             //balle.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(Mathf.Sin(CalculerAngle(positionJoueurVisé)), 0, Mathf.Cos(CalculerAngle(positionJoueurVisé))/*new Vector3(this.transform.position.x - positionJoueurVisé.x, 0.2f, this.transform.position.z - positionJoueurVisé.z*/) * 10f, ForceMode.Impulse);
-            balle.GetComponentInChildren<Rigidbody>().AddForce(vecteurPasse.magnitude > DistPasseForceMax ? ((vecteurPasse).normalized * ForceMaxPasse) : vecteurPasse, ForceMode.Impulse);
+            balle.GetComponent<Rigidbody>().AddForce(vecteurPasse.magnitude > DistPasseForceMax ? ((vecteurPasse).normalized * ForceMaxPasse) : vecteurPasse, ForceMode.Impulse);
 
 
             Debug.DrawRay(new Vector3(this.transform.parent.position.x, 2.425f, this.transform.parent.position.z), vecteurPasse, Color.red, 2);
