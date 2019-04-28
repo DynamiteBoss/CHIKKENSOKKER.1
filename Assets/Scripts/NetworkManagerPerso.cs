@@ -15,7 +15,6 @@ public class NetworkManagerPerso : NetworkManager
     public GameObject aIPre { get; set; }
     public GameObject gardienPre { get; set; }
     public List<GameObject> prefabs = new List<GameObject>();
-
     Button Btn1v1 { get; set; }
     Button Btn2v2 { get; set; }
     Canvas CnvConnexion { get; set; }
@@ -287,11 +286,19 @@ public class NetworkManagerPerso : NetworkManager
     void GérerBoutonsMenu()
     {
         GameObject.Find("BtnHost").GetComponent<Button>().onClick.AddListener(() => GérerGrandeurÉquipe());
-        GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
-        GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
+        //GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
+        //GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
         GameObject.Find("BtnJoin").GetComponent<Button>().onClick.AddListener(() => JoindrePartie());
+        //GameObject.Find("BtnRevenir").GetComponent<Button>().onClick.RemoveAllListeners();
+
     }
-    
+
+    void RevenirMenu()
+    {
+        CnvConnexion.enabled = true;
+        CnvNbJoueur.enabled = false;
+        Debug.Log("2");
+    }
     void GérerBoutonsJeu()
     {
         GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
@@ -301,7 +308,7 @@ public class NetworkManagerPerso : NetworkManager
     {
         CnvConnexion.enabled = false;
         CnvNbJoueur.enabled = true;
-
+        GameObject.Find("BtnRetour").GetComponent<Button>().onClick.AddListener(() => RevenirMenu());
         //Btn1v1.onClick.RemoveAllListeners();
         Btn1v1.onClick.AddListener(() => CreateHost(true));
         //Btn2v2.onClick.RemoveAllListeners();
