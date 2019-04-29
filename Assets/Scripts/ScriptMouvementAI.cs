@@ -267,11 +267,21 @@ public class ScriptMouvementAI : NetworkBehaviour
     //}
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
-        //return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-        PointÀAller = (GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
-            .OrderByDescending(x => x.transform.position.x * constÉquipe).First().transform.position);
-        PointÀAller += (positionTactique + new Vector3(constÉquipe /** (10/PointÀAller.x)*/, 0, 0));
-        VérifierCible();
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        if(balle.GetComponent<PlacerBalle>().estPlacer)
+        {
+            PointÀAller = balle.transform.parent.transform.position;
+            //return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
+
+
+            /*PointÀAller = (GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
+                .OrderByDescending(x => x.transform.position.x * constÉquipe).First().transform.position);*/
+            PointÀAller += (positionTactique + new Vector3(constÉquipe /** (10/PointÀAller.x)*/, 0, 0));
+
+
+            VérifierCible();
+        }
+        
         return PointÀAller;
         
     }

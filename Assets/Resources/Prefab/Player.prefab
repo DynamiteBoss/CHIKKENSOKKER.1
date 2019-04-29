@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 4396265425552050163}
   - component: {fileID: 1027405951089886263}
   - component: {fileID: 3367519272812415070}
+  - component: {fileID: 2971172345930959306}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -638,6 +639,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2971172345930959306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760735fd49aa562449898a954c50a15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &17
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +876,7 @@ GameObject:
   - component: {fileID: 40}
   - component: {fileID: 50}
   - component: {fileID: 45}
+  - component: {fileID: 4601364872114338998}
   m_Layer: 0
   m_Name: ZonePlacage
   m_TagString: ZoneP
@@ -966,6 +980,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19014fd54da93c548be0becefd708366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4601364872114338998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!1 &1683689047276804980
 GameObject:
   m_ObjectHideFlags: 0

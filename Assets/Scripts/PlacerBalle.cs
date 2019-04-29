@@ -25,7 +25,7 @@ public class PlacerBalle : NetworkBehaviour
             if (other.tag == "ZoneC")
             {
                 GameObject parent = other.transform.parent.gameObject;
-                CmdMettreBalleEnfant(parent);
+                MettreBalleEnfant(parent);
             }
             
             //CalculerDistanceBalle();
@@ -36,8 +36,8 @@ public class PlacerBalle : NetworkBehaviour
             if (other.tag == "ZoneC")
             {
                 GameObject parent = other.transform.parent.gameObject;
-                CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
-                CmdMettreBalleEnfant(parent);
+                TrouverJoueurÀChanger(other.transform.parent.gameObject);
+                MettreBalleEnfant(parent);
             }
         }
         else if (other.transform.parent.tag == "Gardien")
@@ -54,7 +54,7 @@ public class PlacerBalle : NetworkBehaviour
     [Command]
     void CmdMettreBalleEnfant(GameObject other)
     {
-        RpcMettreBalleEnfant(other);
+        //RpcMettreBalleEnfant(other);
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
         
         
@@ -85,8 +85,8 @@ public class PlacerBalle : NetworkBehaviour
         }
         */
     }
-    [ClientRpc]
-    void RpcMettreBalleEnfant(GameObject other)
+    
+    void MettreBalleEnfant(GameObject other)
     {
         estPlacer = true;
         //GetComponent<NetworkTransform>().enabled = false;
@@ -115,10 +115,10 @@ public class PlacerBalle : NetworkBehaviour
     [Command]
     void CmdTrouverJoueurÀChanger(GameObject aI)
     {
-        RpcTrouverJoueurÀChanger(aI);
+        //RpcTrouverJoueurÀChanger(aI);
     }
-    [ClientRpc]
-    void RpcTrouverJoueurÀChanger(GameObject aI)
+    
+    void TrouverJoueurÀChanger(GameObject aI)
     {
         string tampon;
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
