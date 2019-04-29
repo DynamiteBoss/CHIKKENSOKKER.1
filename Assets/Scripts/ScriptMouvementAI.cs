@@ -20,6 +20,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     GameObject But { get; set; }
     Vector3 PositionDéfenseDéfaut { get; set; }
     Vector3 PositionDéfenseFill { get; set; }
+    Vector3 PositionDéfenseActuelle { get; set; }
     List<GameObject> ListeProximitéA { get; set; }
     List<GameObject> ListeProximitéB { get; set; }
     string Comportement { get; set; }
@@ -38,7 +39,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     int noComportement;
     short constÉquipe;
     int[] LimitesX { get; set; }
-    int [] LimitesZ { get; set; }
+    int[] LimitesZ { get; set; }
     const int LIMITE_HAUT = 17;
     const int LIMITE_BAS = -17;
     const int LIMITE_GAUCHE = -39;
@@ -76,7 +77,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
         //Debug.Log(noComportement);
 
-       
+
         constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
         TrouverPositionDefDeBase();
         PositionDéfenseFill = new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
@@ -122,16 +123,12 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             case "Attaquer":
                 return GérerPositionsAtt();
-                break;
             case "Défendre":
                 return GérerPositionsDef();
-                break;
             case "Avancer":
                 return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-                break;
             case "Revenir":
                 return DéterminerPosRevenir();
-                break;
             default:
                 if (GameObject.FindGameObjectsWithTag("AI").OrderBy(x => (x.transform.position - Ballon.transform.position).magnitude).Where(x => x.GetComponentInChildren<ScriptMouvementAI>().enabled && x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA).First().transform == this.transform)
                     return Ballon.transform.position;
@@ -152,85 +149,98 @@ public class ScriptMouvementAI : NetworkBehaviour
             }
             else
             {
-                if (estDansZoneFill)
-                {
-                    //Debug.Log("FILL SUIT LA BALLE");
-                    posCible.x = PositionDéfenseFill.x + (posBalleTerrain.x * 0.5f);
-                    posCible.y = PositionDéfenseFill.y + (posBalleTerrain.y * 0.5f);
-                }
-                else
-                {
-                    //Debug.Log("DEFaut SUIT LA BALLE");
-                    posCible.x = PositionDéfenseDéfaut.x + (posBalleTerrain.x * 0.5f);
-                    posCible.y = PositionDéfenseDéfaut.y + (posBalleTerrain.y * 0.5f);
-                }
+                posCible = new Vector3(0, 0, 0);
+                //if (estDansZoneFill)
+                //{
+                //    //Debug.Log("FILL SUIT LA BALLE");
+                //    posCible.x = PositionDéfenseFill.x + (posBalleTerrain.x * 0.5f);
+                //    posCible.y = PositionDéfenseFill.y + (posBalleTerrain.y * 0.5f);
+                //}
+                //else
+                //{
+                //    //Debug.Log("DEFaut SUIT LA BALLE");
+                //    posCible.x = PositionDéfenseDéfaut.x + (posBalleTerrain.x * 0.5f);
+                //    posCible.y = PositionDéfenseDéfaut.y + (posBalleTerrain.y * 0.5f);
+                //}
             }
         }
         else posCible = transform.position;
         return posCible;
     }
 
+
+    //private Vector3 DéterminerPositionBaseActuelleDéfense()
+    //{
+
+    //}
+
     private Vector3 DéterminerPosRevenir()
     {
         //PositionDéfenseDéfaut = posCible;
-        if (tag == "AI")
+        Vector3 posCible = new Vector3();
+        GameObject[] tabJoueurs = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] tabAI = GameObject.FindGameObjectsWithTag("AI");
+        GameObject[] tabTous = tabJoueurs.Concat(tabAI).ToArray();
+        List<GameObject> listeJoueursA = new List<GameObject>();
+        List<GameObject> listeJoueursB = new List<GameObject>();
+        foreach (GameObject x in tabTous)
         {
-            GameObject[] tabJoueurs = GameObject.FindGameObjectsWithTag("Player");
-            GameObject[] tabAI = GameObject.FindGameObjectsWithTag("AI");
-            GameObject[] tabTous = tabJoueurs.Concat(tabAI).ToArray();
-            List<GameObject> listeJoueursA = new List<GameObject>();
-            List<GameObject> listeJoueursB = new List<GameObject>();
-            foreach (GameObject x in tabTous)
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
             {
-                if (x.GetComponent<TypeÉquipe>().estÉquipeA)
-                {
-                    ListeProximitéA.Add(x);
-                }
-                else ListeProximitéB.Add(x);
+                ListeProximitéA.Add(x);
             }
-            foreach(GameObject x in tabJoueurs)
-            {
-                if (x.GetComponent<TypeÉquipe>().estÉquipeA)
-                {
-                    listeJoueursA.Add(x);
-                }
-                else listeJoueursB.Add(x);
-            }
-            if (GetComponent<TypeÉquipe>().estÉquipeA)
-            {
-                if (EstPasSeulDansZone(listeJoueursA, PositionDéfenseDéfaut))
-                {
-                    estDansZoneFill = true;
-                }
-                else estDansZoneFill = false;
-            }
-            else
-            {
-                if (EstPasSeulDansZone(listeJoueursB, PositionDéfenseDéfaut))
-                {
-                    estDansZoneFill = true;
-                }
-                else estDansZoneFill = false;
-            }
-            if (estDansZoneFill)
-            {
-                return PositionDéfenseFill;
-            }
-            else return PositionDéfenseDéfaut;
+            else ListeProximitéB.Add(x);
         }
-        //PositionDéfenseDéfaut = posCible;
-        return PositionDéfenseDéfaut;
+        foreach (GameObject x in tabJoueurs)
+        {
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                listeJoueursA.Add(x);
+            }
+            else listeJoueursB.Add(x);
+        }
+        if (GetComponent<TypeÉquipe>().estÉquipeA)
+        {
+            if (EstPasSeulDansZone(listeJoueursA, PositionDéfenseDéfaut))
+            {
+                estDansZoneFill = true;
+            }
+            else estDansZoneFill = false;
+        }
+        else
+        {
+            if (EstPasSeulDansZone(listeJoueursB, PositionDéfenseDéfaut))
+            {
+                estDansZoneFill = true;
+            }
+            else estDansZoneFill = false;
+        }
+        if (estDansZoneFill)
+        {
+            PositionDéfenseActuelle = PositionDéfenseFill;
+            posCible = PositionDéfenseFill;
+        }
+        else
+        {
+            PositionDéfenseActuelle = PositionDéfenseDéfaut;
+            posCible = PositionDéfenseDéfaut;
+        }
+        if (Comportement == "Revenir")
+        {
+            return posCible;
+        }
+        else return transform.position;
     }
 
-    private bool EstPasSeulDansZone(List<GameObject> listeJoueur,Vector3 milieuZone)
+    private bool EstPasSeulDansZone(List<GameObject> listeJoueur, Vector3 milieuZone)
     {
         bool estPasSeul = false;
         for (int i = 0; i != listeJoueur.Count; i++)
         {
-            if (EstDansPérimètre(listeJoueur[i].transform,milieuZone))
+            if (EstDansPérimètre(listeJoueur[i].transform, milieuZone))
             {
                 estPasSeul = true;
-                
+
             }
         }
         return estPasSeul;
@@ -280,7 +290,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
-        if(balle.GetComponent<PlacerBalle>().estPlacer)
+        if (balle.GetComponent<PlacerBalle>().estPlacer)
         {
             PointÀAller = balle.transform.parent.transform.position;
             //return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
@@ -293,16 +303,16 @@ public class ScriptMouvementAI : NetworkBehaviour
 
             VérifierCible();
         }
-        
+
         return PointÀAller;
-        
+
     }
 
     private void VérifierCible()
     {
         float nouveauX = PointÀAller.x;
-        float nouveauZ = PointÀAller.z ;
-        if(PointÀAller.x > LIMITE_DROITE)
+        float nouveauZ = PointÀAller.z;
+        if (PointÀAller.x > LIMITE_DROITE)
         {
             nouveauX = LIMITE_DROITE;
         }
@@ -337,7 +347,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 if (Ballon.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
                 {
-                    comportement =  "Avancer";
+                    comportement = "Avancer";
                 }
                 else
                 {
