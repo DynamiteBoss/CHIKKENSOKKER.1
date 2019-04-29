@@ -284,7 +284,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     {
         if (other == Ballon)
         {
-            this.transform.GetComponentInChildren<ActionsPlayer>().enabled = true;
+            this.transform.GetComponentInChildren<ActionsPlayerV2>().enabled = true;
             this.transform.GetComponentInChildren<MouvementPlayer>().enabled = true;
             //this.transform.GetComponentInChildren<MouvementManette>().enabled = true;
             this.enabled = false;
@@ -310,11 +310,6 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     //            break;
     //    }
-    //}
-
-    //private int TrouverComportementDéfense()
-    //{
-    //    if ()
     //}
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {

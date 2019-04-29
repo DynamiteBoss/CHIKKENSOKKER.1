@@ -22,12 +22,13 @@ public class GénérerChiffreAléatoire : NetworkBehaviour
     {
         aléatoire = changement;
     }
-    public void CréerAléatoire()
+    [ClientRpc]
+    public void RpcCréerAléatoire()
     {
-        if(isServer)
-        {
+       
             aléatoire = Random.Range(0, 3);
-        }
+        
         
     }
+    
 }

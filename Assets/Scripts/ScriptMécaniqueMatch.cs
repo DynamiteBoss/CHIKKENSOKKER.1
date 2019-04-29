@@ -14,7 +14,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     const string CheminAccesPartielOpts = "Assets/Resources/Options/Options.txt";
 
-    const float FRÉQUENCE_EVENT = 2400f;
+    const float FRÉQUENCE_EVENT = 2400;
 
     const float DURÉE_EVENT = 900f;
 
@@ -38,6 +38,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     const float DuréeNuit = 20f;
     [SerializeField]
     bool EstEnModeNuit;
+
+    [SerializeField]
+    bool ModeTest = false;
     const int OpacitéMaxPannel = 175;
     const int IntensitéMaxLumiere = 100;
     const float VitesseJourNuit = 1f;
@@ -307,7 +310,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((GameObject.FindGameObjectsWithTag("AI").Length > 3))   //TEMPORAIRE
+        if ((GameObject.FindGameObjectsWithTag("AI").Length > 3) || ModeTest)   //TEMPORAIRE
         {
             if (matchEnCours)
             {
@@ -342,10 +345,13 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
                     if (compteur4 >= FRÉQUENCE_EVENT)
                     {
-                        Balle.GetComponent<GénérerChiffreAléatoire>().CréerAléatoire();
-                        évenement = Balle.GetComponent<GénérerChiffreAléatoire>().aléatoire;
-                        CmdChoisirEvent();
                         compteur4 = 0;
+                        CmdChoisirNombre();
+                        //évenement = Balle.GetComponent<ScriptBut>().randomEvent;
+                        //Balle.GetComponent<GénérerChiffreAléatoire>().RpcCréerAléatoire();
+                        //évenement = Balle.GetComponent<GénérerChiffreAléatoire>().aléatoire;
+                        CmdChoisirEvent();
+                        
                     }
 
                     if (compteur2 % 20 == 0)
@@ -381,6 +387,27 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         }
 
 
+    }
+    [Command]
+    void CmdChoisirNombre()
+    {
+        RpcChoisirNombre();
+    }
+    [ClientRpc]
+    void RpcChoisirNombre()
+    {
+        if (évenement == 0)
+        {
+            évenement = 1;
+        }
+        else if (évenement == 1)
+        {
+            évenement = 2;
+        }
+        else if (évenement == 2)
+        {
+            évenement = 0;
+        }
     }
     [ClientRpc]
     void RpcDésactiverEvent()
@@ -424,8 +451,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                 break;
             case 2:
                 EstEnModeNuit = false;
-                évenement = 4;
-               
+         
                 break;
         }
     }

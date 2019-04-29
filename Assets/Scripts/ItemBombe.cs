@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ItemBombe : MonoBehaviour
+public class ItemBombe : NetworkBehaviour
 {
     GameObject zoneExplosion { get; set; }
     private bool explosée;
