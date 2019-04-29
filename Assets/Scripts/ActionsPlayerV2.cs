@@ -11,8 +11,8 @@ using UnityEngine.Networking;
 public class ActionsPlayerV2 : NetworkBehaviour
 {
     Transform ZonePlacage { get; set; }
-    GameObject JoueurÀPlaquer { get; set; }
-    GameObject Balle { get; set; }
+    public GameObject JoueurÀPlaquer { get; set; }
+    public GameObject Balle { get; set; }
 
     [SerializeField]
     public static Vector3[] PositionJoueursAlliés { get; set; }
@@ -341,6 +341,21 @@ public class ActionsPlayerV2 : NetworkBehaviour
         this.transform.GetComponent<Rigidbody>().AddForce(Mathf.Sin(rad) * 65.5f, 0, Mathf.Cos(rad) * 65.5f, ForceMode.Impulse);
         this.transform.GetComponent<Rigidbody>().drag = 10;
         //this.transform.transform.position = new Vector3(0, 0, 0);
+        PlaquerJoueur();
+    }
+    void PlaquerJoueur()
+    {
+        if (!JoueurÀPlaquer)
+            return;
+        if (JoueurÀPlaquer.transform.Find("Balle"))
+        {
+            Balle = JoueurÀPlaquer.transform.Find("Balle").gameObject;
+            Balle.transform.parent = null;
+            Balle.GetComponent<Rigidbody>().AddForce(Mathf.Sin(direction) * 65.5f, 0, Mathf.Cos(direction) * 65.5f, ForceMode.Impulse);
+        }
+        JoueurÀPlaquer.GetComponent<Rigidbody>().isKinematic = false;
+        FrapperAdversaire();
+        StartCoroutine(AttendreDéactivationScriptPlaqué(1.1f, direction));
     }
 
     IEnumerator AttendreDéactivationScriptPlaqueur(float durée, float direction)

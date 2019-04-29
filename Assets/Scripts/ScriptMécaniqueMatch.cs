@@ -9,9 +9,14 @@ using UnityEngine.Networking;
 
 public class ScriptMécaniqueMatch : NetworkBehaviour
 {
+    Color terrain;
     string[] tags = new string[] { "Player", "AI", "Gardien" };
 
     const string CheminAccesPartielOpts = "Assets/Resources/Options/Options.txt";
+
+    const float FRÉQUENCE_EVENT = 2400f;
+
+    const float DURÉE_EVENT = 900f;
 
     GameObject Balle { get; set; }
     GameObject PnlFin { get; set; }
@@ -35,7 +40,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     bool EstEnModeNuit;
     const int OpacitéMaxPannel = 175;
     const int IntensitéMaxLumiere = 100;
-    const float VitesseJourNuit = 100f;
+    const float VitesseJourNuit = 1f;
 
     [SerializeField]
     float FrequenceObjetMax = 1200f; //20 secondes
@@ -60,20 +65,25 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     Light LumierePrincipale { get; set; }
     AudioSource Musique { get; set; }
 
-    [SyncVar (hook = "OnMatchEnCoursChange")]public bool matchEnCours = true;
+    [SyncVar(hook = "OnMatchEnCoursChange")] public bool matchEnCours = true;
     [SyncVar(hook = "OnPauseChange")] public bool enPause;
+    [SyncVar(hook = "OnEnEventChange")] public bool enEvent = false;
+
 
 
     [SyncVar(hook = "OnTimerChange")] public float timer;
     [SyncVar(hook = "OnCompteurChange")] public int compteur = 0;
     [SyncVar(hook = "OnCompteur2Change")] public int compteur2 = 0;
     [SyncVar(hook = "OnCompteur3Change")] public int compteur3 = 0;
+    [SyncVar(hook = "OnCompteur4Change")] public int compteur4 = 0;
+    [SyncVar(hook = "OnCompteurÉvenementChange")] public int compteurÉvenement = 0;
+    [SyncVar(hook = "OnÉvenementChange")] public int évenement = 0;
     [SyncVar(hook = "OnCompteurSpawnChange")] public int compteurSpawn = 0;
     [SyncVar(hook = "OnChanceArrêtSpawnChange")] public float chanceArrêt;
 
 
     List<GameObject> Joueur { get; set; }
-    public int nbOeufs = 0;
+    [SyncVar(hook = "OnNbOeufsChange")] public int nbOeufs = 0;
     int NbOeufMax = 3;
 
     bool ajusteLumiere = false;
@@ -81,6 +91,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
     void Start()
     {
+        terrain = GameObject.Find("Terrain").GetComponent<MeshRenderer>().material.color;
         //lis les valeurs dans le fichier texte OPTIONS
         using (StreamReader streamReader = new StreamReader(CheminAccesPartielOpts))
         {
@@ -160,15 +171,15 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         foreach (string x in tags)
         {
             liste = GameObject.FindGameObjectsWithTag(x);
-            foreach(GameObject z in liste)
+            foreach (GameObject z in liste)
             {
                 listeCommune.Add(z);
             }
         }
 
-        foreach(GameObject x in listeCommune)
+        foreach (GameObject x in listeCommune)
         {
-            if(x.GetComponent<TypeÉquipe>().estÉquipeA)
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
             {
                 listeA.Add(x);
             }
@@ -178,20 +189,20 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
             }
         }
 
-        foreach(GameObject x in listeA)
+        foreach (GameObject x in listeA)
         {
             x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
             compteurSpawn++;
             //TxtFin.text = compteurSpawn.ToString();
         }
-        
-        foreach(GameObject x in listeB)
+
+        foreach (GameObject x in listeB)
         {
             x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
             compteurSpawn++;
         }
-        
-        
+
+
 
 
         PnlFin.SetActive(false);
@@ -295,7 +306,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     // Update is called once per frame
     void Update()
-    { 
+    {
         if ((GameObject.FindGameObjectsWithTag("AI").Length > 3))   //TEMPORAIRE
         {
             if (matchEnCours)
@@ -306,10 +317,12 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                     PartirMatch();
                     compteur3++;
                 }
-                if(!EstEnPause())
+                if (!EstEnPause())
                 {
+                   
                     ++compteur;
                     ++compteur2;
+                    ++compteur4;
                     timer -= Time.deltaTime;
                     if (compteur == NbFramesUpdate + 1)
                     {
@@ -326,6 +339,15 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                             AjusterModeNuit();
 
                     }
+
+                    if (compteur4 >= FRÉQUENCE_EVENT)
+                    {
+                        Balle.GetComponent<GénérerChiffreAléatoire>().CréerAléatoire();
+                        évenement = Balle.GetComponent<GénérerChiffreAléatoire>().aléatoire;
+                        CmdChoisirEvent();
+                        compteur4 = 0;
+                    }
+
                     if (compteur2 % 20 == 0)
                     {
                         if (EstEnModeNuit != modeNuitLocal)
@@ -339,6 +361,17 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                             CmdFaireApparaitreObjet();
                         }
                     }
+
+                    if (enEvent)
+                    {
+                        ++compteurÉvenement;
+                        if (compteurÉvenement >= DURÉE_EVENT)
+                        {
+                            RpcDésactiverEvent();
+                            compteurÉvenement = 0;
+                        }
+                    }
+
                 }
             }
         }
@@ -346,9 +379,157 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             AttendreDébutMatch();
         }
-            
+
 
     }
+    [ClientRpc]
+    void RpcDésactiverEvent()
+    {
+        enEvent = false;
+        GameObject[] listeCatégorie = new GameObject[10];
+        List<GameObject> liste = new List<GameObject>();
+        foreach (string x in tags)
+        {
+            listeCatégorie = GameObject.FindGameObjectsWithTag(x);
+            {
+                foreach (GameObject y in listeCatégorie)
+                {
+                    liste.Add(y);
+                }
+            }
+        }
+       
+        
+        switch (évenement)
+        {
+            case 0:
+                foreach (GameObject x in liste)
+                {
+                    x.GetComponent<MouvementPlayer>().modePluie = false;
+                    x.GetComponent<Rigidbody>().isKinematic = true;
+                    x.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = true;
+                   
+                }
+                break;
+            case 1:
+                foreach (GameObject x in liste)
+                {
+                    GameObject.Find("Terrain").GetComponent<MeshRenderer>().material.color = terrain;
+                    x.GetComponent<MouvementPlayer>().modeGlace = false;
+                    x.GetComponent<Rigidbody>().isKinematic = true;
+                    x.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = true;
+                   
+                    
+                }
+                break;
+            case 2:
+                EstEnModeNuit = false;
+                évenement = 4;
+               
+                break;
+        }
+    }
+    [Command]
+    void CmdChoisirEvent()
+    {
+        RpcChoisirEvent();
+        /*
+        enEvent = true;
+         évenement = UnityEngine.Random.Range(0, 3);
+        
+        GameObject[] listeCatégorie = new GameObject[10];
+        List<GameObject> liste = new List<GameObject>();
+
+        foreach (string x in tags)
+        {
+            listeCatégorie = GameObject.FindGameObjectsWithTag(x);
+            {
+                foreach (GameObject y in listeCatégorie)
+                {
+                    liste.Add(y);
+                }
+            }
+        }
+     
+        
+        switch (évenement)
+        {
+            case 0:
+                foreach (GameObject z in liste)
+                {
+                    z.GetComponent<MouvementPlayer>().modePluie = true;
+                    z.GetComponent<Rigidbody>().isKinematic = false;
+                    z.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = false;
+                }
+                break;
+
+            case 1:
+                foreach (GameObject z in liste)
+                {
+                    z.GetComponent<MouvementPlayer>().modeGlace = true;
+                    z.GetComponent<Rigidbody>().isKinematic = false;
+                    z.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = false;
+                }
+                break;
+
+            case 2:
+                EstEnModeNuit = true;
+                break;
+        }
+        */
+    }
+    [ClientRpc]
+    void RpcChoisirEvent()
+    {
+       
+        
+        enEvent = true;
+       
+        
+
+        GameObject[] listeCatégorie = new GameObject[10];
+        List<GameObject> liste = new List<GameObject>();
+
+        foreach (string x in tags)
+        {
+            listeCatégorie = GameObject.FindGameObjectsWithTag(x);
+            {
+                foreach (GameObject y in listeCatégorie)
+                {
+                    liste.Add(y);
+                }
+            }
+        }
+
+
+        switch (évenement)
+        {
+            case 0:
+                foreach (GameObject z in liste)
+                {
+                    z.GetComponent<MouvementPlayer>().modePluie = true;
+                    z.GetComponent<Rigidbody>().isKinematic = false;
+                    z.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = false;
+                }
+                break;
+
+            case 1:
+                foreach (GameObject z in liste)
+                {
+                    GameObject.Find("Terrain").GetComponent<MeshRenderer>().material.color = Color.blue;
+                    z.GetComponent<MouvementPlayer>().modeGlace = true;
+                    z.GetComponent<Rigidbody>().isKinematic = false;
+                    z.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = false;
+                }
+                break;
+
+            case 2:
+                EstEnModeNuit = true;
+                break;
+        }
+        
+    }
+
     bool EstEnPause()
     {
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -440,7 +621,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                 joueurs[i].GetComponentInChildren<Light>().intensity -= 100f * Time.deltaTime * VitesseJourNuit;
             }
             LumierePrincipale.intensity += (1f) * Time.deltaTime * VitesseJourNuit;
-            PnlNuit.GetComponentInChildren<Image>().color -= new Color(0, 0, 0, (.585f * Time.deltaTime) * VitesseJourNuit);
+            PnlNuit.GetComponentInChildren<Image>().color -= new Color(0, 0, 0, (0.8f * Time.deltaTime) * VitesseJourNuit);
         }
         else
         {
@@ -449,7 +630,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                 joueurs[i].GetComponentInChildren<Light>().intensity += 100f * Time.deltaTime * VitesseJourNuit;
             }
             LumierePrincipale.intensity -= (1f) * Time.deltaTime * VitesseJourNuit;
-            PnlNuit.GetComponentInChildren<Image>().color += new Color(0, 0, 0, (.585f * Time.deltaTime) * VitesseJourNuit);
+            PnlNuit.GetComponentInChildren<Image>().color += new Color(0, 0, 0, (0.8f * Time.deltaTime) * VitesseJourNuit);
         }
 
         if (LumierePrincipale.intensity >= 1 || LumierePrincipale.intensity <= 0)
@@ -483,9 +664,21 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     {
         compteur3 = changement;
     }
+    void OnCompteur4Change(int changement)
+    {
+        compteur4 = changement;
+    }
     void OnCompteurSpawnChange(int changement)
     {
         compteurSpawn = changement;
+    }
+    void OnCompteurÉvenementChange(int changement)
+    {
+        compteurÉvenement = changement;
+    }
+    void OnÉvenementChange(int changement)
+    {
+        évenement = changement;
     }
     void OnMatchEnCoursChange(bool changemment)
     {
@@ -494,6 +687,14 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void OnPauseChange(bool changemment)
     {
         enPause = changemment;
+    }
+    void OnEnEventChange(bool changemment)
+    {
+        enEvent = changemment;
+    }
+    void OnNbOeufsChange(int changement)
+    {
+        nbOeufs = changement;
     }
     void OnChanceArrêtSpawnChange(float changement)
     {

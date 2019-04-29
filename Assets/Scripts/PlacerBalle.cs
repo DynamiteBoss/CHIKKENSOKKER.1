@@ -20,36 +20,38 @@ public class PlacerBalle : NetworkBehaviour
         {
             return;
         }
-        else if (other.transform.parent.tag == "Player")
-        {
-            if (other.tag == "ZoneC")
-            {
-                GameObject parent = other.transform.parent.gameObject;
-                CmdMettreBalleEnfant(parent);
-            }
-            
-            //CalculerDistanceBalle();
-            //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
-        }
-        else if (other.transform.parent.tag == "AI")
-        {
-            if (other.tag == "ZoneC")
-            {
-                GameObject parent = other.transform.parent.gameObject;
-                TrouverJoueurÀChanger(other.transform.parent.gameObject);
-                CmdMettreBalleEnfant(parent);
-            }
-        }
-        else if (other.transform.parent.tag == "Gardien")
-        {
 
-            if (other.tag == "ZoneC")
+        if(other.tag == "ZoneC")
+        {
+            if (other.transform.parent.tag == "Player")
             {
-                GameObject parent = other.transform.parent.gameObject;
-                CmdTrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
-                CmdMettreBalleEnfant(parent);
+             
+                    GameObject parent = other.transform.parent.gameObject;
+                    CmdMettreBalleEnfant(parent);
+                
+
+                //CalculerDistanceBalle();
+                //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
+            }
+            else if (other.transform.parent.tag == "AI")
+            {
+                
+                    GameObject parent = other.transform.parent.gameObject;
+                    TrouverJoueurÀChanger(other.transform.parent.gameObject);
+                    CmdMettreBalleEnfant(parent);
+                
+            }
+            else if (other.transform.parent.tag == "Gardien")
+            {
+
+               
+                    GameObject parent = other.transform.parent.gameObject;
+                    CmdTrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
+                    CmdMettreBalleEnfant(parent);
+                
             }
         }
+        
     }
     [Command]
     void CmdMettreBalleEnfant(GameObject other)
@@ -124,7 +126,7 @@ public class PlacerBalle : NetworkBehaviour
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
         {
             tampon = dernierPosseseur.name;
-            CmdChangerAIÀJoueur(aI, dernierPosseseur, tampon);
+            RpcChangerAIÀJoueur(aI, dernierPosseseur, tampon);
         }
         else
         {
@@ -141,7 +143,7 @@ public class PlacerBalle : NetworkBehaviour
             int grandeur = liste2.Count;
             int aléatoire = Random.Range(1, grandeur);
             tampon = liste2[aléatoire - 1].name;
-            CmdChangerAIÀJoueur(aI, liste2[aléatoire - 1], tampon);
+            RpcChangerAIÀJoueur(aI, liste2[aléatoire - 1], tampon);
 
         }
     }
