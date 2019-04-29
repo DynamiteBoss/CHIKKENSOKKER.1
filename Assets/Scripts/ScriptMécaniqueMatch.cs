@@ -441,7 +441,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                     x.GetComponent<MouvementPlayer>().modePluie = false;
                     x.GetComponent<Rigidbody>().isKinematic = true;
                     x.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = true;
-                   
+                    x.transform.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
+
                 }
                 break;
             case 1:
@@ -451,8 +452,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                     x.GetComponent<MouvementPlayer>().modeGlace = false;
                     x.GetComponent<Rigidbody>().isKinematic = true;
                     x.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = true;
-                   
-                    
+                    x.transform.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
+
+
                 }
                 break;
             case 2:
@@ -635,7 +637,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         TxtFin.text = message;
 
         Invoke("AttendreDébutMatch", 4f);
-        Invoke("PartirMatch", 5f);
+        Invoke("CmdPartirMatch", 5f);
 
 
 

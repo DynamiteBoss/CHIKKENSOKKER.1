@@ -31,7 +31,7 @@ public class TypeÉquipe : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        CmdPlacer();
+        //CmdPlacer();
         if (name.StartsWith("Player"))
         {
             tag = "Player";

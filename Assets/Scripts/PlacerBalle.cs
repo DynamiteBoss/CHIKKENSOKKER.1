@@ -115,6 +115,39 @@ public class PlacerBalle : NetworkBehaviour
     }
     private void Update()
     {
+        GameObject[] listeJoueur = GameObject.FindGameObjectsWithTag("Player");
+        
+        List<GameObject> listeA = new List<GameObject>();
+        List<GameObject> listeB = new List<GameObject>();
+
+        List<GameObject> listeA1 = new List<GameObject>();
+        List<GameObject> listeB1 = new List<GameObject>();
+        List<GameObject> listeA2 = new List<GameObject>();
+        List<GameObject> listeB2 = new List<GameObject>();
+
+        foreach (GameObject x in listeJoueur)
+        {
+           if(x.GetComponent<TypeÉquipe>().estÉquipeA)
+           {
+                listeA.Add(x);
+           }
+           else
+            {
+                listeB.Add(x);
+            }
+        }
+        foreach(GameObject x in listeA)
+        {
+            if(x.name[x.name.Length-2] == 1)
+            {
+                listeA1.Add(x);
+            }
+            if(x.name[x.name.Length-2] == 2)
+            {
+                listeA2.Add(x);
+            }
+        }
+       // foreach()
         /*if (estPlacer)
         {
             if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
