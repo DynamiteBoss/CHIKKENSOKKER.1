@@ -38,6 +38,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     const float DuréeNuit = 20f;
     [SerializeField]
     bool EstEnModeNuit;
+
+    [SerializeField]
+    bool ModeTest = false;
     const int OpacitéMaxPannel = 175;
     const int IntensitéMaxLumiere = 100;
     const float VitesseJourNuit = 1f;
@@ -307,7 +310,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((GameObject.FindGameObjectsWithTag("AI").Length > 3))   //TEMPORAIRE
+        if ((GameObject.FindGameObjectsWithTag("AI").Length > 3) || ModeTest)   //TEMPORAIRE
         {
             if (matchEnCours)
             {
