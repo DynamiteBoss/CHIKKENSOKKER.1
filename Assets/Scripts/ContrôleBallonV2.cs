@@ -14,7 +14,6 @@ public class ContrôleBallonV2 : NetworkBehaviour
     Transform ZoneContrôle { get; set; }
     Vector3 Courbe { get; set; }
 
-    bool boolCourbe = false;
     float compteur1 = 0f;
     // Start is called before the first frame update
     void Start()
@@ -99,14 +98,13 @@ public class ContrôleBallonV2 : NetworkBehaviour
         if (Input.GetKey(KeyCode.X) && Input.GetKeyDown(KeyCode.Space))
         {
             Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-            Courbe = Vector3.right;
+            Balle.GetComponent<Rigidbody>().AddForce(Vector3.up * FORCE, ForceMode.Acceleration);
             Debug.DrawRay(Balle.transform.position, Vector3.back * FORCE/10, Color.black, 3);
-            boolCourbe = true;
         }
         else if (Input.GetKey(KeyCode.Z) && Input.GetKeyDown(KeyCode.Space))
         {
             Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-            Courbe = Vector3.left;
+            Balle.GetComponent<Rigidbody>().AddForce(Vector3.up * FORCE, ForceMode.Acceleration);
             Debug.DrawRay(Balle.transform.position, Vector3.forward * FORCE/10, Color.black, 3);
         }
         else

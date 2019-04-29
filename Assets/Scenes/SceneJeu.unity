@@ -873,6 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EstEnModeNuit: 0
+  ModeTest: 1
   FrequenceObjetMax: 1200
   FrequenceObjetMin: 180
   "chronom\xE8tre": '3 : 00'
@@ -1681,7 +1682,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162426236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.618, y: 3.15, z: 0}
+  m_LocalPosition: {x: -44.34, y: 3.15, z: 0}
   m_LocalScale: {x: 3.765, y: 6, z: 17.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1919,7 +1920,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451368535}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.318, y: 3.15, z: 0}
+  m_LocalPosition: {x: 44.19, y: 3.15, z: 0}
   m_LocalScale: {x: 4.3695745, y: 6, z: 17.5}
   m_Children: []
   m_Father: {fileID: 0}

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -26,9 +27,15 @@ public class PlacerBalle : NetworkBehaviour
             if (other.transform.parent.tag == "Player")
             {
              
-                    GameObject parent = other.transform.parent.gameObject;
-                    CmdMettreBalleEnfant(parent);
-                
+                GameObject parent = other.transform.parent.gameObject;
+                CmdMettreBalleEnfant(parent);
+                foreach(GameObject p in GameObject.FindGameObjectsWithTag("Player"))        //Retire les joueurs ­­­"joueur" inactifs
+                {
+                    if (p != dernierPosseseur)
+                    {
+
+                    }
+                }
 
                 //CalculerDistanceBalle();
                 //this.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
