@@ -9,9 +9,9 @@ public class ScriptMouvementAI : NetworkBehaviour
 {
     bool estDansZoneFill { get; set; }
     Vector3 PointÀAller { get; set; }
-
+    GameObject Balle { get; set; }
     Vector3 positionTactique;
-    Vector3 posBalle { get; set; }
+    Vector3 posBalleTerrain { get; set; }
 
     Vector3 Positionement { get; set; }
 
@@ -48,13 +48,13 @@ public class ScriptMouvementAI : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Balle = GameObject.FindGameObjectWithTag("Balle");
         estDansZoneFill = false;
         PointÀAller = new Vector3();
         LimitesX = new int[2] { LIMITE_GAUCHE, LIMITE_DROITE };
         LimitesZ = new int[2] { LIMITE_BAS, LIMITE_HAUT };
         ListeProximitéA = new List<GameObject>();
         ListeProximitéB = new List<GameObject>();
-        posBalle = GameObject.FindGameObjectWithTag("Balle").GetComponent<Transform>().position;
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
@@ -143,19 +143,31 @@ public class ScriptMouvementAI : NetworkBehaviour
     private Vector3 GérerPositionsDef()
     {
         Vector3 posCible = Vector3.one;
-        if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
+        if (Balle.transform.parent != null)
         {
-            posCible = transform.position;
-        }
-        else
-        {
-            if(estDansZoneFill)
+            posBalleTerrain = Balle.transform.parent.GetComponent<Transform>().position;
+            if (EstPasSeulDansZone(GetComponent<TypeÉquipe>().estÉquipeA ? ListeProximitéB : ListeProximitéA, transform.position))
             {
-                posCible = PositionDéfenseFill;
+                posCible = transform.position;
             }
-            else posCible = PositionDéfenseDéfaut;//(PositionDéfenseDéfaut + 0.25f * posBalle);
+            else
+            {
+                if (estDansZoneFill)
+                {
+                    //Debug.Log("FILL SUIT LA BALLE");
+                    posCible.x = PositionDéfenseFill.x + (posBalleTerrain.x * 0.5f);
+                    posCible.y = PositionDéfenseFill.y + (posBalleTerrain.y * 0.5f);
+                }
+                else
+                {
+                    //Debug.Log("DEFaut SUIT LA BALLE");
+                    posCible.x = PositionDéfenseDéfaut.x + (posBalleTerrain.x * 0.5f);
+                    posCible.y = PositionDéfenseDéfaut.y + (posBalleTerrain.y * 0.5f);
+                }
+            }
         }
-        return posCible ;
+        else posCible = transform.position;
+        return posCible;
     }
 
     private Vector3 DéterminerPosRevenir()

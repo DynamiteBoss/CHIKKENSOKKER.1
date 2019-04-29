@@ -58,13 +58,13 @@ public class TypeÉquipe : NetworkBehaviour
             {
                 if (name == "Joueur1A")
                 {
-                    capsule.GetComponent<MeshRenderer>().material.color = Color.blue;
+                    capsule.GetComponent<MeshRenderer>().material.color = Color.red;
                 }
                 else
                 {
                     if (name == "Joueur2A")
                     {
-                        capsule.GetComponent<MeshRenderer>().material.color = Color.green;
+                        capsule.GetComponent<MeshRenderer>().material.color = Color.yellow;
                     }
 
                 }
@@ -74,13 +74,13 @@ public class TypeÉquipe : NetworkBehaviour
             {
                 if (name == "Joueur1B")
                 {
-                    capsule.GetComponent<MeshRenderer>().material.color = Color.red;
+                    capsule.GetComponent<MeshRenderer>().material.color = Color.blue;
                 }
                 else
                 {
                     if (name == "Joueur2B")
                     {
-                        capsule.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                        capsule.GetComponent<MeshRenderer>().material.color = Color.green;
                     }
 
                 }
