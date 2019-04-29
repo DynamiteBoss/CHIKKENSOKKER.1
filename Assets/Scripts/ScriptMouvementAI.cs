@@ -56,26 +56,26 @@ public class ScriptMouvementAI : NetworkBehaviour
     void Start()
     {
         InitialiserRéférences();
+        constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
         if (noComportement == 3)
         {
-            positionTactique = new Vector3(7, 0, 12);
+            positionTactique = new Vector3(7*constÉquipe, 0, 12);
         }
         else if (noComportement == 4)
         {
-            positionTactique = new Vector3(7, 0, -12);
+            positionTactique = new Vector3(7 * constÉquipe, 0, -12);
         }
         else if (noComportement == 2)
         {
-            positionTactique = new Vector3(-7, 0, 5);
+            positionTactique = new Vector3(-7 * constÉquipe, 0, 5);
         }
         else
         {
-            positionTactique = new Vector3(-7, 0, -5);
+            positionTactique = new Vector3(-7 * constÉquipe, 0, -5);
         }
         //Debug.Log(noComportement);
 
 
-        constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
         TrouverPositionDefDeBase();
         PositionDéfenseFill = new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
     }
@@ -188,14 +188,14 @@ public class ScriptMouvementAI : NetworkBehaviour
             }
             else
             {
-                if (Math.Abs(PosBalleTerrain.x) > DÉCALLAGE_DEMI_TERRAIN)
-                {
-
-                    décallageBalle = DÉCALLAGE_DEMI_TERRAIN;
-                    xÉxceptionConst = 1;
-                }
-                //posCible.x = PositionDéfenseActuelle.x + (xÉxceptionConst * PosBalleTerrain.x) * 0.5f;
-                posCible.x = PositionDéfenseActuelle.x + (xÉxceptionConst * (PosBalleTerrain.x + (constÉquipe * décallageBalle)) * 0.5f);
+                //if (Math.Abs(PosBalleTerrain.x) < DÉCALLAGE_DEMI_TERRAIN)
+                //{
+                    posCible.x = PositionDéfenseActuelle.x + (/*xÉxceptionConst * */(PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe)) * 0.5f);
+                //}
+                //else
+                //{
+                //    posCible.x = PositionDéfenseActuelle.x + (PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe) * 0.5f);
+                //}
                 posCible.z = PositionDéfenseActuelle.z + (PosBalleTerrain.z * 0.5f);
                 //posCible = PositionDéfenseActuelle;
             }
