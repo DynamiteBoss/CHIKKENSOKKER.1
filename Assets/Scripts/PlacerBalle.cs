@@ -145,7 +145,14 @@ public class PlacerBalle : NetworkBehaviour
 
         }
     }
+    [Command]
     void CmdChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
+    {
+
+        RpcChangerAIÀJoueur(aI, joueur, tampon);
+    }
+    [ClientRpc]
+    void RpcChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
     {
 
         joueur.GetComponent<MouvementPlayer>().enabled = false;
