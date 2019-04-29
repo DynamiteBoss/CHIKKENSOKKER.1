@@ -25,7 +25,7 @@ public class PlacerBalle : NetworkBehaviour
             if (other.tag == "ZoneC")
             {
                 GameObject parent = other.transform.parent.gameObject;
-                MettreBalleEnfant(parent);
+                CmdMettreBalleEnfant(parent);
             }
             
             //CalculerDistanceBalle();
@@ -37,7 +37,7 @@ public class PlacerBalle : NetworkBehaviour
             {
                 GameObject parent = other.transform.parent.gameObject;
                 TrouverJoueurÀChanger(other.transform.parent.gameObject);
-                MettreBalleEnfant(parent);
+                CmdMettreBalleEnfant(parent);
             }
         }
         else if (other.transform.parent.tag == "Gardien")
@@ -54,7 +54,7 @@ public class PlacerBalle : NetworkBehaviour
     [Command]
     void CmdMettreBalleEnfant(GameObject other)
     {
-        //RpcMettreBalleEnfant(other);
+        RpcMettreBalleEnfant(other);
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
         
         
@@ -85,8 +85,8 @@ public class PlacerBalle : NetworkBehaviour
         }
         */
     }
-    
-    void MettreBalleEnfant(GameObject other)
+    [ClientRpc]
+    void RpcMettreBalleEnfant(GameObject other)
     {
         estPlacer = true;
         //GetComponent<NetworkTransform>().enabled = false;
@@ -124,7 +124,7 @@ public class PlacerBalle : NetworkBehaviour
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
         {
             tampon = dernierPosseseur.name;
-            ChangerAIÀJoueur(aI, dernierPosseseur, tampon);
+            CmdChangerAIÀJoueur(aI, dernierPosseseur, tampon);
         }
         else
         {
@@ -141,11 +141,11 @@ public class PlacerBalle : NetworkBehaviour
             int grandeur = liste2.Count;
             int aléatoire = Random.Range(1, grandeur);
             tampon = liste2[aléatoire - 1].name;
-            ChangerAIÀJoueur(aI, liste2[aléatoire - 1], tampon);
+            CmdChangerAIÀJoueur(aI, liste2[aléatoire - 1], tampon);
 
         }
     }
-    void ChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
+    void CmdChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
     {
 
         joueur.GetComponent<MouvementPlayer>().enabled = false;

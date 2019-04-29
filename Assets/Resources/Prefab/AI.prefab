@@ -852,9 +852,7 @@ GameObject:
   - component: {fileID: 8685227080764100665}
   - component: {fileID: 8685227080764100614}
   - component: {fileID: 8685227080764100659}
-  - component: {fileID: 8685227080764100649}
   - component: {fileID: 8685227080764100662}
-  - component: {fileID: 7253084819340987017}
   m_Layer: 0
   m_Name: ZonePlacage
   m_TagString: ZoneP
@@ -934,18 +932,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8192396, y: 1, z: 1}
   m_Center: {x: -0.015649319, y: 0, z: 0}
---- !u!114 &8685227080764100649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8685227080764100616}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 636a267ee2c510d45b673b82d0dc656e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8685227080764100662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,39 +944,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19014fd54da93c548be0becefd708366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7253084819340987017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8685227080764100616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!1 &8685227080764100619
 GameObject:
   m_ObjectHideFlags: 0
