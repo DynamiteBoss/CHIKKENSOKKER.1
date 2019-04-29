@@ -60,7 +60,7 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemA2 == Inventaire.ITEMNUL && Inventaire.itemA1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemA2 = indice;
-                CmdAfficherInventaire('A', 2);
+                AfficherInventaire('A', 2);
                 //METTRE ITEM A2
                 Debug.Log("L'item A2 a été changé en " + Inventaire.EnTexte(indice));
 
@@ -69,7 +69,7 @@ public class ScriptOeufMystère : NetworkBehaviour
             {
                 Inventaire.itemA1 = indice;
                 Debug.Log(Inventaire.itemA1);
-                CmdAfficherInventaire('A', 1);
+                AfficherInventaire('A', 1);
                 Debug.Log(Inventaire.itemA1);
                 //METTRE ITEM A1
                 Debug.Log("L'item A1 a été changé en " + Inventaire.EnTexte(indice));
@@ -80,22 +80,21 @@ public class ScriptOeufMystère : NetworkBehaviour
             if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 != Inventaire.ITEMNUL)
             {
                 Inventaire.itemB2 = indice;
-                CmdAfficherInventaire('B', 2);
+                AfficherInventaire('B', 2);
                 Debug.Log("L'item B2 a été changé en " + Inventaire.EnTexte(indice));
                 //METTRE ITEM B2
             }
             else if (Inventaire.itemB2 == Inventaire.ITEMNUL && Inventaire.itemB1 == Inventaire.ITEMNUL)
             {
                 Inventaire.itemB1 = indice;
-                CmdAfficherInventaire('B', 1);
+                AfficherInventaire('B', 1);
                 //METTRE ITEM B1
                 Debug.Log("L'item B1 a été changé en " + Inventaire.EnTexte(indice));
             }
         }
     }
 
-    [Command]
-    public void CmdAfficherInventaire(char équipe, int position)
+    public void AfficherInventaire(char équipe, int position)
     {
         int valeurItemTemp = 8;
 
@@ -131,69 +130,55 @@ public class ScriptOeufMystère : NetworkBehaviour
         {
             case 0:
                 //GameObject Crotte3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(8).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject Crotte3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(8).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(Crotte3Sprite);
+                GameObject Crotte3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(8).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(Crotte3Sprite);
                 //CmdAfficherSprite(position, équipe, "crotte3");
                 return;
             case 1:
                 //GameObject Crotte5Sprite = (GameObject)Instantiate(Item.RetournerItemListe(9).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject Crotte5Sprite = (GameObject)Instantiate(Item.RetournerItemListe(9).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(Crotte5Sprite);
+                GameObject Crotte5Sprite = (GameObject)Instantiate(Item.RetournerItemListe(9).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(Crotte5Sprite);
                 //CmdAfficherSprite(position, équipe, "crotte5");
                 return;
             case 2:
                 //GameObject OeufBlancXLSprite = (GameObject)Instantiate(Item.RetournerItemListe(11).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject OeufBlancXLSprite = (GameObject)Instantiate(Item.RetournerItemListe(11).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(OeufBlancXLSprite);
+                GameObject OeufBlancXLSprite = (GameObject)Instantiate(Item.RetournerItemListe(11).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(OeufBlancXLSprite);
                 //CmdAfficherSprite(position, équipe, "oeufXL");
                 return;
             case 3:
                 //GameObject OeufBlanc3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(10).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject OeufBlanc3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(10).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(OeufBlanc3Sprite);
+                GameObject OeufBlanc3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(10).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(OeufBlanc3Sprite);
                 //CmdAfficherSprite(position, équipe, "oeuf3");
                 return;
             case 4:
                 //GameObject OeufBrunSprite = (GameObject)Instantiate(Item.RetournerItemListe(12).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject OeufBrunSprite = (GameObject)Instantiate(Item.RetournerItemListe(12).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(OeufBrunSprite);
+                GameObject OeufBrunSprite = (GameObject)Instantiate(Item.RetournerItemListe(12).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(OeufBrunSprite);
                 //CmdAfficherSprite(position, équipe, "torpille");
                 return;
             case 5:
                 //GameObject OeufBombeSprite = (GameObject)Instantiate(Item.RetournerItemListe(13).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject OeufBombeSprite = (GameObject)Instantiate(Item.RetournerItemListe(13).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(OeufBombeSprite);
+                GameObject OeufBombeSprite = (GameObject)Instantiate(Item.RetournerItemListe(13).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(OeufBombeSprite);
                 //CmdAfficherSprite(position, équipe, "bombe");
                 return;
             case 6:
                 //GameObject OeufBrouilléSprite = (GameObject)Instantiate(Item.RetournerItemListe(14).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject OeufBrouilléSprite = (GameObject)Instantiate(Item.RetournerItemListe(14).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(OeufBrouilléSprite);
+                GameObject OeufBrouilléSprite = (GameObject)Instantiate(Item.RetournerItemListe(14).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(OeufBrouilléSprite);
                 //CmdAfficherSprite(position, équipe, "brouillé");
                 return;
             case 7:
                 //GameObject VersDeTerreSprite = (GameObject)Instantiate(Item.RetournerItemListe(15).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
-                GameObject VersDeTerreSprite = (GameObject)Instantiate(Item.RetournerItemListe(15).ItemPhysique, GameObject.Find("PnlPrincipal").transform, false);
-                CmdChangerPositionSprite(VersDeTerreSprite);
+                GameObject VersDeTerreSprite = (GameObject)Instantiate(Item.RetournerItemListe(15).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
                 NetworkServer.Spawn(VersDeTerreSprite);
                 //CmdAfficherSprite(position, équipe, "versdeterre");
                 return;
             default:
                 return;
         }
-    }
-    [Command]
-    private void CmdChangerPositionSprite(GameObject sprite)
-    {
-        Debug.Log("SUIS-JE LA&&??????");
-        sprite.transform.localPosition = positionSprite;
     }
 
     //[Command]
