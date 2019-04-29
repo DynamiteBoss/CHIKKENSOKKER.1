@@ -287,7 +287,7 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
 
           //  gardien.transform.position = anciennePosition;
         }
-        Invoke("GérerSaut", 0.5f);
+        Invoke("GérerSaut", 0.2f);
     }
     void GérerSaut()
     {

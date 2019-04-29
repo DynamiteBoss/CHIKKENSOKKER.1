@@ -273,7 +273,7 @@ public class ScriptMenuPause : NetworkBehaviour
         }
         else
         {
-            if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("OptionsBtn1") || Input.GetButtonDown("OptionsBtn2")))               // ALEX CHANGE LE POUR LE BOUTON PAUSE
+            if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("OptionsBtn1") || Input.GetButtonDown("OptionsBtn2")))              
             {
                 if (!menuOuvert)
                 {
