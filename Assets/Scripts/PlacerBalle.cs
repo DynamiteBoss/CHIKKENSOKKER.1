@@ -36,7 +36,7 @@ public class PlacerBalle : NetworkBehaviour
             if (other.tag == "ZoneC")
             {
                 GameObject parent = other.transform.parent.gameObject;
-                CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
+                TrouverJoueurÀChanger(other.transform.parent.gameObject);
                 CmdMettreBalleEnfant(parent);
             }
         }
@@ -115,16 +115,16 @@ public class PlacerBalle : NetworkBehaviour
     [Command]
     void CmdTrouverJoueurÀChanger(GameObject aI)
     {
-        RpcTrouverJoueurÀChanger(aI);
+        //RpcTrouverJoueurÀChanger(aI);
     }
-    [ClientRpc]
-    void RpcTrouverJoueurÀChanger(GameObject aI)
+    
+    void TrouverJoueurÀChanger(GameObject aI)
     {
         string tampon;
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
         {
             tampon = dernierPosseseur.name;
-            ChangerAIÀJoueur(aI, dernierPosseseur, tampon);
+            CmdChangerAIÀJoueur(aI, dernierPosseseur, tampon);
         }
         else
         {
@@ -141,11 +141,18 @@ public class PlacerBalle : NetworkBehaviour
             int grandeur = liste2.Count;
             int aléatoire = Random.Range(1, grandeur);
             tampon = liste2[aléatoire - 1].name;
-            ChangerAIÀJoueur(aI, liste2[aléatoire - 1], tampon);
+            CmdChangerAIÀJoueur(aI, liste2[aléatoire - 1], tampon);
 
         }
     }
-    void ChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
+    [Command]
+    void CmdChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
+    {
+
+        RpcChangerAIÀJoueur(aI, joueur, tampon);
+    }
+    [ClientRpc]
+    void RpcChangerAIÀJoueur(GameObject aI, GameObject joueur, string tampon)
     {
 
         joueur.GetComponent<MouvementPlayer>().enabled = false;

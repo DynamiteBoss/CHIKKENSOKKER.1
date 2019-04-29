@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 4396265425552050163}
   - component: {fileID: 1027405951089886263}
   - component: {fileID: 3367519272812415070}
+  - component: {fileID: 2971172345930959306}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -638,6 +639,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2971172345930959306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760735fd49aa562449898a954c50a15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &17
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +874,6 @@ GameObject:
   - component: {fileID: 34}
   - component: {fileID: 29}
   - component: {fileID: 40}
-  - component: {fileID: 50}
   - component: {fileID: 45}
   m_Layer: 0
   m_Name: ZonePlacage
@@ -942,18 +954,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8192396, y: 1, z: 1}
   m_Center: {x: -0.015649319, y: 0, z: 0}
---- !u!114 &50
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 636a267ee2c510d45b673b82d0dc656e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &45
 MonoBehaviour:
   m_ObjectHideFlags: 0
