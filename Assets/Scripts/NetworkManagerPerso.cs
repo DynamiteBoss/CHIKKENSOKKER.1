@@ -293,7 +293,7 @@ public class NetworkManagerPerso : NetworkManager
 
     }
 
-    void RevenirMenu()
+    public void RevenirMenu()
     {
         CnvConnexion.enabled = true;
         CnvNbJoueur.enabled = false;
@@ -301,8 +301,8 @@ public class NetworkManagerPerso : NetworkManager
     }
     void GérerBoutonsJeu()
     {
-        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
-        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => NetworkManager.singleton.StopClient());
+        //GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
+        //GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => NetworkManager.singleton.StopClient());
     }
     public void GérerGrandeurÉquipe()
     {
