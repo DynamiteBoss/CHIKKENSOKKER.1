@@ -12,6 +12,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
     BoxCollider [] Liste { get; set; }
     GameObject Balle { get; set; }
     Transform ZoneContrôle { get; set; }
+    Vector3 Courbe { get; set; }
+
+    bool boolCourbe = false;
     float compteur1 = 0f;
     // Start is called before the first frame update
     void Start()
@@ -93,17 +96,21 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void RpcTirer1()
     {
         Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && Input.GetKeyDown(KeyCode.Space))
         {
-
+            Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
+            Courbe = Vector3.right;
+            Debug.DrawRay(Balle.transform.position, Vector3.back * FORCE/10, Color.black, 3);
+            boolCourbe = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKey(KeyCode.Z) && Input.GetKeyDown(KeyCode.Space))
         {
-            Balle.GetComponent<Rigidbody>().AddForce(direction.normalized + direction.normalized * FORCE, ForceMode.Impulse);
+            Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
+            Courbe = Vector3.left;
+            Debug.DrawRay(Balle.transform.position, Vector3.forward * FORCE/10, Color.black, 3);
         }
         else
         {
-
            //Debug.Log(direction);
            Balle.GetComponent<Rigidbody>().AddForce(direction.normalized * FORCE, ForceMode.Impulse);
         }

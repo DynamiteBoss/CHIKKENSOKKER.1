@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ItemOeufBrun : MonoBehaviour
+public class ItemOeufBrun : NetworkBehaviour
 {
     void Start()
     {

@@ -67,16 +67,16 @@ public class ScriptItems : NetworkBehaviour
         // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
         if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
         { 
-            FaireOpérationJoueur();
+            CmdFaireOpérationJoueur();
         }
         // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
         if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2") && isLocalPlayer)
         {
-            FaireOpérationJoueur();
+            CmdFaireOpérationJoueur();
         }
     }
-
-    private void FaireOpérationJoueur()
+    [Command]
+    private void CmdFaireOpérationJoueur()
     {
         /*string équipe;
         if(GetComponent<TypeÉquipe>().estÉquipeA)
@@ -162,16 +162,10 @@ public class ScriptItems : NetworkBehaviour
             else { Inventaire.objet1B = null; }
 
         }
-
-        Debug.Log("Le Sprite a été modifié pour l'équipe" + équipe);
-        GameObject.Find("Objet1A").GetComponent<SpriteRenderer>().sprite = Inventaire.objet1A;
-        GameObject.Find("Objet2A").GetComponent<SpriteRenderer>().sprite = Inventaire.objet2A;
-        GameObject.Find("Objet1B").GetComponent<SpriteRenderer>().sprite = Inventaire.objet1B;
-        GameObject.Find("Objet2B").GetComponent<SpriteRenderer>().sprite = Inventaire.objet2B;
     }
 
     [Command]
-    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE juste pour le host
+    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE 
     {
         RpcInstancierItem(indiceItem, position);
         Debug.Log(string.Format("Instanciation de l'item {0} par {1}", Inventaire.EnTexte(indiceItem), isLocalPlayer? "leu joueur local" : "leu client"));
