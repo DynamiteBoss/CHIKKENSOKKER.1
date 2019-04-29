@@ -158,7 +158,13 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         chanceArrêt = UnityEngine.Random.Range(0f, 1f);
         return chanceArrêt;
     }
-    void PartirMatch()
+    [Command]
+    void CmdPartirMatch()
+    {
+        RpcPartirMatch();
+    }
+    [ClientRpc]
+    void RpcPartirMatch()
     {
         enPause = false;
         PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
@@ -317,7 +323,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                 if (compteur3 == 0)
                 {
 
-                    PartirMatch();
+                    CmdPartirMatch();
                     compteur3++;
                 }
                 if (!EstEnPause())

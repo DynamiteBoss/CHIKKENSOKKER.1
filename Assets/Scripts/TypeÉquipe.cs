@@ -18,10 +18,20 @@ public class TypeÉquipe : NetworkBehaviour
     {
         return Camera.GetComponent<ScriptMécaniqueMatch>().enPause || Camera.GetComponent<ScriptMenuPause>().enPause || Balle.GetComponent<ScriptBut>().enPause;
     }
+    [Command]
+    void CmdPlacer()
+    {
+        RpcPlacer();
+    }
+    [ClientRpc]
+    void RpcPlacer()
+    {
+        GameObject.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
+    }
     // Update is called once per frame
     void Update()
     {
-        GameObject.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
+        CmdPlacer();
         if (name.StartsWith("Player"))
         {
             tag = "Player";
