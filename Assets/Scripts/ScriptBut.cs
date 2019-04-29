@@ -22,6 +22,11 @@ public class ScriptBut : NetworkBehaviour
     [SyncVar(hook = "OnRandomChangeB")]
     public int random;
 
+
+    [SyncVar(hook = "OnRandomChange")]
+    public int randomEvent;
+
+
     [SyncVar(hook ="OnScoreChange")]
     public string score = 0 + "  -  " + 0;
 
@@ -180,6 +185,11 @@ public class ScriptBut : NetworkBehaviour
         random = changement;
         
     }
+    void OnRandomChange(int changement)
+    {
+        randomEvent = changement;
+
+    }
     void OnScoreChange(string change)
     {
         score = change;
@@ -210,7 +220,10 @@ public class ScriptBut : NetworkBehaviour
         if(compteur2 >= 4f)
         {
             random = UnityEngine.Random.Range(0, IndiceMax);
+            randomEvent = UnityEngine.Random.Range(0, 3);
         }
+
+        
     }
     [Command]
     void CmdButRéaliser()
