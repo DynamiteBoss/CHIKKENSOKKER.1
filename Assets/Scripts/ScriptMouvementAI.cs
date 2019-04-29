@@ -299,11 +299,6 @@ public class ScriptMouvementAI : NetworkBehaviour
     //            break;
     //    }
     //}
-
-    //private int TrouverComportementDéfense()
-    //{
-    //    if ()
-    //}
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
