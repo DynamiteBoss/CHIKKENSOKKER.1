@@ -26,14 +26,22 @@ public class MouvementCaméra : NetworkBehaviour
         }
         if (estCrée)
         {
-            if (ballon.transform.position.x > dimensions || ballon.transform.position.x < -dimensions)
+            if (this.tag == "MainCamera")
             {
-                transform.position = transform.position;
+                if (ballon.transform.position.x > dimensions || ballon.transform.position.x < -dimensions)
+                {
+                    transform.position = transform.position;
+                }
+                else
+                {
+                    transform.position = new Vector3(ballon.transform.position.x, transform.position.y, transform.position.z);
+                }
             }
             else
             {
-                transform.position = new Vector3(ballon.transform.position.x, transform.position.y, transform.position.z);
+
             }
+            
         }
     }
 }

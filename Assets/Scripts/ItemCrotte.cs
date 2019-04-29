@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Networking;
 
-public class ItemCrotte : MonoBehaviour
+public class ItemCrotte : NetworkBehaviour
 {
     void Start()
     {
