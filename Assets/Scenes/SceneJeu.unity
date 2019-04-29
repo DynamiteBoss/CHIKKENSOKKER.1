@@ -878,10 +878,14 @@ MonoBehaviour:
   "chronom\xE8tre": '3 : 00'
   matchEnCours: 1
   enPause: 0
+  enEvent: 0
   timer: 180
   compteur: 0
   compteur2: 0
   compteur3: 0
+  compteur4: 0
+  "compteur\xC9venement": 0
+  "\xE9venement": 0
   compteurSpawn: 0
   "chanceArr\xEAt": 0
   nbOeufs: 0
