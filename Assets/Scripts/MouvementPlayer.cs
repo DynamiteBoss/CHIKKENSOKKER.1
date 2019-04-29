@@ -13,10 +13,10 @@ public class MouvementPlayer : NetworkBehaviour
     const int LIMITE_DROITE= 39;
 
 
-    string[] Controles = new string[] { "w", "a", "s", "d" };
-    string[] ControlesInversés = new string[] { "w", "a", "s", "d" };
-    string[] ControlesOriginaux = new string[] { "d", "s", "w", "a" };
-    bool joueur1EstPris = false;
+    string[] ControlesWASD = new string[] { "w", "a", "s", "d" };
+    string[] ControlesInversésWASD = new string[] { "w", "a", "s", "d" };
+    string[] ControlesOriginauxWASD = new string[] { "d", "s", "w", "a" };
+    
     [SerializeField]
     public bool modeGlace;
 
@@ -63,14 +63,27 @@ public class MouvementPlayer : NetworkBehaviour
 
                 else { this.GetComponentInChildren<Rigidbody>().drag = 0.75f; }
 
-                DéplacerModeGlace();
+                DéplacerModeGlace1();
             }
-            joueur1EstPris = true;
+           
         }
         if (tag == "Player" && name.StartsWith("Joueur2"))
         {
-            DéplacerFlèche();
-            DéplacerManette(2);
+
+            if (!modeGlace && !modePluie)
+            {
+                DéplacerManette(2);
+                DéplacerFlèche();
+            }
+            else
+            {
+                if (modePluie) { this.GetComponentInChildren<Rigidbody>().drag = 3; }
+
+                else { this.GetComponentInChildren<Rigidbody>().drag = 0.75f; }
+
+                DéplacerModeGlace2();
+            }
+           
         }
 
         else { }
@@ -79,7 +92,7 @@ public class MouvementPlayer : NetworkBehaviour
         if (compteur++ == 10)
         {
             GetComponentInChildren<Rigidbody>().isKinematic = !(modeGlace || modePluie);
-            Controles = modeSaoul ? ControlesOriginaux : ControlesInversés;
+            ControlesWASD = modeSaoul ? ControlesOriginauxWASD : ControlesInversésWASD;
         }
     }
     private bool EstHorsLimite(int limite, float coordonnéeÀVéfifier)
@@ -131,9 +144,9 @@ public class MouvementPlayer : NetworkBehaviour
     void DépacerAWSD()
     {
         autreValeur = false;
-        if (Input.GetKey(Controles[0]))
+        if (Input.GetKey(ControlesWASD[0]))
         {
-            if (Input.GetKey(Controles[1]) || Input.GetKey(Controles[2]) || Input.GetKey(Controles[3]))
+            if (Input.GetKey(ControlesWASD[1]) || Input.GetKey(ControlesWASD[2]) || Input.GetKey(ControlesWASD[3]))
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
                 if (EstHorsLimite(LIMITE_HAUT,transform.position.z)) return;
@@ -147,7 +160,7 @@ public class MouvementPlayer : NetworkBehaviour
                 autreValeur = true;
             }
         }
-        if (Input.GetKey(Controles[1]))
+        if (Input.GetKey(ControlesWASD[1]))
         {
             if (autreValeur)
             {
@@ -163,7 +176,7 @@ public class MouvementPlayer : NetworkBehaviour
                 autreValeur = true;
             }
         }
-        if (Input.GetKey(Controles[2]))
+        if (Input.GetKey(ControlesWASD[2]))
         {
             if (autreValeur)
             {
@@ -180,7 +193,7 @@ public class MouvementPlayer : NetworkBehaviour
             }
 
         }
-        if (Input.GetKey(Controles[3]))
+        if (Input.GetKey(ControlesWASD[3]))
         {
             if (autreValeur)
             {
@@ -260,27 +273,101 @@ public class MouvementPlayer : NetworkBehaviour
 
         }
     }
-    void DéplacerModeGlace()
+    void DéplacerModeGlace1()
     {
-        if (Input.GetKey(Controles[0]))
+        DéplacerModeGlaceClavier();
+        DéplacerModeGlaceManette(1);
+
+    }
+    void DéplacerModeGlaceClavier()
+    {
+        if (Input.GetKey(ControlesWASD[0]))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
             this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.forward, ForceMode.Acceleration);
         }
-        if (Input.GetKey(Controles[1]))
+        if (Input.GetKey(ControlesWASD[1]))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
             this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.left, ForceMode.Acceleration);
         }
-        if (Input.GetKey(Controles[2]))
+        if (Input.GetKey(ControlesWASD[2]))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
             this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.back, ForceMode.Acceleration);
         }
-        if (Input.GetKey(Controles[3]))
+        if (Input.GetKey(ControlesWASD[3]))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
             this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.right, ForceMode.Acceleration);
         }
     }
+    void DéplacerModeGlaceManette(int number)
+    {
+        float k = Input.GetAxis("LeftJoystickHorizontal" + number.ToString());
+        {
+            if (k > 0)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+                this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.right, ForceMode.Acceleration);
+            }
+            else
+            {
+                if (k < 0)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
+                    this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.left, ForceMode.Acceleration);
+                }
+            }
+            //transform.Translate(new Vector3(2 * k, 0, 0) * 5.5f * Time.deltaTime, Space.World);
+        }
+        float j = Input.GetAxis("LeftJoystickVertical" + number.ToString());
+        {
+            if (j > 0)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
+                this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.forward, ForceMode.Acceleration);
+            }
+            else
+            {
+                if (j < 0)
+                {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
+                    this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.back, ForceMode.Acceleration);
+                }
+            }
+            //transform.Translate(new Vector3(0, 0, 2 * j) * 5.5f * Time.deltaTime, Space.World);
+        }
+    }
+
+    void DéplacerModeGlace2()
+    {
+        DéplacerModeGlaceFlèches();
+        DéplacerModeGlaceManette(2);
+    }
+    void DéplacerModeGlaceFlèches()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.1f);
+            this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.forward, ForceMode.Acceleration);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.1f);
+            this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.left, ForceMode.Acceleration);
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.1f);
+            this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.back, ForceMode.Acceleration);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.1f);
+            this.GetComponentInChildren<Rigidbody>().AddForce((modeFurax ? 17.5f * VitesseModeFurax : 17.5f) * Vector3.right, ForceMode.Acceleration);
+        }
+    }
+    
+
 }

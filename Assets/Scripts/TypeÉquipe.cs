@@ -21,6 +21,7 @@ public class TypeÉquipe : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
         if (name.StartsWith("Player"))
         {
             tag = "Player";

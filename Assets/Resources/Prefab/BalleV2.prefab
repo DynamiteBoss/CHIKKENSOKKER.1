@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8208502189713598781}
   - component: {fileID: 1727964526553916447}
   - component: {fileID: 6310501856699404803}
+  - component: {fileID: 8114701392641891425}
   m_Layer: 0
   m_Name: BalleV2
   m_TagString: Balle
@@ -158,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04acdcad7c05d6340b39cf85115f1821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionJouer: {x: 0, y: 0, z: 0}
   AncienGardien: {fileID: 0}
   dernierPosseseur: {fileID: 0}
   estPlacer: 0
@@ -176,9 +178,11 @@ MonoBehaviour:
   compteurSpawn: 0
   NbButsA: 0
   NbButsB: 0
+  random: 0
   score: 0  -  0
   compteur: 0
   enPause: 0
+  butEffectuer: 0
   "est\xC9quipeA": 1
 --- !u!114 &1727964526553916447
 MonoBehaviour:
@@ -214,3 +218,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d191e65b5a9a37b4b9ad91e34d9921b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8114701392641891425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616913947956764931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a50e88092961149a61d4fb02c6770c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  "al\xE9atoire": 0
