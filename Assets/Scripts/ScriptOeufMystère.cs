@@ -131,49 +131,79 @@ public class ScriptOeufMystère : NetworkBehaviour
             case 0:
                 //GameObject Crotte3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(8).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject Crotte3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(8).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
                 NetworkServer.Spawn(Crotte3Sprite);
+                Debug.Log("la position est " + positionSprite.ToString());
                 //CmdAfficherSprite(position, équipe, "crotte3");
                 return;
             case 1:
                 //GameObject Crotte5Sprite = (GameObject)Instantiate(Item.RetournerItemListe(9).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject Crotte5Sprite = (GameObject)Instantiate(Item.RetournerItemListe(9).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(Crotte5Sprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "crotte5");
                 return;
             case 2:
                 //GameObject OeufBlancXLSprite = (GameObject)Instantiate(Item.RetournerItemListe(11).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject OeufBlancXLSprite = (GameObject)Instantiate(Item.RetournerItemListe(11).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(OeufBlancXLSprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "oeufXL");
                 return;
             case 3:
                 //GameObject OeufBlanc3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(10).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject OeufBlanc3Sprite = (GameObject)Instantiate(Item.RetournerItemListe(10).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(OeufBlanc3Sprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "oeuf3");
                 return;
             case 4:
                 //GameObject OeufBrunSprite = (GameObject)Instantiate(Item.RetournerItemListe(12).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject OeufBrunSprite = (GameObject)Instantiate(Item.RetournerItemListe(12).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(OeufBrunSprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "torpille");
                 return;
             case 5:
                 //GameObject OeufBombeSprite = (GameObject)Instantiate(Item.RetournerItemListe(13).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject OeufBombeSprite = (GameObject)Instantiate(Item.RetournerItemListe(13).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(OeufBombeSprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "bombe");
                 return;
             case 6:
                 //GameObject OeufBrouilléSprite = (GameObject)Instantiate(Item.RetournerItemListe(14).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject OeufBrouilléSprite = (GameObject)Instantiate(Item.RetournerItemListe(14).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(OeufBrouilléSprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "brouillé");
                 return;
             case 7:
                 //GameObject VersDeTerreSprite = (GameObject)Instantiate(Item.RetournerItemListe(15).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0));
                 GameObject VersDeTerreSprite = (GameObject)Instantiate(Item.RetournerItemListe(15).ItemPhysique, positionSprite, Quaternion.Euler(41, 0, 0), GameObject.Find("PnlPrincipal").transform);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 NetworkServer.Spawn(VersDeTerreSprite);
+                Debug.Log("la position est " + positionSprite.ToString());
+
                 //CmdAfficherSprite(position, équipe, "versdeterre");
                 return;
             default:

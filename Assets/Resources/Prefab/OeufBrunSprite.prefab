@@ -89,7 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3594963755925065346}
   - component: {fileID: 3418327998841171563}
-  - component: {fileID: 6867452462081290347}
   m_Layer: 0
   m_Name: OeufBrunSprite
   m_TagString: Untagged
@@ -145,15 +144,3 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &6867452462081290347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7087801809429181158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4ff21fd6a918e940a52c8dca51d62a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
