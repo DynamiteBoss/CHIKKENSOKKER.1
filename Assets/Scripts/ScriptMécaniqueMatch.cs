@@ -646,8 +646,8 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void AjusterModeNuit()
     {
-        List<GameObject> liste = GameObject.FindGameObjectsWithTag("Player")/*.OrderBy(x => int.Parse(x.name[9].ToString()))*/.ToList();
-        /*
+        List<GameObject> liste1 = GameObject.FindGameObjectsWithTag("Player")/*.OrderBy(x => int.Parse(x.name[9].ToString()))*/.ToList();
+        
         GameObject[] listeCatégorie = new GameObject[10];
         List<GameObject> liste = new List<GameObject>();
         foreach (string x in tags)
@@ -659,7 +659,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                     liste.Add(y);
                 }
             }
-        }*/
+        }
 
         if (!EstEnModeNuit)
         {

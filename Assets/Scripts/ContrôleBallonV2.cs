@@ -202,7 +202,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         
         Balle.GetComponent<PlacerBalle>().positionJouer = this.transform.position;
 
-        if (Balle.GetComponent<PlacerBalle>().AncienGardien != null)
+        if (Balle.GetComponent<PlacerBalle>().AncienGardien == "Gardien")
         {
 
             Gardien = gardien;
@@ -255,7 +255,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         
         gardien.tag = "Gardien";
 
-        Balle.GetComponent<PlacerBalle>().AncienGardien = null;
+        Balle.GetComponent<PlacerBalle>().AncienGardien = "PasGardien";
         Invoke("RéactiverSave", 0.5f);
     }
 

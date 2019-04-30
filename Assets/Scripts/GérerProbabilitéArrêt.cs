@@ -118,19 +118,22 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         //Debug.DrawRay(balle.transform.position, balle.GetComponent<PlacerBalle>().positionJouer,Color.blue,3f);
         float probabilité;
         Debug.Log(angle);
-        if (angle >= 19)
+        if (angle >= 25)
         {
             probabilité = 0.95f;
+            PlacerGardien(false);
         }
         else
         {
 
             probabilité = angle / 20;
+            PlacerGardien(true);
         }
 
 
         Debug.Log(probabilité);
         //Debug.Log("chance"+chance);
+        /*
         if (chance >= probabilité)
         {
             bool type;
@@ -150,6 +153,7 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         {
 
         }
+        */
     }
     void CalculerProbabilité()
     {
