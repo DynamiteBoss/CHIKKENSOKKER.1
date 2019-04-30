@@ -243,7 +243,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         Debug.Log(visé.ToString());
         if (balle != null)
         {
-            balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
+            balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject.name;
             transform.Find("ZonePlacage").GetComponent<BoxCollider>().enabled = false;
             //StartCoroutine(AttendrePourDistanceBallon(0.2f));
             balle.transform.parent = null;

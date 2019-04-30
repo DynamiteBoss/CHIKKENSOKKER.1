@@ -47,6 +47,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("CircleBtn1")) && compteur1 >= TEMPS_MIN)
                         {
                             CmdTirerBalle1();
+                            //Invoke("CmdTirerBalle", 0.1f);
                             CmdTirerBalle();
                             //CmdTirerBalle();
                         }
@@ -56,6 +57,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
                         if ((Input.GetKeyDown(KeyCode.Keypad3) || Input.GetButtonDown("CircleBtn2")) && compteur1 >= TEMPS_MIN)
                         {
                             CmdTirerBalle1();
+                            //Invoke("CmdTirerBalle", 0.1f);
                             CmdTirerBalle();
                             //CmdTirerBalle();
                         }
@@ -159,7 +161,8 @@ public class ContrôleBallonV2 : NetworkBehaviour
     [ClientRpc]
     void RpcTirer()
     {
-        Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
+        GameObject gardien = Balle.transform.parent.gameObject;
+        Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject.name;
         Liste = GetComponentsInChildren<BoxCollider>();
         foreach (BoxCollider x in Liste)
         {
@@ -201,7 +204,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
         if (Balle.GetComponent<PlacerBalle>().AncienGardien != null)
         {
-            GameObject gardien = Balle.GetComponent<PlacerBalle>().AncienGardien;
+
             Gardien = gardien;
 
             GameObject[] listeAI = new GameObject[8];
@@ -226,7 +229,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
             }
             GameObject joueur = listeAIMonÉquipe[listeAIMonÉquipe.Count-1];
             ChangerJoueurÀGardien(joueur,gardien, équipe);
-            Balle.GetComponent<PlacerBalle>().dernierPosseseur = GameObject.Find("Joueur1" + équipe);
+            Balle.GetComponent<PlacerBalle>().dernierPosseseur = GameObject.Find("Joueur1" + équipe).name;
             //tampon = joueur.name;
             
         }
