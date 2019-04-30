@@ -42,7 +42,7 @@ public class ActionPlaquageGardien : MonoBehaviour
                     JoueurÀPlaquer = Joueur;
                     compteur = 0;
                     //estEnMouvementPlacage = true;
-                    //FairePlacage();
+                    //CmdFairePlacage();
                     //FrapperAdversaire();
                     //estEnMouvementPlacage = false;
                     

@@ -29,14 +29,14 @@
 //        {
 //            //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
 //            compteur = 0;
-//            FairePlacage();
+//            CmdFairePlacage();
 //            compteur = 0;
 //        }
 //    }
 //    private void OnTriggerEnter(Collider other)
 //    {
 //        //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-//        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
+//        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
 //        if (other.name.StartsWith("Player") && other.gameObject != this.transform.parent.gameObject)
 //        {
 //            JoueurÀPlaquer = other.gameObject;
@@ -54,7 +54,7 @@
 //    //    }
 //    //}
 
-//    private void FairePlacage()
+//    private void CmdFairePlacage()
 //    {
 //        float rad = this.transform.parent.eulerAngles.y / 180 * Mathf.PI;
 //        this.transform.parent.GetComponent<Rigidbody>().AddForce(Mathf.Sin(rad) * 45, 0, Mathf.Cos(rad) * 45, ForceMode.Impulse);

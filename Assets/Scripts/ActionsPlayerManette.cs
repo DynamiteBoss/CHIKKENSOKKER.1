@@ -44,7 +44,7 @@ public class ActionsPlayerManette : MonoBehaviour
                 compteur = 0;
                 estEnMouvementPlacage = true;
                 FairePlacage();
-                //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
                 FrapperAdversaire();
                 estEnMouvementPlacage = false;
             }
@@ -55,8 +55,8 @@ public class ActionsPlayerManette : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
-        if (other.transform.parent.tag == "Player" && other.transform.parent.gameObject != this.transform.parent.gameObject /*&& que FairePlacage est en cours, live */)
+        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
+        if (other.transform.parent.tag == "Player" && other.transform.parent.gameObject != this.transform.parent.gameObject /*&& que CmdFairePlacage est en cours, live */)
         {
             JoueurÀPlaquer = other.transform.parent.gameObject;
             if (other.transform.Find("Balle"))
@@ -72,8 +72,8 @@ public class ActionsPlayerManette : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
-        if (other.name.StartsWith("ZonePlacage") && other.transform.parent.gameObject != this.transform.parent.gameObject /*&& que FairePlacage est en cours, live */)
+        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
+        if (other.name.StartsWith("ZonePlacage") && other.transform.parent.gameObject != this.transform.parent.gameObject /*&& que CmdFairePlacage est en cours, live */)
         {
             JoueurÀPlaquer = null;
 
