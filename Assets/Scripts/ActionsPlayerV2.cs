@@ -84,9 +84,9 @@ public class ActionsPlayerV2 : NetworkBehaviour
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
                         estEnMouvementPlacage = true;
-                        FairePlacage();
+                        CmdFairePlacage();
                         StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
                     }
 
 
@@ -99,7 +99,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
                             //FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                             CmdFairePasse(direction);
                             //StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                                                                                                          //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                                                                                                          //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
                         }
                         else
                         {
@@ -114,9 +114,9 @@ public class ActionsPlayerV2 : NetworkBehaviour
                         //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
                         compteur = 0;
                         estEnMouvementPlacage = true;
-                        FairePlacage();
+                        CmdFairePlacage();
                         StartCoroutine(AttendreDéactivationScriptPlaqueur(1f, direction));         //attendre un certain temps
-                                                                                                   //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                                                                                                   //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
                     }
 
                     if ((Input.GetKeyDown(KeyCode.Keypad2) || Input.GetButtonDown("XBtn1")) && compteur >= 0.95f && possessionBallon)
@@ -126,7 +126,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
                         //FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                         CmdFairePasse(direction);
                         //StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
                     }
                 }
             }
@@ -297,7 +297,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
+        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
         if (other.transform.tag == "Player" && other.transform.GetComponent<TypeÉquipe>().estÉquipeA != this.transform.GetComponent<TypeÉquipe>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject && !estEnMouvementPlacage)
         {
             if (other.transform.parent != this.transform)
@@ -320,8 +320,8 @@ public class ActionsPlayerV2 : NetworkBehaviour
     /*private void OnTriggerExit(Collider other)
     {
         //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
-        if (other.name.StartsWith("ZonePlacage") && other.transform.parent.gameObject != this.transform.parent.gameObject) //&& que FairePlacage est en cours, live 
+        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
+        if (other.name.StartsWith("ZonePlacage") && other.transform.parent.gameObject != this.transform.parent.gameObject) //&& que CmdFairePlacage est en cours, live 
         {
             JoueurÀPlaquer = null;
             JoueurEnDdans = other;
@@ -329,10 +329,15 @@ public class ActionsPlayerV2 : NetworkBehaviour
             //FrapperAdversaire();
         }
     }*/
-
-    private void FairePlacage()
+    [Command]
+    private void CmdFairePlacage()
     {
-
+        RpcFairePlacage();
+    }
+    [ClientRpc]
+    private void RpcFairePlacage()
+    {
+        this.transform.Find("ZonePlacage").GetComponent<DétectionPlacage>().estEnPlacage = true;
         this.transform.GetComponent<Rigidbody>().isKinematic = false;
         this.transform.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = false;
 
@@ -344,7 +349,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         //this.transform.transform.position = new Vector3(0, 0, 0);
         PlaquerJoueur();
     }
-    void PlaquerJoueur()
+    public void PlaquerJoueur()
     {
         if (!JoueurÀPlaquer)
             return;
@@ -352,7 +357,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         {
             Balle = JoueurÀPlaquer.transform.Find("Balle").gameObject;
             Balle.transform.parent = null;
-            Balle.GetComponent<Rigidbody>().AddForce(Mathf.Sin(direction) * 65.5f, 0, Mathf.Cos(direction) * 65.5f, ForceMode.Impulse);
+            Balle.GetComponent<Rigidbody>().AddForce(Mathf.Sin(direction) * 45f, 0, Mathf.Cos(direction) * 45f, ForceMode.Impulse);
         }
         JoueurÀPlaquer.GetComponent<Rigidbody>().isKinematic = false;
         FrapperAdversaire();
@@ -371,9 +376,10 @@ public class ActionsPlayerV2 : NetworkBehaviour
         this.GetComponent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player
         this.transform.GetComponent<Rigidbody>().isKinematic = true;
         this.transform.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = true;
-        this.transform.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
+        //this.transform.Find("Corps").transform.rotation = Quaternion.identity;
 
         estEnMouvementPlacage = false;
+        this.GetComponentInChildren<DétectionPlacage>().estEnPlacage = true;
     }
     IEnumerator AttendreDéactivationScriptPlaqué(float durée, float direction)
     {

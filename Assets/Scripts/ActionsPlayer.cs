@@ -83,9 +83,9 @@
 //                        //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
 //                        compteur = 0;
 //                        estEnMouvementPlacage = true;
-//                        FairePlacage();
+//                        CmdFairePlacage();
 //                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-//                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+//                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
 //                    }
 
 
@@ -98,7 +98,7 @@
 //                            //FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
 //                            CmdFairePasse(direction);
 //                            StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-//                                                                                                          //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+//                                                                                                          //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
 //                        }
 //                        else
 //                        {
@@ -113,9 +113,9 @@
 //                        //bloquer le mouvement du perso pendant un certain temps //VOIR DANSFAIREPLACAGE EN BAS
 //                        compteur = 0;
 //                        estEnMouvementPlacage = true;
-//                        FairePlacage();
+//                        CmdFairePlacage();
 //                        StartCoroutine(AttendreDéactivationScriptPlaqueur(1f, direction));         //attendre un certain temps
-//                                                                                                   //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+//                                                                                                   //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
 //                    }
 
 //                    if ((Input.GetKeyDown(KeyCode.Keypad2) || Input.GetButtonDown("XBtn1")) && compteur >= 0.95f && possessionBallon)
@@ -125,7 +125,7 @@
 //                        //FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
 //                        CmdFairePasse(direction);
 //                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
-//                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
+//                                                                                                      //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le CmdFairePlacage (avant le frapperadversaire)
 //                    }
 //                }
 //            }
@@ -294,7 +294,7 @@
 //    private void OnTriggerEnter(Collider other)
 //    {
 //        //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-//        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
+//        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
 //        if (other.transform.tag == "Player" && other.transform.GetComponent<TypeÉquipe>().estÉquipeA != this.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject && !estEnMouvementPlacage)
 //        {
 //            if (other.transform.parent != this.transform.parent)
@@ -316,8 +316,8 @@
 //    /*private void OnTriggerExit(Collider other)
 //    {
 //        //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-//        //faut genre mettre le OnTriggerEnter dans le FairePlacage ou le FrapperAdversaire
-//        if (other.name.StartsWith("ZonePlacage") && other.transform.parent.gameObject != this.transform.parent.gameObject) //&& que FairePlacage est en cours, live 
+//        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
+//        if (other.name.StartsWith("ZonePlacage") && other.transform.parent.gameObject != this.transform.parent.gameObject) //&& que CmdFairePlacage est en cours, live 
 //        {
 //            JoueurÀPlaquer = null;
 //            JoueurEnDdans = other;
@@ -326,7 +326,7 @@
 //        }
 //    }*/
 
-//    private void FairePlacage()
+//    private void CmdFairePlacage()
 //    {
        
 //        this.transform.parent.GetComponent<Rigidbody>().isKinematic = false;
