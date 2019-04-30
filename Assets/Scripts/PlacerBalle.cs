@@ -113,8 +113,9 @@ public class PlacerBalle : NetworkBehaviour
 
         //mettre la balle vers le milieu de la zone de controle
     }
-    private void Update()
+    void Update()
     {
+        
         GameObject[] listeJoueur = GameObject.FindGameObjectsWithTag("Player");
         
         List<GameObject> listeA = new List<GameObject>();
@@ -132,9 +133,9 @@ public class PlacerBalle : NetworkBehaviour
                 listeA.Add(x);
            }
            else
-            {
+           {
                 listeB.Add(x);
-            }
+           }
         }
         foreach(GameObject x in listeA)
         {
@@ -147,12 +148,140 @@ public class PlacerBalle : NetworkBehaviour
                 listeA2.Add(x);
             }
         }
-       // foreach()
+        foreach (GameObject x in listeB)
+        {
+            if (x.name[x.name.Length - 2] == 1)
+            {
+                listeB1.Add(x);
+            }
+            else if (x.name[x.name.Length - 2] == 2)
+            {
+                listeB2.Add(x);
+            }
+        }
+        VérifierChaqueListe(listeA1, listeA2, listeB1, listeB2);
+        // foreach()
         /*if (estPlacer)
         {
             if (transform.parent.GetComponent<NetworkIdentity>().isLocalPlayer)
                 transform.localPosition = new Vector3(-0.1f, 1.5f, 2);
         }*/
+    }
+    void VérifierChaqueListe(List<GameObject> listeA1, List<GameObject> listeA2, List<GameObject> listeB1, List<GameObject> listeB2)
+    {
+        if (listeA1.Count == 2)
+        {
+            VériifierÉtat(listeA1, "A");
+        }
+        if (listeA2.Count == 2)
+        {
+            VériifierÉtat(listeA2, "A");
+        }
+        if (listeB1.Count == 2)
+        {
+            VériifierÉtat(listeB1, "B");
+        }
+        if (listeB2.Count == 2)
+        {
+            VériifierÉtat(listeB2, "B");
+        }
+    }
+    void VériifierÉtat(List<GameObject> liste,string équipe)
+    {
+        GameObject balle = GameObject.FindGameObjectWithTag("Balle");
+        if (balle.transform.parent != null)
+        {
+            foreach (GameObject x in liste)
+            {
+                if (x.transform.Find("Balle") == true)
+                {
+
+                }
+                else
+                {
+                    int indice = TrouverListeAI(x);
+                    x.tag = "AI";
+                    x.name = "AI" + indice + équipe;
+                    x.GetComponent<MouvementPlayer>().enabled = false;
+                    x.GetComponent<ScriptMouvementAI>().enabled = true;
+                }
+            }
+        }
+    }
+    int TrouverListeAI(GameObject joueur)
+    {
+        int indice = 1;
+        bool estAI1 = false;
+        bool estAI2 = false;
+        bool estAI3 = false;
+        GameObject[] listeAI = new GameObject[10];
+        GameObject[] listeJoueur = GameObject.FindGameObjectsWithTag("Player");
+        List<GameObject> listeJoueurÉquipe = new List<GameObject>();
+        foreach (GameObject x in listeJoueur)
+        {
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA == joueur.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                listeJoueurÉquipe.Add(x);
+            }
+        }
+        int nombreJoueur = listeJoueurÉquipe.Count;
+        
+
+        List<GameObject> bonneListe = new List<GameObject>();
+        listeAI = GameObject.FindGameObjectsWithTag("AI");
+
+        foreach(GameObject x in listeAI)
+        {
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA == joueur.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                bonneListe.Add(x);
+            }
+        }
+        if(nombreJoueur == 2)
+        {
+            foreach(GameObject x in bonneListe)
+            {
+                if(x.name[x.name.Length - 2] == 1)
+                {
+                    estAI1 = false;
+                }
+                else if(x.name[x.name.Length - 2] == 2)
+                {
+                    estAI2 = false;
+                }
+                else if (x.name[x.name.Length - 2] == 3)
+                {
+                    estAI3 = false;
+                }
+            }
+        }
+        else if(nombreJoueur == 3)
+        {
+            foreach (GameObject x in bonneListe)
+            {
+                if (x.name[x.name.Length - 2] == 1)
+                {
+                    estAI1 = false;
+                }
+                else if (x.name[x.name.Length - 2] == 2)
+                {
+                    estAI2 = false;
+                }
+            }
+        }
+        if(estAI1)
+        {
+            indice = 1;
+        }
+        else if(estAI2)
+        {
+            indice = 2;
+        }
+        else if(estAI3)
+        {
+            indice = 3;
+        }
+        return indice;
     }
     [Command]
     void CmdTrouverJoueurÀChanger(GameObject aI)

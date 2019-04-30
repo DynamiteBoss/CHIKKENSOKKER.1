@@ -55,11 +55,39 @@ public class ScriptMouvementAI : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         InitialiserRéférences();
         constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
         if (noComportement == 3)
         {
             positionTactique = new Vector3(7*constÉquipe, 0, 12);
+        }
+        else if (noComportement == 4)
+        {
+            positionTactique = new Vector3(7 * constÉquipe, 0, -12);
+        }
+        else if (noComportement == 2)
+        {
+            positionTactique = new Vector3(-7 * constÉquipe, 0, 5);
+        }
+        else
+        {
+            positionTactique = new Vector3(-7 * constÉquipe, 0, -5);
+        }
+        //Debug.Log(noComportement);
+
+
+        TrouverPositionDefDeBase();
+        PositionDéfenseFill = new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
+        
+    }
+    void Uptade()
+    {
+        InitialiserRéférences();
+        constÉquipe = (short)(this.transform.GetComponent<TypeÉquipe>().estÉquipeA ? 1 : -1);
+        if (noComportement == 3)
+        {
+            positionTactique = new Vector3(7 * constÉquipe, 0, 12);
         }
         else if (noComportement == 4)
         {
@@ -99,6 +127,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
+        Debug.Log(noComportement);
     }
     private void TrouverPositionDefDeBase()
     {
