@@ -646,22 +646,35 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     }
     void AjusterModeNuit()
     {
-        List<GameObject> joueurs = GameObject.FindGameObjectsWithTag("Player")/*.OrderBy(x => int.Parse(x.name[9].ToString()))*/.ToList();
+        List<GameObject> liste = GameObject.FindGameObjectsWithTag("Player")/*.OrderBy(x => int.Parse(x.name[9].ToString()))*/.ToList();
+        /*
+        GameObject[] listeCatégorie = new GameObject[10];
+        List<GameObject> liste = new List<GameObject>();
+        foreach (string x in tags)
+        {
+            listeCatégorie = GameObject.FindGameObjectsWithTag(x);
+            {
+                foreach (GameObject y in listeCatégorie)
+                {
+                    liste.Add(y);
+                }
+            }
+        }*/
 
         if (!EstEnModeNuit)
         {
-            for (int i = 0; i < joueurs.Count; i++)
+            for (int i = 0; i < liste.Count; i++)
             {
-                joueurs[i].GetComponentInChildren<Light>().intensity -= 100f * Time.deltaTime * VitesseJourNuit;
+                liste[i].GetComponentInChildren<Light>().intensity -= 100f * Time.deltaTime * VitesseJourNuit;
             }
             LumierePrincipale.intensity += (1f) * Time.deltaTime * VitesseJourNuit;
             PnlNuit.GetComponentInChildren<Image>().color -= new Color(0, 0, 0, (0.8f * Time.deltaTime) * VitesseJourNuit);
         }
         else
         {
-            for (int i = 0; i < joueurs.Count; i++)
+            for (int i = 0; i < liste.Count; i++)
             {
-                joueurs[i].GetComponentInChildren<Light>().intensity += 100f * Time.deltaTime * VitesseJourNuit;
+                liste[i].GetComponentInChildren<Light>().intensity += 100f * Time.deltaTime * VitesseJourNuit;
             }
             LumierePrincipale.intensity -= (1f) * Time.deltaTime * VitesseJourNuit;
             PnlNuit.GetComponentInChildren<Image>().color += new Color(0, 0, 0, (0.8f * Time.deltaTime) * VitesseJourNuit);
@@ -671,9 +684,9 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             ajusteLumiere = false;
             //PnlNuit.SetActive(EstEnModeNuit);
-            for (int i = 0; i < joueurs.Count; i++)
+            for (int i = 0; i < liste.Count; i++)
             {
-                joueurs[i].GetComponentInChildren<Light>().intensity = EstEnModeNuit ? 100 : 0;
+                liste[i].GetComponentInChildren<Light>().intensity = EstEnModeNuit ? 100 : 0;
             }
         }
 

@@ -29,7 +29,7 @@ public class TypeÉquipe : NetworkBehaviour
         GameObject.Find("Corps").transform.rotation = new Quaternion(0, 0, 0, 0);
     }
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //CmdPlacer();
         if (name.StartsWith("Player"))
