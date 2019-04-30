@@ -98,7 +98,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
                             compteur = 0;
                             //FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                             CmdFairePasse(direction);
-                            StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
+                            //StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                                                                                                           //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                         }
                         else
@@ -125,7 +125,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
                         compteur = 0;
                         //FairePasse(TrouverPosJoueurPasse(direction));                                                                                                             // TANTOT
                         CmdFairePasse(direction);
-                        StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
+                        //StartCoroutine(AttendreDéactivationScriptPlaqueur(0.75f, direction));         //attendre un certain temps
                                                                                                       //faire en sorte de pouvoir faire le ontriggerenter ici ou dans le FairePlacage (avant le frapperadversaire)
                     }
                 }
@@ -243,6 +243,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         Debug.Log(visé.ToString());
         if (balle != null)
         {
+            balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
             transform.Find("ZonePlacage").GetComponent<BoxCollider>().enabled = false;
             //StartCoroutine(AttendrePourDistanceBallon(0.2f));
             balle.transform.parent = null;
@@ -250,7 +251,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
 
             balle.GetComponent<PlacerBalle>().estPlacer = false;
             balle.GetComponent<SphereCollider>().enabled = true;
-            balle.GetComponent<PlacerBalle>().dernierPosseseur = transform.gameObject;
+           
             balle.GetComponent<PlacerBalle>().positionJouer = transform.transform.position;
             balle.GetComponent<PlacerBalle>().enabled = true;
             Invoke("AttendreDistance", 0.1f);

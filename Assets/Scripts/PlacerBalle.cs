@@ -44,7 +44,7 @@ public class PlacerBalle : NetworkBehaviour
             {
                 
                     GameObject parent = other.transform.parent.gameObject;
-                    TrouverJoueurÀChanger(other.transform.parent.gameObject);
+                    CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
                     CmdMettreBalleEnfant(parent);
                 
             }
@@ -286,15 +286,28 @@ public class PlacerBalle : NetworkBehaviour
     [Command]
     void CmdTrouverJoueurÀChanger(GameObject aI)
     {
-        //RpcTrouverJoueurÀChanger(aI);
+        RpcTrouverJoueurÀChanger(aI);
     }
-    
-    void TrouverJoueurÀChanger(GameObject aI)
+    [ClientRpc]
+    void RpcTrouverJoueurÀChanger(GameObject aI)
     {
-        string tampon;
+        string tampon = null;
         if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA == aI.GetComponent<TypeÉquipe>().estÉquipeA)
         {
-            tampon = dernierPosseseur.name;
+            string équipe;
+            if (dernierPosseseur.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                équipe = "A";
+            }
+            else
+            {
+                équipe = "B";
+            }
+            if (dernierPosseseur.tag == "Player")
+            {
+                tampon = "Joueur" + dernierPosseseur.name[dernierPosseseur.name.Length - 2] + équipe;
+            }
+            //tampon = dernierPosseseur.name;
             RpcChangerAIÀJoueur(aI, dernierPosseseur, tampon);
         }
         else

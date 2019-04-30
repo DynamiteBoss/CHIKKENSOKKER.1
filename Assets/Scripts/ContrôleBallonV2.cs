@@ -159,6 +159,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     [ClientRpc]
     void RpcTirer()
     {
+        Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
         Liste = GetComponentsInChildren<BoxCollider>();
         foreach (BoxCollider x in Liste)
         {
@@ -195,7 +196,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         Balle.GetComponent<PlacerBalle>().estPlacer = false;
         Balle.GetComponent<SphereCollider>().enabled = true;
         Invoke("AttendrePourDistanceBallon", 0.5f);
-        Balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject;
+        
         Balle.GetComponent<PlacerBalle>().positionJouer = this.transform.position;
 
         if (Balle.GetComponent<PlacerBalle>().AncienGardien != null)
