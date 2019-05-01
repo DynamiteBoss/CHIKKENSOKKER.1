@@ -244,7 +244,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         if (balle != null)
         {
             balle.GetComponent<PlacerBalle>().dernierPosseseur = this.gameObject.name;
-            //transform.Find("ZonePlacage").GetComponent<BoxCollider>().enabled = false;
+            transform.Find("ZonePlacage").GetComponent<BoxCollider>().enabled = false;
             //StartCoroutine(AttendrePourDistanceBallon(0.2f));
             balle.transform.parent = null;
             balle.transform.GetComponent<Rigidbody>().isKinematic = false;
@@ -339,11 +339,11 @@ public class ActionsPlayerV2 : NetworkBehaviour
     {
         this.transform.Find("ZonePlacage").GetComponent<DétectionPlacage>().estEnPlacage = true;
         this.transform.GetComponent<Rigidbody>().isKinematic = false;
-        //this.transform.GetComponent<Rigidbody>().isKinematic = false;
+        this.transform.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = false;
 
 
         float rad = this.transform.eulerAngles.y / 180 * Mathf.PI;
-        //this.transform.GetComponent<Rigidbody>().isKinematic = false;
+        this.transform.GetComponent<Rigidbody>().isKinematic = false;
         this.transform.GetComponent<Rigidbody>().AddForce(Mathf.Sin(rad) * 65.5f, 0, Mathf.Cos(rad) * 65.5f, ForceMode.Impulse);
         this.transform.GetComponent<Rigidbody>().drag = 10;
         //this.transform.transform.position = new Vector3(0, 0, 0);
@@ -374,8 +374,8 @@ public class ActionsPlayerV2 : NetworkBehaviour
         yield return new WaitForSeconds(2 * durée / 3);
         this.transform.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon
         this.GetComponent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player
-        this.transform.GetComponent<Rigidbody>().isKinematic = !(this.transform.GetComponent<MouvementPlayer>().modePluie || this.transform.GetComponent<MouvementPlayer>().modeGlace);
-        //this.transform.GetComponent<Rigidbody>().isKinematic = true;
+        this.transform.GetComponent<Rigidbody>().isKinematic = !(this.transform.GetComponent<MouvementPlayer>().modePluie | this.transform.GetComponent<MouvementPlayer>().modeGlace);
+        this.transform.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = true;
         //this.transform.Find("Corps").transform.rotation = Quaternion.identity;
 
         estEnMouvementPlacage = false;
