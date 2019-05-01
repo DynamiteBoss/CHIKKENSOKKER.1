@@ -206,8 +206,6 @@ public class ScriptMouvementAI : NetworkBehaviour
     private Vector3 GérerPositionsDef()
     {
         Vector3 posCible = new Vector3();
-        float décallageBalle = 0;
-        float xÉxceptionConst = -1;
         if (Balle.transform.parent != null)
         {
             PosBalleTerrain = Balle.transform.parent.GetComponent<Transform>().position;
@@ -217,24 +215,16 @@ public class ScriptMouvementAI : NetworkBehaviour
                 {
                     posCible = PositionDéfenseActuelle;
                 }
-                else
+                else// ATTAQUANT QUI EST SEUL DANS LA ZONE DU DEFENSEUR
                 {
-                    posCible = PositionDéfenseActuelle;
-                    //posCible = (TrouverAttaquantProche().transform.position - GardienAllié.transform.position).normalized * 2*(this.transform.position - GardienAllié.transform.position).magnitude/3 + GardienAllié.transform.position;
+                    //posCible = PositionDéfenseActuelle;
+                    posCible = (TrouverAttaquantProche().transform.position - Balle.transform.parent.position).normalized * 2*(TrouverAttaquantProche().transform.position - Balle.transform.parent.position).magnitude/3 + Balle.transform.parent.position;
                 }
             }
             else
             {
-                //if (Math.Abs(PosBalleTerrain.x) < DÉCALLAGE_DEMI_TERRAIN)
-                //{
-                    posCible.x = PositionDéfenseActuelle.x + (/*xÉxceptionConst * */(PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe)) * 0.5f);
-                //}
-                //else
-                //{
-                //    posCible.x = PositionDéfenseActuelle.x + (PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe) * 0.5f);
-                //}
+                posCible.x = PositionDéfenseActuelle.x + ((PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe)) * 0.5f);
                 posCible.z = PositionDéfenseActuelle.z + (PosBalleTerrain.z * 0.5f);
-                //posCible = PositionDéfenseActuelle;
             }
         }
         return posCible;
@@ -329,25 +319,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
     }
 
-    //private Vector3 GérerComportementDef()              //       À MODIFIER
-    //{
-    //    //return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-    //    switch (TrouverComportementDéfense())
-    //    {
-    //        case 1:
-
-    //        case 2:
-
-    //            break;
-    //        case 3:
-    //            return GérerComportementDef();
-    //            break;
-    //        case 4:
-    //            return new Vector3(20 * (-constÉquipe) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-
-    //            break;
-    //    }
-    //}
+   
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
