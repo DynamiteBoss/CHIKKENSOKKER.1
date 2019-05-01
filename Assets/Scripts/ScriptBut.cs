@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq;
 
 public class ScriptBut : NetworkBehaviour
 {
@@ -55,6 +56,7 @@ public class ScriptBut : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Soccer")).First());
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
             butEffectuer = true;
