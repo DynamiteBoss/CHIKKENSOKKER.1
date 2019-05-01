@@ -65,12 +65,12 @@ public class ScriptItems : NetworkBehaviour
         }
 
         // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
-        if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
+        if ((Input.GetKeyDown("r") || Input.GetButtonDown("SquareBtn1")) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
         { 
             CmdFaireOpérationJoueur();
         }
         // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
-        if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2") && isLocalPlayer)
+        if ((Input.GetKeyDown(KeyCode.Keypad0) || Input.GetButtonDown("SquareBtn2")) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2") && isLocalPlayer)
         {
             CmdFaireOpérationJoueur();
         }
@@ -164,14 +164,14 @@ public class ScriptItems : NetworkBehaviour
         }
     }
 
+    //[Command]
+    //public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE 
+    //{
+    //    RpcInstancierItem(indiceItem, position);
+    //    Debug.Log(string.Format("Instanciation de l'item {0} par {1}", Inventaire.EnTexte(indiceItem), isLocalPlayer? "leu joueur local" : "leu client"));
+    //}
     [Command]
-    public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE 
-    {
-        RpcInstancierItem(indiceItem, position);
-        Debug.Log(string.Format("Instanciation de l'item {0} par {1}", Inventaire.EnTexte(indiceItem), isLocalPlayer? "leu joueur local" : "leu client"));
-    }
-    [ClientRpc]
-    private void RpcInstancierItem(int indiceItem, Vector3 position)
+    private void CmdInstancierItem(int indiceItem, Vector3 position)
     {
         Debug.Log("Instanciaton de l'item" + Inventaire.EnTexte(indiceItem) + "à la position " + position.ToString());
         switch (indiceItem)

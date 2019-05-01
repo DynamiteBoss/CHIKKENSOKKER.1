@@ -10,6 +10,7 @@ using UnityEngine.Networking;
 
 public class ActionsPlayerV2 : NetworkBehaviour
 {
+    string[] tags = new string[] { "Player", "AI", "Gardien" };
     Transform ZonePlacage { get; set; }
     public GameObject JoueurÀPlaquer { get; set; }
     public GameObject Balle { get; set; }
@@ -103,6 +104,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
                         }
                         else
                         {
+                            CmdChanger();
                             //ChangerAIÀJoueur(TrouverJoueurPasse(TrouverPosJoueurPasse(direction)), this.transform.gameObject, this.transform.gameObject.name);
                         }
                     }
@@ -132,7 +134,67 @@ public class ActionsPlayerV2 : NetworkBehaviour
             }
         }
     }
+    [Command]
+    void CmdChanger()
+    {
+        RpcChanger();
+    }
+    [ClientRpc]
+    void RpcChanger()
+    {
+        GameObject[] liste = new GameObject[10];
+        List<GameObject> listeA = new List<GameObject>();
+        List<GameObject> listeB = new List<GameObject>();
+        foreach(string x in tags)
+        {
+            liste = GameObject.FindGameObjectsWithTag(x);
+            foreach(GameObject z in liste)
+            {
+                if(z.GetComponent<TypeÉquipe>() == this.GetComponent<TypeÉquipe>().estÉquipeA)
+                {
+                    listeA.Add(z);
+                }
 
+            }
+        }
+
+        foreach(GameObject x in listeA)
+        {
+            if(x.tag == "AI")
+            {
+                listeB.Add(x);
+            }
+        }
+
+        float distance = Vector3.Distance(transform.position, listeB[0].transform.position);
+        GameObject changement = listeB[0];
+
+        foreach (GameObject x in listeB)
+        {
+            float test = Vector3.Distance(transform.position, x.transform.position);
+            if(test < distance)
+            {
+                distance = test;
+                changement = x;
+            }
+        }
+        string tampon = this.name;
+
+        ChagerNom(this.gameObject, changement, tampon);
+    }
+    void ChagerNom(GameObject joueur,GameObject aI,string tampon)
+    {
+        joueur.GetComponent<MouvementPlayer>().enabled = false;
+        joueur.GetComponent<ScriptMouvementAI>().enabled = true;
+        joueur.tag = "AI";
+        joueur.name = aI.name;
+        joueur.GetComponentInChildren<Rigidbody>().isKinematic = true;
+
+        aI.name = tampon;
+        aI.GetComponent<MouvementPlayer>().enabled = true;
+        aI.GetComponent<ScriptMouvementAI>().enabled = false;
+        aI.tag = "Player";
+    }
     private Vector3 TrouverPosJoueurPasse(float direction)
     {
         /*Vector du But de l'autre team*/
