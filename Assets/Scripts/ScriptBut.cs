@@ -56,7 +56,7 @@ public class ScriptBut : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Soccer")).First());
+        this.GetComponent<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Soccer")).First());
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
             butEffectuer = true;
