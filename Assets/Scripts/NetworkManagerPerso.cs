@@ -11,6 +11,7 @@ using System.Linq;
 // FAIRE UN CUSTOM PLAYER SPAWN
 public class NetworkManagerPerso : NetworkManager
 {
+    int cpt = 0;
     public GameObject playerPre { get; set; }
     public GameObject aIPre { get; set; }
     public GameObject gardienPre { get; set; }
@@ -64,6 +65,7 @@ public class NetworkManagerPerso : NetworkManager
     */
     public void JoindrePartie()
     {
+        //RevenirMenu();
         InstancierAddresseIP();
         InstancierPort();
         NetworkManager.singleton.StartClient();
@@ -81,7 +83,8 @@ public class NetworkManagerPerso : NetworkManager
     }
     public void CreateHost(bool estSeul)
     {
-
+        compteurB = 0;
+        //RevenirMenu();
         est1v1 = estSeul;
         InstancierAddresseIP();
         InstancierPort();
@@ -275,10 +278,15 @@ public class NetworkManagerPerso : NetworkManager
         if (level == 0)
         {
             GérerBoutonsMenu();
+            if(cpt != 0)
+            {
+                InstancierRéférences();
+            }
         }
 
         else if(level == 1)
         {
+            cpt = 1;
             GérerBoutonsJeu();
         }
     }
@@ -287,7 +295,7 @@ public class NetworkManagerPerso : NetworkManager
     {
         GameObject.Find("BtnHost").GetComponent<Button>().onClick.AddListener(() => GérerGrandeurÉquipe());
         //GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
-        //GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
+       // GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
         GameObject.Find("BtnJoin").GetComponent<Button>().onClick.AddListener(() => JoindrePartie());
         //GameObject.Find("BtnRevenir").GetComponent<Button>().onClick.RemoveAllListeners();
 
@@ -301,9 +309,20 @@ public class NetworkManagerPerso : NetworkManager
     }
     void GérerBoutonsJeu()
     {
-        //GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
-        //GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => NetworkManager.singleton.StopClient());
+       // GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => Quitter());
     }
+
+    public void Quitter()
+    {
+        NetworkManager.singleton.StopHost();
+        NetworkManager.singleton.StopServer();
+    }
+    public override void OnStopHost()
+    {
+
+    }
+
     public void GérerGrandeurÉquipe()
     {
         CnvConnexion.enabled = false;
@@ -312,9 +331,13 @@ public class NetworkManagerPerso : NetworkManager
         //Btn1v1.onClick.RemoveAllListeners();
         Btn1v1.onClick.AddListener(() => CreateHost(true));
         //Btn2v2.onClick.RemoveAllListeners();
-        //Btn2v2.onClick.AddListener(() => CreateHost(false));
+        Btn2v2.onClick.AddListener(() => CreateHost(false));
     }
     private void Start()
+    {
+        InstancierRéférences();
+    }
+    void InstancierRéférences()
     {
         Btn1v1 = GameObject.Find("Btn1v1").GetComponent<Button>();
         Btn2v2 = GameObject.Find("Btn2v2").GetComponent<Button>();
@@ -331,5 +354,22 @@ public class NetworkManagerPerso : NetworkManager
         prefabs.Add(aIPre);
         prefabs.Add(gardienPre);
     }
+    //void InstancierRéférencesV2()
+    //{
+    //    Button Btn1v1 =  GameObject.Find("Btn1v1").GetComponent<Button>();
+    //    Button Btn2v2 = GameObject.Find("Btn2v2").GetComponent<Button>();
+    //    Canvas CnvConnexion = GameObject.Find("CnvConnexion").GetComponent<Canvas>();
+    //    Canvas CnvNbJoueur = GameObject.Find("CnvNbJoueur").GetComponent<Canvas>();
+
+    //    CnvNbJoueur.enabled = false;
+
+    //    GameObject playerPre = Resources.Load<GameObject>("Prefab/Player");
+    //    GameObject aIPre = Resources.Load<GameObject>("Prefab/AI");
+    //    GameObject gardienPre = Resources.Load<GameObject>("Prefab/gardien");
+    //    List<GameObject> prefabs = new List<GameObject>();
+    //    prefabs.Add(playerPre);
+    //    prefabs.Add(aIPre);
+    //    prefabs.Add(gardienPre);
+    //}
 }
 

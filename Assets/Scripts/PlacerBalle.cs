@@ -35,14 +35,14 @@ public class PlacerBalle : NetworkBehaviour
             return;
         }
 
-        if(other.tag == "ZoneC")
+        if (other.tag == "ZoneC")
         {
             if (other.transform.parent.tag == "Player")
             {
-             
+
                 GameObject parent = other.transform.parent.gameObject;
                 CmdMettreBalleEnfant(parent);
-                foreach(GameObject p in GameObject.FindGameObjectsWithTag("Player"))        //Retire les joueurs ­­­"joueur" inactifs
+                foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))        //Retire les joueurs ­­­"joueur" inactifs
                 {
                     if (p.name != dernierPosseseur)
                     {
@@ -56,44 +56,44 @@ public class PlacerBalle : NetworkBehaviour
             else if (other.transform.parent.tag == "AI")
             {
                 Debug.Log("COLLI AI");
-                
-                    GameObject parent = other.transform.parent.gameObject;
-                    CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
-                    CmdMettreBalleEnfant(parent);
-                
+
+                GameObject parent = other.transform.parent.gameObject;
+                CmdTrouverJoueurÀChanger(other.transform.parent.gameObject);
+                CmdMettreBalleEnfant(parent);
+
             }
             else if (other.transform.parent.tag == "Gardien")
             {
 
-               
-                    GameObject parent = other.transform.parent.gameObject;
-                    CmdTrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
-                    CmdMettreBalleEnfant(parent);
-                
+
+                GameObject parent = other.transform.parent.gameObject;
+                CmdTrouverJoueurÀChangerGardien(other.transform.parent.gameObject);
+                CmdMettreBalleEnfant(parent);
+
             }
         }
-        
+
     }
     [Command]
     void CmdMettreBalleEnfant(GameObject other)
     {
         RpcMettreBalleEnfant(other);
         //changer pour pas qu'on puisse prendre le ballon  aquelquun qui la deja
-        
-        
-            /*
-            estPlacer = true;
-            //GetComponent<NetworkTransform>().enabled = false;
-            this.transform.parent = other.transform;
-            transform.localScale = Vector3.one;
-
-            this.transform.localPosition = new Vector3(0, 1.5f, 2);
-            GetComponent<SphereCollider>().enabled = false;
-            transform.GetComponent<Rigidbody>().isKinematic = true;
-            */
 
 
-        
+        /*
+        estPlacer = true;
+        //GetComponent<NetworkTransform>().enabled = false;
+        this.transform.parent = other.transform;
+        transform.localScale = Vector3.one;
+
+        this.transform.localPosition = new Vector3(0, 1.5f, 2);
+        GetComponent<SphereCollider>().enabled = false;
+        transform.GetComponent<Rigidbody>().isKinematic = true;
+        */
+
+
+
 
 
 
@@ -133,9 +133,9 @@ public class PlacerBalle : NetworkBehaviour
         string équipe = joueur.GetComponent<TypeÉquipe>().estÉquipeA ? "A" : "B";
         List<GameObject> vraiListe = new List<GameObject>();
         GameObject[] listeAI = GameObject.FindGameObjectsWithTag("AI");
-        foreach(GameObject x in listeAI)
+        foreach (GameObject x in listeAI)
         {
-            if(x.name.StartsWith("Joueur"))
+            if (x.name.StartsWith("Joueur"))
             {
 
             }
@@ -151,69 +151,120 @@ public class PlacerBalle : NetworkBehaviour
         copie.GetComponent<MouvementPlayer>().enabled = false;
         copie.GetComponent<ScriptMouvementAI>().enabled = true;
     }
-    void RéglerCopieAI()
+    void RéglerCopieAI(GameObject bon, GameObject copie, GameObject[] liste)
     {
+        bool est1 = false;
+        bool est2 = false;
+        bool est3 = false;
+        bool est4 = false;
+        string équipe = bon.GetComponent<TypeÉquipe>().estÉquipeA ? "A" : "B";
+        List<GameObject> listeÉquipe = new List<GameObject>();
+        foreach (GameObject x in liste)
+        {
 
+            if (bon.GetComponent<TypeÉquipe>().estÉquipeA == x.GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                listeÉquipe.Add(x);
+            }
+        }
+        foreach (GameObject x in listeÉquipe)
+        {
+            if (x.name[x.name.Length - 2] == '1')
+            {
+                est1 = true;
+            }
+            else if (x.name[x.name.Length - 2] == '2')
+            {
+                est2 = true;
+            }
+            else if (x.name[x.name.Length - 2] == '3')
+            {
+                est3 = true;
+            }
+            else if (x.name[x.name.Length - 2] == '4')
+            {
+                est4 = true;
+            }
+        }
+        if (!est1)
+        {
+            copie.name = "AI1" + équipe;
+        }
+        else if (!est2)
+        {
+            copie.name = "AI2" + équipe;
+        }
+        else if (!est3)
+        {
+            copie.name = "AI3" + équipe;
+        }
+        else if (!est4)
+        {
+            copie.name = "AI4" + équipe;
+        }
     }
-  
+
     void Update()
     {
         int indice = 0;
         GameObject[] listeJoueur1 = GameObject.FindGameObjectsWithTag("Player");
-        
+
         GameObject[] listeAI = GameObject.FindGameObjectsWithTag("AI");
 
-        
 
-        foreach(GameObject x in listeJoueur1)
+
+        foreach (GameObject x in listeJoueur1)
         {
-            foreach(GameObject z in listeAI)
+            foreach (GameObject z in listeAI)
             {
-                if(x.name == z.name)
+                if (x.name == z.name)
                 {
-                   
+
                     RéglerCopie(x, z);
                 }
             }
         }
-        foreach(GameObject x in listeAI)
+        
+        foreach (GameObject z in listeAI)
         {
-            foreach(GameObject z in listeAI)
+            for (int i = 0; i < listeAI.Length; i++)
             {
-                if(z.name == listeAI[indice].name)
+                if (z.name == listeAI[i].name && i != indice)
                 {
-                    RéglerCopieAI();
+                    RéglerCopieAI(z, listeAI[i], listeAI);
                 }
             }
             indice++;
         }
-        if(GameObject.FindGameObjectWithTag("Balle").transform.parent != null)
+
+
+        if (GameObject.FindGameObjectWithTag("Balle").transform.parent != null)
         {
             foreach (GameObject x in listeJoueur1)
             {
                 if (GameObject.FindGameObjectWithTag("Balle").transform.parent.gameObject.name == x.name)
                 {
-                    if(x != GameObject.FindGameObjectWithTag("Balle").transform.parent.gameObject)
+                    if (x != GameObject.FindGameObjectWithTag("Balle").transform.parent.gameObject)
                     {
-                      
+
                         RéglerCopie(GameObject.FindGameObjectWithTag("Balle").transform.parent.gameObject, x);
                     }
 
                 }
             }
         }
-       
-        
-       
-     
+
+
+
+
         if (estPlacer)
         {
             this.transform.localPosition = new Vector3(0, 1.5f, 2);
         }
     }
-    
-    
-    
+
+
+
     [Command]
     void CmdTrouverJoueurÀChanger(GameObject aI)
     {
@@ -337,11 +388,11 @@ public class PlacerBalle : NetworkBehaviour
                 listeAIMonÉquipe.Add(x);
             }
             */
-            if(x.GetComponent<TypeÉquipe>().estÉquipeA == gardien.GetComponent<TypeÉquipe>().estÉquipeA)
+            if (x.GetComponent<TypeÉquipe>().estÉquipeA == gardien.GetComponent<TypeÉquipe>().estÉquipeA)
             {
                 listeAIMonÉquipe.Add(x);
             }
-            
+
         }
         if (gardien.GetComponent<TypeÉquipe>().estÉquipeA)
         {
@@ -359,7 +410,7 @@ public class PlacerBalle : NetworkBehaviour
         CmdChangerGardienÀJoueur(joueur, gardien, tampon, grandeur, équipe);
     }
     [Command]
-    void CmdChangerGardienÀJoueur(GameObject joueur,GameObject gardien, string tampon,int grandeur,string équipe)
+    void CmdChangerGardienÀJoueur(GameObject joueur, GameObject gardien, string tampon, int grandeur, string équipe)
     {
         RpcChangerGardienÀJoueur(joueur, gardien, tampon, grandeur, équipe);
         /*

@@ -105,7 +105,6 @@ GameObject:
   - component: {fileID: 3973255589375540317}
   - component: {fileID: 613087233149285601}
   - component: {fileID: 6142764029643978864}
-  - component: {fileID: 81154653108193893}
   m_Layer: 0
   m_Name: ZonePlacage
   m_TagString: Untagged
@@ -197,39 +196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30054a8d64b4d6945bcecd599417d2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &81154653108193893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748016393197258212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!1 &4003801480907696392
 GameObject:
   m_ObjectHideFlags: 0

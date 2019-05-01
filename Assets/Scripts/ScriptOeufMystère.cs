@@ -20,7 +20,8 @@ public class ScriptOeufMystère : NetworkBehaviour
     public string équipeLive;
 
     void Start()
-    {    
+    {
+
     }
 
     void Update()
@@ -36,7 +37,6 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;
             //int random = UnityEngine.Random.Range(0, IndiceMax);
-            indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
             //indice = UnityEngine.Random.Range(0, IndiceMax);
             CmdAttribuerObjetJoueur(other.transform.parent.parent.gameObject, indice);    
         }
@@ -45,7 +45,6 @@ public class ScriptOeufMystère : NetworkBehaviour
             Destroy(this.transform.gameObject);
             GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;
             //int random = UnityEngine.Random.Range(0, IndiceMax);
-            indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
             //ndice = UnityEngine.Random.Range(0, IndiceMax);
             CmdAttribuerObjetJoueur(other.transform.parent.gameObject, indice);
         }
