@@ -368,7 +368,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                             modeNuitLocal = EstEnModeNuit;
                             ajusteLumiere = true;
                         }
-                        if (compteur2 >= frequenceObjetV)
+                        if (compteur2 >= frequenceObjet)
                         {
                             compteur2 = 0;
                             CmdFaireApparaitreObjet();
