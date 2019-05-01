@@ -65,7 +65,7 @@ public class NetworkManagerPerso : NetworkManager
     */
     public void JoindrePartie()
     {
-        RevenirMenu();
+        //RevenirMenu();
         InstancierAddresseIP();
         InstancierPort();
         NetworkManager.singleton.StartClient();
@@ -83,7 +83,8 @@ public class NetworkManagerPerso : NetworkManager
     }
     public void CreateHost(bool estSeul)
     {
-        RevenirMenu();
+        compteurB = 0;
+        //RevenirMenu();
         est1v1 = estSeul;
         InstancierAddresseIP();
         InstancierPort();
@@ -293,8 +294,8 @@ public class NetworkManagerPerso : NetworkManager
     void GérerBoutonsMenu()
     {
         GameObject.Find("BtnHost").GetComponent<Button>().onClick.AddListener(() => GérerGrandeurÉquipe());
-        GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
-        GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
+        //GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
+       // GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
         GameObject.Find("BtnJoin").GetComponent<Button>().onClick.AddListener(() => JoindrePartie());
         //GameObject.Find("BtnRevenir").GetComponent<Button>().onClick.RemoveAllListeners();
 
@@ -308,11 +309,15 @@ public class NetworkManagerPerso : NetworkManager
     }
     void GérerBoutonsJeu()
     {
-        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
-        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => NetworkManager.singleton.StopHost());
+       // GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => Quitter());
     }
 
-
+    public void Quitter()
+    {
+        NetworkManager.singleton.StopHost();
+        NetworkManager.singleton.StopServer();
+    }
     public override void OnStopHost()
     {
 
@@ -326,7 +331,7 @@ public class NetworkManagerPerso : NetworkManager
         //Btn1v1.onClick.RemoveAllListeners();
         Btn1v1.onClick.AddListener(() => CreateHost(true));
         //Btn2v2.onClick.RemoveAllListeners();
-        //Btn2v2.onClick.AddListener(() => CreateHost(false));
+        Btn2v2.onClick.AddListener(() => CreateHost(false));
     }
     private void Start()
     {
