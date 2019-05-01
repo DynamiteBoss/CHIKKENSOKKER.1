@@ -7,26 +7,34 @@ using UnityEngine.Networking;
 
 public class ItemBombe : NetworkBehaviour
 {
-    GameObject zoneExplosion { get; set; }
+    GameObject zoneExplosion;
     private bool explosée;
     private bool changementGrandeurZone;
     float scaleMax;
     float scale = 0.5f;
-    float tempsExplosion = 30; //le temps ou le scale augmente, durant les premieres frames (30)
+    float tempsExplosion = 45; //le temps ou le scale augmente, durant les premieres frames (30)
     float tempsFade = 127.5f;
     float transparence = 254;
     float transparenceMin = 0;
     float transparenceMax = 255;
+    static bool changerTrajectoireLive;
+    int compteur;
 
     void Start()
     {
         changementGrandeurZone = false;
+        changerTrajectoireLive = false;
     }
     void Update()
     {
+        if (this.transform.position.y >= 7)
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.zero, ForceMode.Force);
+            GetComponent<Rigidbody>().AddForce((transform.up * 100) + (transform.forward * 200), ForceMode.Force);
+        }
         if (changementGrandeurZone)
         {
-            if(scale < scaleMax)
+            if (scale < scaleMax)
             {
                 zoneExplosion.transform.localScale = zoneExplosion.transform.localScale + new Vector3(scaleMax / tempsExplosion, scaleMax / tempsExplosion, scaleMax / tempsExplosion);
                 scale = zoneExplosion.transform.localScale.x;
@@ -36,14 +44,13 @@ public class ItemBombe : NetworkBehaviour
                 //CA VA PA DANS CE CODE LA (POUR LA TRANSPAREMNCE) DONC CA NE DESTROY PA
                 if (transparence > transparenceMin)
                 {
-                    transform.GetComponentInChildren<Material>().color = new Color(transform.GetComponentInChildren<Material>().color.r, transform.GetComponentInChildren<Material>().color.g, transform.GetComponentInChildren<Material>().color.b, (transparence - (transparenceMax / tempsFade)));
-                    transparence = transform.GetComponentInChildren<Material>().color.a;
+                    zoneExplosion.transform.GetComponentInChildren<Renderer>().material.color = new Color(zoneExplosion.transform.GetComponentInChildren<Renderer>().material.color.r, zoneExplosion.transform.GetComponentInChildren<Renderer>().material.color.g, zoneExplosion.transform.GetComponentInChildren<Renderer>().material.color.b, (transparence - (transparenceMax / tempsFade)));
+                    transparence = zoneExplosion.transform.GetComponentInChildren<Renderer>().material.color.a;
                 }
                 else
                 {
                     changementGrandeurZone = false;
                     Destroy(zoneExplosion);
-                    Destroy(this.transform.gameObject);
                 }
             }
         }
@@ -51,31 +58,34 @@ public class ItemBombe : NetworkBehaviour
 
     public static void FaireEffetItem(GameObject item)
     {
+        item.GetComponent<Rigidbody>().AddForce((item.transform.up * 100) + (item.transform.forward * -225), ForceMode.Force);
         // OEUF BOMBE QUI FAIT UN ARC DE CERCLE AVANT DEXPLOSER A TERRE 
-        // ON TRIGGER ENTER, LAUTRE JOUEUR SE FAIR RAPE SOLIDE
+        // ON TRIGGER ENTER, LAUTRE JOUEUR 
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (this.GetComponentInChildren<GestionAudio>())
-            this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Explosion")).First()); //Fait jouer le son explosion
-
-        if (other.transform.tag == "Player" && !explosée)  //si a touche un player AVANT de toucher a terre apres/avant son arc de cercle, ELLE EXPLOSE TOUT DE SUITE
+        
+        if (other.name == ("Terrain"))
         {
-            Explose(12);
-
-
+            this.GetComponentInChildren<MeshRenderer>().enabled = false;
+            this.GetComponentInChildren<SphereCollider>().enabled = false;
+            this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("Oeuf - Son")).First());
+            Explose(50);
+            StartCoroutine("DeleteBombe");
         }
-        if (!(other.transform.tag == "Player") && !explosée) //si a touche a terre ou a un mur
-        {
-            Explose(15);
-        }
+    }
+    IEnumerable DeleteBombe()
+    {
+        yield return new WaitForSeconds(.1f);
+        Destroy(this.transform.gameObject);
     }
     private void Explose(float scale) 
     {
-        zoneExplosion = Instantiate(Item.RetournerItemListe(8).ItemPhysique, this.transform.position, Quaternion.identity);
+        this.GetComponentInChildren<GestionAudio>().FaireJouerSon(this.GetComponents<AudioSource>().Where(x => x.clip.name.StartsWith("explo")).First());
+
+        zoneExplosion = Instantiate(Item.RetournerItemListe(16).ItemPhysique, this.transform.position + Vector3.up * 2, Quaternion.identity);
         changementGrandeurZone = true;
         scaleMax = scale;
-        this.transform.GetComponentInChildren<MeshRenderer>().enabled = false;
 
         // créer la zone d'explosion avec le rayon donné
         // agrandir la zone d'explosion avec le temps

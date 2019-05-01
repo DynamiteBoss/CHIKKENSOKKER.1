@@ -14,8 +14,6 @@ public class ItemVers : NetworkBehaviour
         
     }
 
-    // SCRIPT A ENLEVER ON VA SCARP LE MODE INVINCIBLE
-
     public static void FaireEffetItem(GameObject joueur)  //y faut un joueur qui se fait donner le mode invincible
     {
         //joueur.GetComponent<MouvementPlayer>().modeInvincible = true;

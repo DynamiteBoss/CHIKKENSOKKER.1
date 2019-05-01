@@ -13,13 +13,6 @@ public class Inventaire
     [SyncVar(hook = "OnItemB1")] public static int itemB1 = 8;
     [SyncVar(hook = "OnItemB2")] public static int itemB2 = 8;
 
-    //  TEST
-    [SyncVar(hook = "OnObjet1A")] public static GameObject objet1A;
-    [SyncVar(hook = "OnObjet2A")] public static GameObject objet2A;
-    [SyncVar(hook = "OnObjet1B")] public static GameObject objet1B;
-    [SyncVar(hook = "OnObjet2B")] public static GameObject objet2B;
-    //  TEST 
-
     static void OnItemA1(int changement)
     {
         itemA1 = changement;
@@ -35,22 +28,6 @@ public class Inventaire
     static void OnItemB2(int changement)
     {
         itemB2 = changement;
-    }
-    static void OnObjet1A(GameObject changement)
-    {
-        objet1A = changement;
-    }
-    static void OnObjet2A(GameObject changement)
-    {
-        objet2A = changement;
-    }
-    static void OnObjet1B(GameObject changement)
-    {
-        objet1B = changement;
-    }
-    static void OnObjet2B(GameObject changement)
-    {
-        objet2B = changement;
     }
     public static string EnTexte(int valeur)
     {

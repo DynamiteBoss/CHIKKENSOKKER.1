@@ -12,6 +12,7 @@ TagManager:
   - But
   - Gardien
   - AI
+  - Sprite
   layers:
   - Default
   - TransparentFX

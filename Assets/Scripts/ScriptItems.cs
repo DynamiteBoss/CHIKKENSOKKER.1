@@ -20,49 +20,49 @@ public class ScriptItems : NetworkBehaviour
             
 
         framesDélai++;
-        if (isLocalPlayer && tag == "Player")
-        {
-            if (Input.GetKeyDown("1") && framesDélai > 60)
-            {
-                CmdInstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("2") && framesDélai > 60)
-            {
-                CmdInstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("3") && framesDélai > 60)
-            {
-                CmdInstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("4") && framesDélai > 60)
-            {
-                CmdInstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("5") && framesDélai > 60)
-            {
-                CmdInstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("6") && framesDélai > 60)
-            {
-                CmdInstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("7") && framesDélai > 60)
-            {
-                CmdInstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-            if (Input.GetKeyDown("8") && framesDélai > 60)
-            {
-                CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
-                framesDélai = 0;
-            }
-        }
+        //if (isLocalPlayer && tag == "Player")
+        //{
+        //    if (Input.GetKeyDown("1") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("2") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("3") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("4") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("5") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("6") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("7") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //    if (Input.GetKeyDown("8") && framesDélai > 60)
+        //    {
+        //        CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
+        //        framesDélai = 0;
+        //    }
+        //}
 
         // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
         if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
@@ -143,24 +143,70 @@ public class ScriptItems : NetworkBehaviour
     [ClientRpc]
     private void RpcModifierSprite(int position, char équipe)
     {
+        GameObject[] sprites = GameObject.FindGameObjectsWithTag("Sprite");
         if (équipe == 'A')
         {
             if (position == 2)
             {
-                Inventaire.objet1A = Inventaire.objet2A;
-                Inventaire.objet2A = null;
+                foreach (GameObject sprite in sprites)
+                {
+                    if (sprite.transform.localPosition == new Vector3(-130, -104, -244))
+                    {
+                        Destroy(sprite);
+                        return;
+                    }
+                }
+                foreach (GameObject sprite in sprites)
+                {
+                    if (sprite.transform.localPosition == new Vector3(-205, -104, -244))
+                    {
+                        sprite.transform.localPosition = new Vector3(-130, -104, -244);
+                    }
+                }
             }
-            else { Inventaire.objet1A = null; }
+            else
+            {
+                foreach (GameObject sprite in sprites)
+                {
+                    if (sprite.transform.localPosition == new Vector3(-130, -104, -244))
+                    {
+                        Destroy(sprite);
+                        return;
+                    }
+                }
+            }
         }
-        else if ( équipe == 'B')
+        else if (équipe == 'B')
         {
             if (position == 2)
             {
-                Inventaire.objet1B = Inventaire.objet2B;
-                Inventaire.objet2B = null;
+                foreach (GameObject sprite in sprites)
+                {
+                    if (sprite.transform.localPosition == new Vector3(134, -104, -244))
+                    {
+                        Destroy(sprite);
+                        return;
+                    }
+                }
+                foreach (GameObject sprite in sprites)
+                {
+                    if (sprite.transform.localPosition == new Vector3(210, -104, -244))
+                    {
+                        sprite.transform.localPosition = new Vector3(134, -104, -244);
+                    }
+                }
             }
-            else { Inventaire.objet1B = null; }
-
+            else
+            {
+                foreach (GameObject sprite in sprites)
+                {
+                    if (sprite.transform.localPosition == new Vector3(134, -104, -244))
+                    {
+                        Destroy(sprite);
+                        return;
+                    }
+                }
+            }
         }
     }
 
@@ -185,7 +231,7 @@ public class ScriptItems : NetworkBehaviour
                     foreach (GameObject item in listCrotte)
                     {
                         NetworkServer.Spawn(item);
-                        Destroy(item, 6);
+                        Destroy(item, 8);
                     }
                     ItemCrotte.FaireEffetItem(listCrotte); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
                     break;
@@ -201,7 +247,7 @@ public class ScriptItems : NetworkBehaviour
                     foreach (GameObject item in listCrotte)
                     {
                         NetworkServer.Spawn(item);
-                        Destroy(item, 6);
+                        Destroy(item, 8);
                     }
                     ItemCrotte.FaireEffetItem(listCrotte); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
                     break;
@@ -213,7 +259,7 @@ public class ScriptItems : NetworkBehaviour
                     foreach (GameObject item in listOeux)
                     {
                         NetworkServer.Spawn(item);
-                        Destroy(item, 5);
+                        Destroy(item, 7);
                     }
                     ItemOeufBlanc.FaireEffetItem(0, listOeux); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
                     break;
@@ -227,7 +273,7 @@ public class ScriptItems : NetworkBehaviour
                     foreach (GameObject item in listOeux)
                     {
                         NetworkServer.Spawn(item);
-                        Destroy(item, 5);
+                        Destroy(item, 7);
                     }
                     ItemOeufBlanc.FaireEffetItem(1, listOeux); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
 
@@ -236,9 +282,9 @@ public class ScriptItems : NetworkBehaviour
             case 4:
                 {
                     GameObject OeufBrun = (GameObject)Instantiate(Item.RetournerItemListe(4).ItemPhysique, position + transform.up * 2 + transform.forward * 3.5f, Quaternion.Euler(90, 0, -(this.transform.rotation.eulerAngles.y)));
-                    ItemOeufBrun.FaireEffetItem(OeufBrun); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
+                    ItemOeufBrun.FaireEffetItem(OeufBrun, this.transform.gameObject); //DONNER UNE VITESSE OU MOUVEMENT DANS LE SCRIPT SPÉCIALISÉ
                     NetworkServer.Spawn(OeufBrun);
-                    Destroy(OeufBrun, 5);
+                    Destroy(OeufBrun, 6);
                     break;
                 }
             case 5:

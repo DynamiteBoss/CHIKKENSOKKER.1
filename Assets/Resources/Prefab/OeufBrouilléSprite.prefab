@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6207071956653150314}
   m_Layer: 0
   m_Name: "OeufBrouill\xE9Sprite"
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

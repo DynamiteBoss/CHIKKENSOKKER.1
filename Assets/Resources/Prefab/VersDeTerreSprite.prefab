@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5388840009861202580}
   m_Layer: 0
   m_Name: VersDeTerreSprite
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

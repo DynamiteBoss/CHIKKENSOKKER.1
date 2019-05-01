@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 529306062822987741}
   m_Layer: 0
   m_Name: Crotte5Sprite
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

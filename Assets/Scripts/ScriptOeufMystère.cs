@@ -300,7 +300,7 @@ public class ScriptOeufMystère : NetworkBehaviour
     {
         Debug.Log(positionSprite.ToString() + "INITIAL");
         item.transform.localPosition = positionSprite;
-        item.transform.localScale = new Vector3(8, 8, 8);
+        item.transform.localScale = new Vector3(9, 9, 9);
         RpcSynchroSprite(item, positionSprite);
         Debug.Log(positionSprite.ToString() + "FINAL");  
     }
@@ -309,7 +309,7 @@ public class ScriptOeufMystère : NetworkBehaviour
     {
         Debug.Log(positionVrai.ToString() + "DANS LE RPC");  //CA MARQUE 0,0,0
         item.transform.localPosition = positionVrai; //  NE MARCHE PAS
-        item.transform.localScale = new Vector3(8,8,8);  //  MARCHE PI LA ROTATION EST OK AUSSI
+        item.transform.localScale = new Vector3(9,9,9);  //  MARCHE PI LA ROTATION EST OK AUSSI
     }
 
     void OnIndiceChange(int changement)

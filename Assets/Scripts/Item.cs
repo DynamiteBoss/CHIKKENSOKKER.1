@@ -44,6 +44,9 @@ public class Item
                 return new Item("OeufBrouilléSprite", (GameObject)Resources.Load("Prefab/OeufBrouilléSprite"));
             case 15:
                 return new Item("VersDeTerreSprite", (GameObject)Resources.Load("Prefab/VersDeTerreSprite"));
+            case 16:
+                return new Item("ZoneExplosion", (GameObject)Resources.Load("Prefab/ZoneExplosion"));
+
             default:
                 return null;
             }
