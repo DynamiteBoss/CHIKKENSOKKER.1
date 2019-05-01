@@ -252,7 +252,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
             balle.GetComponent<PlacerBalle>().estPlacer = false;
             balle.GetComponent<SphereCollider>().enabled = true;
            
-            balle.GetComponent<PlacerBalle>().positionJouer = transform.transform.position;
+            balle.GetComponent<PlacerBalle>().positionJouer = transform.position;
             balle.GetComponent<PlacerBalle>().enabled = true;
             Invoke("AttendreDistance", 0.1f);
 

@@ -88,16 +88,16 @@ public class ScriptMouvementAI : NetworkBehaviour
         PositionDéfenseActuelle = new Vector3();
         TabJoueurs = GameObject.FindGameObjectsWithTag("Player");
         TabAI = GameObject.FindGameObjectsWithTag("AI");
-        /*
-        if (GameObject.FindGameObjectsWithTag("Gardien").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.gameObject.GetComponent<TypeÉquipe>()) != null)
+        GameObject[] liste = GameObject.FindGameObjectsWithTag("Gardien");
+        foreach(GameObject x in liste)
         {
-            GardienAllié = GameObject.FindGameObjectsWithTag("Gardien").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.gameObject.GetComponent<TypeÉquipe>()).First();
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA == GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                GardienAllié = x;
+            }
         }
-        else
-        {
-            GardienAllié = GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == gameObject.GetComponent<TypeÉquipe>().estÉquipeA).First();
-        }
-        */
+       
+        
        
         TabTous = TabJoueurs.Concat(TabAI).ToArray();
         ListeJoueursA = new List<GameObject>();
