@@ -55,6 +55,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     float volume;
 
     float frequenceObjet = 1200f/*1200f*/;
+    float frequenceObjetV = 1200f;
 
     [SerializeField]
     const int NbFramesUpdate = 10;
@@ -367,7 +368,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                             modeNuitLocal = EstEnModeNuit;
                             ajusteLumiere = true;
                         }
-                        if (compteur2 >= frequenceObjet)
+                        if (compteur2 >= frequenceObjetV)
                         {
                             compteur2 = 0;
                             CmdFaireApparaitreObjet();
@@ -574,12 +575,11 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     [Command]
     public void CmdFaireApparaitreObjet()
     {
-        RpcFaireApparaitreObjet();
+        FaireApparaitreObjet();
     }
 
 
-    [ClientRpc]
-    public void RpcFaireApparaitreObjet()
+    public void FaireApparaitreObjet()
     {
         Vector3 positionObj = new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ));
         if (nbOeufs < NbOeufMax)
