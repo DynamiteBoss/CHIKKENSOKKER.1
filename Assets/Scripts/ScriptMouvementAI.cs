@@ -50,6 +50,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     const int LIMITE_BAS = -17;
     const int LIMITE_GAUCHE = -39;
     const int LIMITE_DROITE = 39;
+    Vector3 milieuBut = new Vector3(-44, 0, 0);
 
     const float VitDeplacement = 7.5f;
     // Start is called before the first frame update
@@ -213,7 +214,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 if (EstDansPérimètre(Balle.transform.parent.transform, PositionDéfenseActuelle))
                 {
-                    posCible = PositionDéfenseActuelle;
+                    posCible = ((milieuBut*constÉquipe) - Balle.transform.parent.position).normalized * 1 * ((milieuBut * constÉquipe) - Balle.transform.parent.position).magnitude / 3 + Balle.transform.parent.position;
                 }
                 else// ATTAQUANT QUI EST SEUL DANS LA ZONE DU DEFENSEUR
                 {
