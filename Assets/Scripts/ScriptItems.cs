@@ -65,12 +65,12 @@ public class ScriptItems : NetworkBehaviour
         }
 
         // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
-        if (Input.GetKeyDown("r") && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
+        if ((Input.GetKeyDown("r") || Input.GetButtonDown("SquareBtn1")) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
         { 
             CmdFaireOpérationJoueur();
         }
         // VRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 2
-        if (Input.GetKeyDown(KeyCode.Keypad1) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2") && isLocalPlayer)
+        if ((Input.GetKeyDown(KeyCode.Keypad0) || Input.GetButtonDown("SquareBtn2")) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur2") && isLocalPlayer)
         {
             CmdFaireOpérationJoueur();
         }
