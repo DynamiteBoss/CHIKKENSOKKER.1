@@ -50,6 +50,7 @@ public class ScriptMouvementAI : NetworkBehaviour
     const int LIMITE_BAS = -17;
     const int LIMITE_GAUCHE = -39;
     const int LIMITE_DROITE = 39;
+    Vector3 milieuBut = new Vector3(-44, 0, 0);
 
     const float VitDeplacement = 7.5f;
     // Start is called before the first frame update
@@ -87,16 +88,16 @@ public class ScriptMouvementAI : NetworkBehaviour
         PositionDéfenseActuelle = new Vector3();
         TabJoueurs = GameObject.FindGameObjectsWithTag("Player");
         TabAI = GameObject.FindGameObjectsWithTag("AI");
-        /*
-        if (GameObject.FindGameObjectsWithTag("Gardien").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.gameObject.GetComponent<TypeÉquipe>()) != null)
+        GameObject[] liste = GameObject.FindGameObjectsWithTag("Gardien");
+        foreach(GameObject x in liste)
         {
-            GardienAllié = GameObject.FindGameObjectsWithTag("Gardien").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.gameObject.GetComponent<TypeÉquipe>()).First();
+            if(x.GetComponent<TypeÉquipe>().estÉquipeA == GetComponent<TypeÉquipe>().estÉquipeA)
+            {
+                GardienAllié = x;
+            }
         }
-        else
-        {
-            GardienAllié = GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == gameObject.GetComponent<TypeÉquipe>().estÉquipeA).First();
-        }
-        */
+       
+        
        
         TabTous = TabJoueurs.Concat(TabAI).ToArray();
         ListeJoueursA = new List<GameObject>();
@@ -206,8 +207,6 @@ public class ScriptMouvementAI : NetworkBehaviour
     private Vector3 GérerPositionsDef()
     {
         Vector3 posCible = new Vector3();
-        float décallageBalle = 0;
-        float xÉxceptionConst = -1;
         if (Balle.transform.parent != null)
         {
             PosBalleTerrain = Balle.transform.parent.GetComponent<Transform>().position;
@@ -215,26 +214,18 @@ public class ScriptMouvementAI : NetworkBehaviour
             {
                 if (EstDansPérimètre(Balle.transform.parent.transform, PositionDéfenseActuelle))
                 {
-                    posCible = PositionDéfenseActuelle;
+                    posCible = ((milieuBut*constÉquipe) - Balle.transform.parent.position).normalized * 1 * ((milieuBut * constÉquipe) - Balle.transform.parent.position).magnitude / 3 + Balle.transform.parent.position;
                 }
-                else
+                else// ATTAQUANT QUI EST SEUL DANS LA ZONE DU DEFENSEUR
                 {
-                    posCible = PositionDéfenseActuelle;
-                    //posCible = (TrouverAttaquantProche().transform.position - GardienAllié.transform.position).normalized * 2*(this.transform.position - GardienAllié.transform.position).magnitude/3 + GardienAllié.transform.position;
+                    //posCible = PositionDéfenseActuelle;
+                    posCible = (TrouverAttaquantProche().transform.position - Balle.transform.parent.position).normalized * 2*(TrouverAttaquantProche().transform.position - Balle.transform.parent.position).magnitude/3 + Balle.transform.parent.position;
                 }
             }
             else
             {
-                //if (Math.Abs(PosBalleTerrain.x) < DÉCALLAGE_DEMI_TERRAIN)
-                //{
-                    posCible.x = PositionDéfenseActuelle.x + (/*xÉxceptionConst * */(PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe)) * 0.5f);
-                //}
-                //else
-                //{
-                //    posCible.x = PositionDéfenseActuelle.x + (PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe) * 0.5f);
-                //}
+                posCible.x = PositionDéfenseActuelle.x + ((PosBalleTerrain.x + (DÉCALLAGE_DEMI_TERRAIN * constÉquipe)) * 0.5f);
                 posCible.z = PositionDéfenseActuelle.z + (PosBalleTerrain.z * 0.5f);
-                //posCible = PositionDéfenseActuelle;
             }
         }
         return posCible;
@@ -329,25 +320,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         }
     }
 
-    //private Vector3 GérerComportementDef()              //       À MODIFIER
-    //{
-    //    //return new Vector3(-20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-    //    switch (TrouverComportementDéfense())
-    //    {
-    //        case 1:
-
-    //        case 2:
-
-    //            break;
-    //        case 3:
-    //            return GérerComportementDef();
-    //            break;
-    //        case 4:
-    //            return new Vector3(20 * (-constÉquipe) + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-
-    //            break;
-    //    }
-    //}
+   
     private Vector3 GérerPositionsAtt()              //       À MODIFIER
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
