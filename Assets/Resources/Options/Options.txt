@@ -1,10 +1,10 @@
 FréqObj : 
-0.1768281
+0.5
 NbMaxObj : 
 3
 FréqPluie : 
-0.2672194
+0.5
 FréqOrage : 
-0.2136523
+0.5
 VolumeSon : 
-0.7356111
+1
