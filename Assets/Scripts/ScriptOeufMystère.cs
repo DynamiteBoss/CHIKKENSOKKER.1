@@ -18,7 +18,8 @@ public class ScriptOeufMystère : NetworkBehaviour
     public const int IndiceMax = 8;
 
     void Start()
-    {    
+    {
+
     }
 
     void Update()
@@ -28,24 +29,21 @@ public class ScriptOeufMystère : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        Destroy(this.transform.gameObject);
+        GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;
+        indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
+        indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
         if (other.name == "Tête" && other.transform.parent.parent.tag == "Player")
         {
-            Destroy(this.transform.gameObject);
-            GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
             //int random = UnityEngine.Random.Range(0, IndiceMax);
-            indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
             //indice = UnityEngine.Random.Range(0, IndiceMax);
             CmdAttribuerObjetJoueur(other.transform.parent.parent.gameObject, indice);    
         }
         else if ((other.name == "ZoneContrôle" || other.name == "ZonePlacage" || other.name == "Corps") && other.transform.parent.tag == "Player")
         {
-            Destroy(this.transform.gameObject);
-            GameObject.Find("Main Camera").GetComponent<ScriptMécaniqueMatch>().nbOeufs -= 1;
             //GetComponent<NetworkIdentity>().AssignClientAuthority(this.GetComponent<NetworkIdentity>().connectionToClient);
             //int random = UnityEngine.Random.Range(0, IndiceMax);
-            indice = GameObject.FindGameObjectWithTag("Balle").GetComponent<ScriptBut>().random;
             //ndice = UnityEngine.Random.Range(0, IndiceMax);
             CmdAttribuerObjetJoueur(other.transform.parent.gameObject, indice);
         }

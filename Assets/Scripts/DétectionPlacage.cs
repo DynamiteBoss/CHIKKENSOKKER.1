@@ -9,10 +9,11 @@ public class DétectionPlacage : NetworkBehaviour
     GameObject Balle { get; set; }
     public bool estEnPlacage = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        JoueurÀPlaquer = this.transform.parent.GetComponent<ActionsPlayerV2>().JoueurÀPlaquer;
-        Balle = this.transform.parent.GetComponent<ActionsPlayerV2>().Balle;
+
+        //JoueurÀPlaquer = this.transform.parent.GetComponent<ActionsPlayerV2>().JoueurÀPlaquer == null ? null : this.transform.parent.GetComponent<ActionsPlayerV2>().JoueurÀPlaquer;
+        //Balle = this.transform.parent.GetComponent<ActionsPlayerV2>().Balle;
     }
 
     // Update is called once per frame

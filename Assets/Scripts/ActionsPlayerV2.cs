@@ -374,7 +374,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         yield return new WaitForSeconds(2 * durée / 3);
         this.transform.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon
         this.GetComponent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player
-        this.transform.GetComponent<Rigidbody>().isKinematic = true;
+        this.transform.GetComponent<Rigidbody>().isKinematic = !(this.transform.GetComponent<MouvementPlayer>().modePluie | this.transform.GetComponent<MouvementPlayer>().modeGlace);
         this.transform.Find("Corps").transform.GetComponent<Rigidbody>().isKinematic = true;
         //this.transform.Find("Corps").transform.rotation = Quaternion.identity;
 
@@ -391,7 +391,7 @@ public class ActionsPlayerV2 : NetworkBehaviour
         yield return new WaitForSeconds(2 * durée / 3);
         JoueurÀPlaquer.GetComponentInChildren<ContrôleBallonV2>().enabled = true;    //réactiver le controle du ballon du player attaqué
         JoueurÀPlaquer.GetComponent<MouvementPlayer>().enabled = true;    //réactiver le mouvement du player attaqués
-        JoueurÀPlaquer.GetComponent<Rigidbody>().isKinematic = true;
+        JoueurÀPlaquer.GetComponent<Rigidbody>().isKinematic = !(this.transform.GetComponent<MouvementPlayer>().modePluie | this.transform.GetComponent<MouvementPlayer>().modeGlace);
     }
     private void FrapperAdversaire()
     {
