@@ -39,11 +39,6 @@ public class ActionsPlayerV2 : NetworkBehaviour
         ZonePlacage = this.transform.Find("ZonePlacage");
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
     }
-    private void Awake()
-    {
-        //FaireRencensementJoueurs();
-        //TrouverPosJoueursÉquipe();
-    }
     void Update()
     {
         float direction = this.transform.eulerAngles.y / 180f * Mathf.PI;
@@ -53,23 +48,6 @@ public class ActionsPlayerV2 : NetworkBehaviour
         {
             return;
         }
-
-        /*
-                if (cpt2 % 10 == 0)
-                {
-                    if (cpt2 == 150)
-                    {
-                        FaireRencensementJoueurs();
-                        cpt2 = 0;
-                    }
-                    TrouverPosJoueursÉquipe();
-                }
-                else if (cpt2 % 25 == 0)
-                {
-                    RetirerJoueurPossessionBallon();    //<-------------    REVOIR CECI (2019/03/20 13:45)
-                }
-                ++cpt2;
-                */
         possessionBallon = this.transform.Find("Balle");
         compteur += Time.deltaTime;
 
