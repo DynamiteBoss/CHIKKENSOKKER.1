@@ -22,14 +22,14 @@ public class ContrôleGardien : MonoBehaviour
     string Nom { get; set; }
     GameObject Balle { get; set; }
     Vector3 PositionBalle { get; set; }
-    // Start is called before the first frame update
+
     void Start()
     {
         Balle = GameObject.FindGameObjectWithTag("Balle");
         Nom = name;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         float positionGardienz = transform.position.z;
