@@ -18,51 +18,7 @@ public class ScriptItems : NetworkBehaviour
             return;
         }
             
-
         framesDélai++;
-        //if (isLocalPlayer && tag == "Player")
-        //{
-        //    if (Input.GetKeyDown("1") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(0, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("2") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(1, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("3") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(2, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("4") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(3, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("5") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(4, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("6") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(5, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("7") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(6, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //    if (Input.GetKeyDown("8") && framesDélai > 60)
-        //    {
-        //        CmdInstancierItem(7, this.transform.position);  // ITEM 0 TEMPORAIRE
-        //        framesDélai = 0;
-        //    }
-        //}
 
         // vRAI COMMANDE AVEC LE VRAI BOUTON POUR LE JOUEUR 1
         if ((Input.GetKeyDown("r") || Input.GetButtonDown("SquareBtn1")) && framesDélai > 60 && this.transform.gameObject.name.StartsWith("Joueur1") && isLocalPlayer)
@@ -75,26 +31,11 @@ public class ScriptItems : NetworkBehaviour
             CmdFaireOpérationJoueur();
         }
     }
+
+    //utliser un item.  Enlever la valeur de l'item si item 1 et mettre la valeur de l'item 2 dans l'item 1 si c'est l'item 2 qui a été utilisé, ensuite enlever la valeur de l'item 1
     [Command]
     private void CmdFaireOpérationJoueur()
     {
-        /*string équipe;
-        if(GetComponent<TypeÉquipe>().estÉquipeA)
-        {
-            if (Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
-            {
-                Debug.Log("A");
-                équipe = "A";
-            }
-        }
-        else
-        {
-            if (Inventaire.itemB1 < Inventaire.ITEMNUL && Inventaire.itemB1 >= 0)
-            {
-                Debug.Log("B");
-                équipe = "B";
-            }
-        }*/
         if (GetComponent<TypeÉquipe>().estÉquipeA && Inventaire.itemA1 < Inventaire.ITEMNUL && Inventaire.itemA1 >= 0)
         {
             CmdInstancierItem(Inventaire.itemA1, this.transform.position);
@@ -135,8 +76,9 @@ public class ScriptItems : NetworkBehaviour
         }
     }
 
+    // même chose que les items, mais avec les sprites (voir comm à la ligne 35, en haut de CmdFaireOpérationJoueur)
     [Command]
-    private void CmdModifierSprite(int position, char équipe)  //CA MARCHE PAS
+    private void CmdModifierSprite(int position, char équipe) 
     {
         RpcModifierSprite(position, équipe);
     }
@@ -210,16 +152,11 @@ public class ScriptItems : NetworkBehaviour
         }
     }
 
-    //[Command]
-    //public void CmdInstancierItem(int indiceItem, Vector3 position)  // CA MARCHE 
-    //{
-    //    RpcInstancierItem(indiceItem, position);
-    //    Debug.Log(string.Format("Instanciation de l'item {0} par {1}", Inventaire.EnTexte(indiceItem), isLocalPlayer? "leu joueur local" : "leu client"));
-    //}
+    //instancier un certain item à une certaine position et le spawner dans le serveur
+    //faire l'effet de l'item (lui donner une force, une vitesse, un effet, etc
     [Command]
     private void CmdInstancierItem(int indiceItem, Vector3 position)
     {
-        Debug.Log("Instanciaton de l'item" + Inventaire.EnTexte(indiceItem) + "à la position " + position.ToString());
         switch (indiceItem)
         {
             case 0:
