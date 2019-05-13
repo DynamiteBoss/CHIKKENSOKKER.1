@@ -12,8 +12,7 @@ public class DétectionPlacage : NetworkBehaviour
     void Awake()
     {
 
-        //JoueurÀPlaquer = this.transform.parent.GetComponent<ActionsPlayerV2>().JoueurÀPlaquer == null ? null : this.transform.parent.GetComponent<ActionsPlayerV2>().JoueurÀPlaquer;
-        //Balle = this.transform.parent.GetComponent<ActionsPlayerV2>().Balle;
+        
     }
 
     // Update is called once per frame
@@ -23,8 +22,7 @@ public class DétectionPlacage : NetworkBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //ca marche pas parce que ca appelle ce fonction la quan nimporte quoi touche a la zone de placage
-        //faut genre mettre le OnTriggerEnter dans le CmdFairePlacage ou le FrapperAdversaire
+       
         if(estEnPlacage)
         if ((other.transform.parent.tag == "Player" || other.transform.parent.tag == "AI") && other.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA != this.transform.parent.GetComponent<TypeÉquipe>().estÉquipeA && other.transform.parent.gameObject != this.transform.parent.gameObject)
         {

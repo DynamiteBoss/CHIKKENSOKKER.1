@@ -118,33 +118,14 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             frequenceObjet = FrequenceObjetMax - FrequenceObjetMax * frequenceObjet + FrequenceObjetMin;
         }
-        /*
-        Musique = this.GetComponentInChildren<AudioSource>();
-        Musique.volume = volume;
-        GetComponent<GestionAudio>().FaireJouerMusique(Musique);*/
-
-
-        //TEMPORAIRE
-        //GameObject OeufHasard = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
-        //GameObject OeufHasard2 = (GameObject)Instantiate((GameObject)Resources.Load("Prefab/Item"), new Vector3(UnityEngine.Random.Range(-DimTerrainX, DimTerrainX), 1, UnityEngine.Random.Range(-DimTerrainZ, DimTerrainZ)), Quaternion.identity);
-        //nbOeufs += 2;
-        //TEMPORAIRE
+     
 
         Balle = GameObject.FindGameObjectWithTag("Balle");
 
         PnlFin = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlFin").gameObject;
         TxtFin = PnlFin.transform.Find("TxtFin").gameObject.GetComponentInChildren<Text>();
 
-        //timer = DuréeMatch;
-        //if()
-        //{
-        //    timer = DuréeMatch;
-        //}
-        //timer = DuréeMatch;
-        //if (isServer && isLocalPlayer)
-        //{
-        //    timer = DuréeMatch;
-        //}
+       
 
 
         TxtTimer = GameObject.Find("Interface").transform.Find("PnlPrincipal").transform.Find("PnlScore").transform.Find("Temps").gameObject.GetComponentInChildren<Text>();
@@ -203,7 +184,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         {
             x.transform.position = GameObject.Find("SpawnPoint" + compteurSpawn).transform.position + Vector3.up;
             compteurSpawn++;
-            //TxtFin.text = compteurSpawn.ToString();
+           
         }
 
         foreach (GameObject x in listeB)
@@ -354,9 +335,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
                     {
                         compteur4 = 0;
                         CmdChoisirNombre();
-                        //évenement = Balle.GetComponent<ScriptBut>().randomEvent;
-                        //Balle.GetComponent<GénérerChiffreAléatoire>().RpcCréerAléatoire();
-                        //évenement = Balle.GetComponent<GénérerChiffreAléatoire>().aléatoire;
+                        
                         CmdChoisirEvent();
                         
                     }
@@ -468,50 +447,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
     void CmdChoisirEvent()
     {
         RpcChoisirEvent();
-        /*
-        enEvent = true;
-         évenement = UnityEngine.Random.Range(0, 3);
-        
-        GameObject[] listeCatégorie = new GameObject[10];
-        List<GameObject> liste = new List<GameObject>();
-
-        foreach (string x in tags)
-        {
-            listeCatégorie = GameObject.FindGameObjectsWithTag(x);
-            {
-                foreach (GameObject y in listeCatégorie)
-                {
-                    liste.Add(y);
-                }
-            }
-        }
-     
-        
-        switch (évenement)
-        {
-            case 0:
-                foreach (GameObject z in liste)
-                {
-                    z.GetComponent<MouvementPlayer>().modePluie = true;
-                    z.GetComponent<Rigidbody>().isKinematic = false;
-                    z.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = false;
-                }
-                break;
-
-            case 1:
-                foreach (GameObject z in liste)
-                {
-                    z.GetComponent<MouvementPlayer>().modeGlace = true;
-                    z.GetComponent<Rigidbody>().isKinematic = false;
-                    z.transform.Find("Corps").GetComponent<Rigidbody>().isKinematic = false;
-                }
-                break;
-
-            case 2:
-                EstEnModeNuit = true;
-                break;
-        }
-        */
+       
     }
     [ClientRpc]
     void RpcChoisirEvent()
@@ -642,11 +578,11 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
 
 
 
-        //GetComponent<ScriptMenuPause>().DésactiverMouvement();
+        
     }
     void AjusterModeNuit()
     {
-        List<GameObject> liste1 = GameObject.FindGameObjectsWithTag("Player")/*.OrderBy(x => int.Parse(x.name[9].ToString()))*/.ToList();
+        List<GameObject> liste1 = GameObject.FindGameObjectsWithTag("Player").ToList();
         
         GameObject[] listeCatégorie = new GameObject[10];
         List<GameObject> liste = new List<GameObject>();
@@ -683,7 +619,7 @@ public class ScriptMécaniqueMatch : NetworkBehaviour
         if (LumierePrincipale.intensity >= 1 || LumierePrincipale.intensity <= 0)
         {
             ajusteLumiere = false;
-            //PnlNuit.SetActive(EstEnModeNuit);
+           
             for (int i = 0; i < liste.Count; i++)
             {
                 liste[i].GetComponentInChildren<Light>().intensity = EstEnModeNuit ? 100 : 0;

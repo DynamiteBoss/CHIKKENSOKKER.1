@@ -10,10 +10,7 @@ public class GestionAudio : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*if (Parent)
-            Son = Parent.GetComponentInChildren<AudioSource>();
-        else
-            Son = this.transform.GetComponentInChildren<AudioSource>();*/
+     
     }
 
     public void FaireJouerSon(AudioSource Son)

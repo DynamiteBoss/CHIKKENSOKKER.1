@@ -200,7 +200,7 @@ public class ScriptGestionOpts : MonoBehaviour
         string[] noms = Input.GetJoystickNames();
         for (int x = 0; x < noms.Length; x++)
         {
-            Debug.Log(noms[x].Length);
+         
             if (noms[x].Length == 19)
             {
                 PS4_Controller += 1;

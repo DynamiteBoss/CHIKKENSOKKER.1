@@ -17,7 +17,7 @@ public class GestionLimiteTerrain : NetworkBehaviour
         if(transform.position.x > 42|| transform.position.x <-42 ||
            transform.position.z > 20 || transform.position.z < -20)
         {
-            //transform.position = new Vector3(0, -1, 0);
+           
         }
     }
 }

@@ -60,13 +60,7 @@ public class ScriptBut : NetworkBehaviour
         if (other.tag == "But" && compteur >= TEMPS_MIN)
         {
             butEffectuer = true;
-            /*Ballon = this.gameObject;
-            GameObject[] liste = new GameObject[10];
-            List<GameObject> liste1 = new List<GameObject>();
-            compteur = 0;
-            Ballon.transform.position = new Vector3(1, 0.5f, 5);
-            Ballon.GetComponent<Rigidbody>().isKinematic = true;
-            Ballon.transform.parent = null;*/
+           
 
             if (other.name == NomBut1)
                 ++NbButsB;
@@ -74,14 +68,10 @@ public class ScriptBut : NetworkBehaviour
                 ++NbButsA;
 
             score = NbButsB.ToString() + "  -  " + NbButsA.ToString();
-            /*
-            compteur = 0;
-            enPause = true;
-            PlacerJoueur(liste1,liste);
-            Invoke("RéactiverMouvement", 1f);*/
+           
         }
 
-        // Ajouter un "Point" à l'équipe 1
+        
     }
     
     void PlacerJoueur(List<GameObject> liste1, GameObject[] liste)
@@ -175,12 +165,12 @@ public class ScriptBut : NetworkBehaviour
     void OnButChangeA(int but)
     {
         NbButsA = but;
-       // InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
+      
     }
     void OnButChangeB(int but)
     {
         NbButsB = but;
-       // InterfaceScore.text = (NbButsB).ToString() + "  -  " + (NbButsA).ToString();
+    
     }
     void OnRandomChangeB(int changement)
     {

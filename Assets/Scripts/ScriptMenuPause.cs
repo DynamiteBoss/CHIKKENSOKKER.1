@@ -63,49 +63,7 @@ public class ScriptMenuPause : NetworkBehaviour
     public void CmdDésactiverMouvement()
     {
         RpcDésactiverMouvement();
-        /*
-        foreach(string x in tags)
-        {
-            liste = GameObject.FindGameObjectsWithTag(x);
-            foreach(GameObject z in liste)
-            {
-                listeCommune.Add(z);
-            }
-        }
-        foreach(GameObject x in listeCommune)
-        {
-            x.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            x.GetComponent<ContrôleBallonV2>().enabled = false;
-            if(x.tag == tags[0])
-            {
-                x.GetComponent<MouvementPlayer>().enabled = false;
-            }
-            else if(x.tag == tags[1])
-            {
-                x.GetComponent<ScriptMouvementAI>().enabled = false;
-            }
-            else if(x.tag == tags[2])
-            {
-                x.GetComponent<ContrôleGardien>().enabled = false;
-            }
-        }
-        velocité = Balle.GetComponent<Rigidbody>().velocity;
-        angularVelocité = Balle.GetComponent<Rigidbody>().angularVelocity;
-
-        Balle.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        Balle.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-
-        
-        /*
-        for (int i = 0; i < JoueursPhysiques.Length; i++)
-        {
-            JoueursPhysiques[i].GetComponentInChildren<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            JoueursPhysiques[i].transform.Find("ZoneContrôle").gameObject.SetActive(false);
-            JoueursPhysiques[i].GetComponentInChildren<MouvementPlayer>().enabled = false;
-
-        }
-        */
+       
     }
     [ClientRpc]
     void RpcDésactiverMouvement()
@@ -145,43 +103,7 @@ public class ScriptMenuPause : NetworkBehaviour
     public void CmdRéactiverMouvement()
     {
         RpcRéactiverMouvement();
-        /*
-        foreach (string x in tags)
-        {
-            liste = GameObject.FindGameObjectsWithTag(x);
-            foreach (GameObject z in liste)
-            {
-                listeCommune.Add(z);
-            }
-        }
-        foreach (GameObject x in listeCommune)
-        {
-            x.GetComponent<ContrôleBallonV2>().enabled = true;
-            x.GetComponent<Rigidbody>().constraints = (RigidbodyConstraints)116;
-            if (x.tag == tags[0])
-            {
-                x.GetComponent<MouvementPlayer>().enabled = true;
-            }
-            else if (x.tag == tags[1])
-            {
-                x.GetComponent<ScriptMouvementAI>().enabled = true;
-            }
-            else if (x.tag == tags[2])
-            {
-                x.GetComponent<ContrôleGardien>().enabled = true;
-            }
-        }
-        Balle.GetComponent<Rigidbody>().velocity = velocité;
-        Balle.GetComponent<Rigidbody>().angularVelocity = angularVelocité;
-        /*
-        for (int i = 0; i < JoueursPhysiques.Length; i++)
-        {
-            JoueursPhysiques[i].GetComponentInChildren<Rigidbody>().constraints = (RigidbodyConstraints)116;
-            
-            JoueursPhysiques[i].transform.Find("ZoneContrôle").gameObject.SetActive(true);
-            JoueursPhysiques[i].GetComponent<MouvementPlayer>().enabled = true;
-        }
-        */
+       
     }
     [ClientRpc]
     void RpcRéactiverMouvement()
@@ -278,22 +200,12 @@ public class ScriptMenuPause : NetworkBehaviour
                 if (!menuOuvert)
                 {
                     CmdOuverturePause();
-                    /*
-                    SceneManager.LoadSceneAsync("SceneMenuPause", LoadSceneMode.Additive);
-                    menuOuvert = true;
-                    peutOuvrirMenu = false;
-                    DésactiverMouvement();
-                    enPause = true;*/
+                   
                 }
                 else
                 {
                     CmdFermeturePause();
-                    /*
-                    SceneManager.UnloadSceneAsync("SceneMenuPause");
-                    menuOuvert = false;
-                    peutOuvrirMenu = false;
-                    RéactiverMouvement();
-                    enPause = false;*/
+                   
                 }
             }
         }

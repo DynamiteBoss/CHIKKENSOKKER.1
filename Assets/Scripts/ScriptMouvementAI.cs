@@ -75,7 +75,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             positionTactique = new Vector3(-7 * constÉquipe, 0, -5);
         }
-        //Debug.Log(noComportement);
+      
 
 
         TrouverPositionDefDeBase();
@@ -113,7 +113,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         Ballon = GameObject.FindGameObjectWithTag("Balle").GetComponentInChildren<Rigidbody>();
         But = GameObject.Find("But1");  //changer pour le but à rechercher
         noComportement = int.Parse(this.name[this.name.Length - 2].ToString());
-        Debug.Log(noComportement);
+        
     }
     private void TrouverPositionDefDeBase()
     {
@@ -149,11 +149,7 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             positionTactique = new Vector3(-7 * constÉquipe, 0, -5);
         }
-        //Debug.Log(noComportement);
-
-
-       // TrouverPositionDefDeBase();
-        // PositionDéfenseFill = new Vector3(10 - DÉCALLAGE_DEMI_TERRAIN * constÉquipe, transform.position.y, -10);
+       
 
         ++compteurFrames;
         DéplacerJoueur();
@@ -163,10 +159,8 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             compteurFrames = 0;
             PointÀAller = TrouverPointDéplacement(TrouverCorportementDéplacement());
-            Debug.DrawLine(this.transform.position + Vector3.up, PointÀAller, Color.gray, 17f / 60f);
-            /*
-            Debug.Log(TrouverCorportementDéplacement());
-            */
+           
+           
         }
     }
     private Vector3 TrouverPointDéplacement(string comportement)
@@ -218,7 +212,7 @@ public class ScriptMouvementAI : NetworkBehaviour
                 }
                 else// ATTAQUANT QUI EST SEUL DANS LA ZONE DU DEFENSEUR
                 {
-                    //posCible = PositionDéfenseActuelle;
+                    
                     posCible = (TrouverAttaquantProche().transform.position - Balle.transform.parent.position).normalized * 2*(TrouverAttaquantProche().transform.position - Balle.transform.parent.position).magnitude/3 + Balle.transform.parent.position;
                 }
             }
@@ -232,14 +226,11 @@ public class ScriptMouvementAI : NetworkBehaviour
     }
 
 
-    //private Vector3 DéterminerPositionBaseActuelleDéfense()
-    //{
-
-    //}
+  
 
     private void DéterminerPosRevenir()
     {
-        //PositionDéfenseDéfaut = posCible;
+        
         Vector3 posCible = new Vector3();
         foreach (GameObject x in TabTous)
         {
@@ -314,25 +305,21 @@ public class ScriptMouvementAI : NetworkBehaviour
         {
             this.transform.GetComponentInChildren<ActionsPlayerV2>().enabled = true;
             this.transform.GetComponentInChildren<MouvementPlayer>().enabled = true;
-            //this.transform.GetComponentInChildren<MouvementManette>().enabled = true;
+            
             this.enabled = false;
             Ballon.isKinematic = true;
         }
     }
 
    
-    private Vector3 GérerPositionsAtt()              //       À MODIFIER
+    private Vector3 GérerPositionsAtt()             
     {
         GameObject balle = GameObject.FindGameObjectWithTag("Balle");
         if (balle.GetComponent<PlacerBalle>().estPlacer)
         {
             PointÀAller = balle.transform.parent.transform.position;
-            //return new Vector3(20 * constÉquipe + UnityEngine.Random.Range(-5f, 5f), this.transform.position.y, this.transform.position.z);
-
-
-            /*PointÀAller = (GameObject.FindGameObjectsWithTag("Player").Where(x => x.GetComponent<TypeÉquipe>().estÉquipeA == this.transform.GetComponent<TypeÉquipe>().estÉquipeA)
-                .OrderByDescending(x => x.transform.position.x * constÉquipe).First().transform.position);*/
-            PointÀAller += (positionTactique + new Vector3(constÉquipe /** (10/PointÀAller.x)*/, 0, 0));
+           
+            PointÀAller += (positionTactique + new Vector3(constÉquipe, 0, 0));
 
 
             VérifierCible();
@@ -437,14 +424,7 @@ public class ScriptMouvementAI : NetworkBehaviour
             this.transform.LookAt(new Vector3(orientation.x, this.transform.position.y, orientation.z));
         }
 
-        //if (!aLeBallon)
-        //{
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Ballon.transform.position - this.transform.position), 0.1f);
-        //}
-        //else
-        //{
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(But.transform.position - this.transform.position), 0.1f);
-        //}
+      
     }
 
     private void TirerBallon()
@@ -459,12 +439,7 @@ public class ScriptMouvementAI : NetworkBehaviour
 
     private void CalculerNouvellePosition()
     {
-        //  Soit:
-        // - "PosAllié_BalleAllié"
-        // - "PosAllié_BalleEnnemie"
-        // - "PosEnnemie_BalleAlliée"
-        // - "PosEnnemie_BalleEnnemie"
-        // En fonction de la position du ballon
+       
         PointÀAller = new Vector3(Ballon.position.x, this.transform.position.y, Ballon.position.z);
     }
 
@@ -485,16 +460,13 @@ public class ScriptMouvementAI : NetworkBehaviour
 
                 break;
             default:
-                /*if (Ballon.velocity.magnitude <= 2)
-                    PointÀAller = Ballon.position;
-                else*/
-                //PointÀAller = new Vector3(PointÀAller.x + UnityEngine.Random.Range(-deltaPosition, deltaPosition), PointÀAller.y, PointÀAller.z + UnityEngine.Random.Range(-deltaPosition, deltaPosition));
+               
 
                 this.transform.position += (PointÀAller - this.transform.position).normalized * Time.deltaTime * déplacementParSeconde;
 
                 break;
         }
-        //BougerJoueur();
+       
 
     }
 

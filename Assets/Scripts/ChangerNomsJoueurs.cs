@@ -28,14 +28,8 @@ public class ChangerNomsJoueurs : NetworkBehaviour
 
     // Update is called once per frame
     void Update()
-    {/*
-        Player = GameObject.FindGameObjectsWithTag("Player");
-        Gardien = GameObject.FindGameObjectsWithTag("Gardien");
-        AI = GameObject.FindGameObjectsWithTag("AI");
+    {
 
-        ChangerName("Joueur", cmptJA, cmptJB, Player);
-        ChangerName("Gardien", cmptGA, cmptGB, Gardien);
-        ChangerName("AI", cmptAIA, cmptAIB, AI);*/
     }
 
    
@@ -55,24 +49,8 @@ public class ChangerNomsJoueurs : NetworkBehaviour
             }
         }
     }
-    //RpcChangerName(nom, cmpt1, cmpt2, liste);
-    [ClientRpc]
-    void RpcChangerName(string nom, int cmpt1, int cmpt2, GameObject[] liste)
-    {
-        foreach (GameObject x in liste)
-        {
-            if (x.GetComponent<TypeÉquipe>().estÉquipeA)
-            {
-                x.transform.name = nom + cmpt1 + "A";
-                cmpt1++;
-            }
-            else
-            {
-                x.transform.name = nom + cmpt2 + "B";
-                cmpt2++;
-            }
-        }
-    }
+  
+   
 }
   
     

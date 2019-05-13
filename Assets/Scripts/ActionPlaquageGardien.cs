@@ -41,10 +41,6 @@ public class ActionPlaquageGardien : MonoBehaviour
 
                     JoueurÀPlaquer = Joueur;
                     compteur = 0;
-                    //estEnMouvementPlacage = true;
-                    //CmdFairePlacage();
-                    //FrapperAdversaire();
-                    //estEnMouvementPlacage = false;
                     
                 }
             }
@@ -73,7 +69,7 @@ public class ActionPlaquageGardien : MonoBehaviour
         }
         else
         {
-            //JoueurÀPlaquer.GetComponentInChildren<Rigidbody>().AddForce(new Vector3(JoueurÀPlaquer.transform.position.x - this.transform.parent.position.x, 0, JoueurÀPlaquer.transform.position.z - this.transform.parent.position.z).normalized * 10f, ForceMode.Impulse);
+            
             JoueurÀPlaquer.GetComponent<Rigidbody>().AddForce(Mathf.Sin(direction) * 30, 0, Mathf.Cos(direction) * 30, ForceMode.Impulse);
 
             StartCoroutine(AttendreDéactivationScriptPlaqué(1.1f, direction));

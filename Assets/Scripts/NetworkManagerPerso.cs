@@ -23,8 +23,7 @@ public class NetworkManagerPerso : NetworkManager
 
     public bool est1v1 = false;
 
-    public Équipe ÉquipeA { get; set; }
-    public Équipe ÉquipeB { get; set; }
+ 
 
 
     public ÉquipeV2 ÉquipeAV2 { get; set; }
@@ -36,36 +35,10 @@ public class NetworkManagerPerso : NetworkManager
 
     public int compteurB = 0;
 
-/*
-    [SyncVar(hook = "OnEst1v1Change")]
-    public bool est1v1 = false;
-    [SyncVar(hook = "OnCompteurIdChange")]
-    public int compteurId = 0;
-    [SyncVar(hook = "OnCompteurAChange")]
-    public int compteurA = 0;
-    [SyncVar(hook = "OnCompteurBChange")]
-    public int compteurB = 0;
 
-    void OnEst1v1Change(bool changement)
-    {
-        est1v1 = changement;
-    }
-    void OnCompteurIdChange(int changement)
-    {
-        compteurId = changement;
-    }
-    void OnCompteurAChange(int changement)
-    {
-        compteurA = changement;
-    }
-    void OnCompteurBChange(int changement)
-    {
-        compteurB = changement;
-    }
-    */
     public void JoindrePartie()
     {
-        //RevenirMenu();
+       
         InstancierAddresseIP();
         InstancierPort();
         NetworkManager.singleton.StartClient();
@@ -84,7 +57,7 @@ public class NetworkManagerPerso : NetworkManager
     public void CreateHost(bool estSeul)
     {
         compteurB = 0;
-        //RevenirMenu();
+       
         est1v1 = estSeul;
         InstancierAddresseIP();
         InstancierPort();
@@ -95,41 +68,7 @@ public class NetworkManagerPerso : NetworkManager
     {
 
 
-        //AjouterJoueur(conn,playerPrefab,playerControllerId);
-        //compteurId++;
-        //if (compteurA == 0)
-        //{
-        //    for (int i = 0; i < ÉquipeV2.GRANDEUR; i++)
-        //    {
-        //        GameObject joueur = (GameObject)Instantiate(ÉquipeAV2.ListeJoueur[i].gameObject);
-        //        Debug.Log(compteurId);
-        //        joueur.transform.name = string.Format("Player ({0})", compteurId);
-        //        compteurId++;
-        //        joueur.transform.position = GameObject.Find("SpawnPoint" + compteurId).transform.position;
-        //        NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
-        //    }
-        //}
-
-
-        //if (compteurId == 0)
-        //{
-        //    JoueurV2 joueur = ÉquipeAV2.ListeJoueur[0];
-        //    GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        //    prefab.name = joueur.NomJoueur;
-        //    prefab.transform.position = GameObject.Find("SpawnPoint" + 0).transform.position;
-
-        //    NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-        //}
-        //else
-        //{
-        //    JoueurV2 joueur = ÉquipeBV2.ListeJoueur[0];
-        //    GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        //    prefab.name = joueur.NomJoueur;
-        //    prefab.transform.position = GameObject.Find("SpawnPoint" + 1).transform.position;
-
-        //    NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-
-        //}
+       
 
 
         JoueurV2 joueur = ÉquipeAV2.ListeJoueur[playerControllerId];
@@ -156,46 +95,10 @@ public class NetworkManagerPerso : NetworkManager
 
         
 
-        //if (compteurA == 0)
-        //{
-        //    for (int i = 0; i < ÉquipeAV2.ListeJoueur.Count; i++)
-        //    {
-        //        Debug.Log("rENTRE DANS SPAWN 1");
-        //        JoueurV2 joueur = ÉquipeAV2.ListeJoueur[i];
-        //        GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        //        prefab.name = joueur.NomJoueur;
-        //        prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
-        //        compteurB++;
-        //        prefab.GetComponent<TypeÉquipe>().estÉquipeA = true;
-        //        NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-        //        //NetworkServer.Spawn(prefab);
-
-        //    }
-        //}
-        //else
-        //{
-        //    for (int i = 0; i < ÉquipeBV2.ListeJoueur.Count; i++)
-        //    {
-        //        Debug.Log("rENTRE DANS SPAWN 2");
-        //        JoueurV2 joueur = ÉquipeBV2.ListeJoueur[i];
-        //        GameObject prefab = (GameObject)Instantiate(joueur.Prefab);
-        //        prefab.name = joueur.NomJoueur;
-        //        prefab.transform.position = GameObject.Find("SpawnPoint" + compteurB).transform.position;
-        //        compteurB++;
-        //        prefab.GetComponent<TypeÉquipe>().estÉquipeA = false;
-        //        NetworkServer.AddPlayerForConnection(conn, prefab, playerControllerId);
-        //        //NetworkServer.Spawn(prefab);
-        //    }
-        //}
         
         
 
-        //GameObject joueur = (GameObject)Instantiate(playerPrefab);
-        //Debug.Log(compteurId);
-        //joueur.transform.name = string.Format("Player ({0})", compteurId);
-        //compteurId++;
-        //joueur.transform.position = GameObject.Find("SpawnPoint"+ compteurId).transform.position;
-        //NetworkServer.AddPlayerForConnection(conn, joueur, playerControllerId);
+        
     }
   
 
@@ -213,8 +116,7 @@ public class NetworkManagerPerso : NetworkManager
 
     void CréerÉquipe()
     {
-        // ÉquipeA = new Équipe('A');
-        // ÉquipeB = new Équipe('B');
+      
         if(est1v1)
         {
             if(compteurA == 0)
@@ -294,10 +196,9 @@ public class NetworkManagerPerso : NetworkManager
     void GérerBoutonsMenu()
     {
         GameObject.Find("BtnHost").GetComponent<Button>().onClick.AddListener(() => GérerGrandeurÉquipe());
-        //GameObject.Find("BtnHost").GetComponent<Button>().onClick.RemoveAllListeners();
-       // GameObject.Find("BtnJoin").GetComponent<Button>().onClick.RemoveAllListeners();
+       
         GameObject.Find("BtnJoin").GetComponent<Button>().onClick.AddListener(() => JoindrePartie());
-        //GameObject.Find("BtnRevenir").GetComponent<Button>().onClick.RemoveAllListeners();
+        
 
     }
 
@@ -305,11 +206,11 @@ public class NetworkManagerPerso : NetworkManager
     {
         CnvConnexion.enabled = true;
         CnvNbJoueur.enabled = false;
-        Debug.Log("2");
+       
     }
     void GérerBoutonsJeu()
     {
-       // GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.RemoveAllListeners();
+       
         GameObject.Find("BtnDisconnect").GetComponent<Button>().onClick.AddListener(() => Quitter());
     }
 
@@ -328,9 +229,9 @@ public class NetworkManagerPerso : NetworkManager
         CnvConnexion.enabled = false;
         CnvNbJoueur.enabled = true;
         GameObject.Find("BtnRetour").GetComponent<Button>().onClick.AddListener(() => RevenirMenu());
-        //Btn1v1.onClick.RemoveAllListeners();
+       
         Btn1v1.onClick.AddListener(() => CreateHost(true));
-        //Btn2v2.onClick.RemoveAllListeners();
+   
         Btn2v2.onClick.AddListener(() => CreateHost(false));
     }
     private void Start()
@@ -354,22 +255,6 @@ public class NetworkManagerPerso : NetworkManager
         prefabs.Add(aIPre);
         prefabs.Add(gardienPre);
     }
-    //void InstancierRéférencesV2()
-    //{
-    //    Button Btn1v1 =  GameObject.Find("Btn1v1").GetComponent<Button>();
-    //    Button Btn2v2 = GameObject.Find("Btn2v2").GetComponent<Button>();
-    //    Canvas CnvConnexion = GameObject.Find("CnvConnexion").GetComponent<Canvas>();
-    //    Canvas CnvNbJoueur = GameObject.Find("CnvNbJoueur").GetComponent<Canvas>();
-
-    //    CnvNbJoueur.enabled = false;
-
-    //    GameObject playerPre = Resources.Load<GameObject>("Prefab/Player");
-    //    GameObject aIPre = Resources.Load<GameObject>("Prefab/AI");
-    //    GameObject gardienPre = Resources.Load<GameObject>("Prefab/gardien");
-    //    List<GameObject> prefabs = new List<GameObject>();
-    //    prefabs.Add(playerPre);
-    //    prefabs.Add(aIPre);
-    //    prefabs.Add(gardienPre);
-    //}
+   
 }
 

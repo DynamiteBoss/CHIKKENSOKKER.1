@@ -34,8 +34,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
         }
 
         compteur1 += Time.deltaTime;
-        //if(isLocalPlayer)
-        //{
+      
         if (tag == "Player")
         {
             if (Balle.transform.parent != null)
@@ -47,9 +46,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
                         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("CircleBtn1")) && compteur1 >= TEMPS_MIN)
                         {
                             CmdTirerBalle1();
-                            //Invoke("CmdTirerBalle", 0.1f);
+                            
                             CmdTirerBalle();
-                            //CmdTirerBalle();
+                            
                         }
                     }
                     else
@@ -57,15 +56,15 @@ public class ContrôleBallonV2 : NetworkBehaviour
                         if ((Input.GetKeyDown(KeyCode.Keypad3) || Input.GetButtonDown("CircleBtn2")) && compteur1 >= TEMPS_MIN)
                         {
                             CmdTirerBalle1();
-                            //Invoke("CmdTirerBalle", 0.1f);
+                           
                             CmdTirerBalle();
-                            //CmdTirerBalle();
+                          
                         }
                     }
                 }
             }
         }
-        //}
+   
         
     }
 
@@ -73,25 +72,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void CmdTirerBalle()
     {
         RpcTirer1();
-        //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
         
-        //Balle.GetComponent<Rigidbody>().AddForce(direction*FORCE, ForceMode.Impulse);
-        /* if (GameObject.Find("Balle") != null)
-         {
-             GameObject balle = GameObject.Find("Balle");
-             balle.transform.parent  = null;
-             /*GameObject balle = GameObject.Find("Balle");
-             balle.GetComponent<PlacerBalle>().enabled = false;
-             balle.transform.GetComponent<Rigidbody>().isKinematic = false;
-             StartCoroutine(AttendrePourDistanceBallon(0.4f, balle));
-             balle.GetComponent<SphereCollider>().enabled = true;
-             balle.transform.parent = null;
-             Vector3 direction = new Vector3(balle.transform.position.x - ZoneContrôle.transform.position.x, 0, balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-             balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-             balle.GetComponent<NetworkIdentity>().localPlayerAuthority = false;
-
-         }
-         */
     }
    [ClientRpc]
     void RpcTirer1()
@@ -101,17 +82,17 @@ public class ContrôleBallonV2 : NetworkBehaviour
         {
             Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
             Balle.GetComponent<Rigidbody>().AddForce(Vector3.up * FORCE, ForceMode.Acceleration);
-            Debug.DrawRay(Balle.transform.position, Vector3.back * FORCE/10, Color.black, 3);
+            
         }
         else if (Input.GetKey(KeyCode.Z) && Input.GetKeyDown(KeyCode.Space))
         {
             Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
             Balle.GetComponent<Rigidbody>().AddForce(Vector3.up * FORCE, ForceMode.Acceleration);
-            Debug.DrawRay(Balle.transform.position, Vector3.forward * FORCE/10, Color.black, 3);
+            
         }
         else
         {
-           //Debug.Log(direction);
+           
            Balle.GetComponent<Rigidbody>().AddForce(direction.normalized * FORCE, ForceMode.Impulse);
         }
 
@@ -121,42 +102,7 @@ public class ContrôleBallonV2 : NetworkBehaviour
     void CmdTirerBalle1()
     {
         RpcTirer();
-        //Liste = GetComponentsInChildren<BoxCollider>();
-        //foreach(BoxCollider x in Liste)
-        //{
-        //    if(x.transform.tag == "ZoneC")
-        //    {
-        //        x.enabled = false;
-        //    }
-        //}
-        //ZoneC = GameObject.FindGameObjectWithTag("ZoneC");
-        //ZoneC.GetComponent<BoxCollider>().enabled = false;
-        //Balle.transform.parent = null;
        
-        //foreach (GameObject x in Liste)
-        //{
-        //    if (x.tag == "ZoneC")
-        //    {
-        //        x.GetComponent<BoxCollider>().enabled = false;
-        //    }
-        //}
-        //Balle.GetComponent<NetworkTransform>().enabled = true;
-        //Balle.GetComponent<NetworkTransform>().enabled = false;
-        //Balle.transform.GetComponent<Rigidbody>().isKinematic = false;
-        //Balle.GetComponent<SphereCollider>().enabled = true;
-
-
-        //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-        //Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-
-
-
-        //Balle.GetComponent<SphereCollider>().isTrigger = false;
-
-        //Balle.GetComponent<PlacerBalle>().estPlacer = false;
-      
-        //Invoke("AttendrePourDistanceBallon", 0.1f);
-        //AttendrePourDistanceBallon1(4, balle);
     }
     [ClientRpc]
     void RpcTirer()
@@ -171,31 +117,12 @@ public class ContrôleBallonV2 : NetworkBehaviour
                 x.enabled = false;
             }
         }
-        //ZoneC = GameObject.FindGameObjectWithTag("ZoneC");
-        //ZoneC.GetComponent<BoxCollider>().enabled = false;
+       
         Balle.transform.parent = null;
         
-        //foreach (GameObject x in Liste)
-        //{
-        //    if (x.tag == "ZoneC")
-        //    {
-        //        x.GetComponent<BoxCollider>().enabled = false;
-        //    }
-        //}
-        //Balle.GetComponent<NetworkTransform>().enabled = true;
-        //Balle.GetComponent<NetworkTransform>().enabled = false;
+      
         Balle.GetComponent<Rigidbody>().isKinematic = false;
-        //Balle.GetComponent<SphereCollider>().enabled = true;
-
-
-        //Vector3 direction = new Vector3(Balle.transform.position.x - ZoneContrôle.transform.position.x, 0, Balle.transform.position.z - ZoneContrôle.transform.position.z).normalized;
-        //Balle.GetComponent<Rigidbody>().AddForce(direction * FORCE, ForceMode.Impulse);
-
-
-
-        //Balle.GetComponent<SphereCollider>().isTrigger = false;
-
-        //Balle.GetComponent<PlacerBalle>().estPlacer = false;
+        
         Balle.GetComponent<PlacerBalle>().estPlacer = false;
         Balle.GetComponent<SphereCollider>().enabled = true;
         Invoke("AttendrePourDistanceBallon", 0.5f);
@@ -230,10 +157,10 @@ public class ContrôleBallonV2 : NetworkBehaviour
             GameObject joueur = listeAIMonÉquipe[listeAIMonÉquipe.Count-1];
             ChangerJoueurÀGardien(joueur,gardien, équipe);
             Balle.GetComponent<PlacerBalle>().dernierPosseseur = GameObject.Find("Joueur1" + équipe).name;
-            //tampon = joueur.name;
+           
             
         }
-        //AttendrePourDistanceBallon1(4, balle);
+       
     }
     void RéactiverSave()
     {
@@ -269,16 +196,9 @@ public class ContrôleBallonV2 : NetworkBehaviour
 
     void AttendrePourDistanceBallon()
     {
-        //Balle.GetComponent<NetworkTransform>().enabled = true;
-        //Balle.GetComponent<SphereCollider>().isTrigger = true;
+       
         Balle.GetComponent<PlacerBalle>().enabled = true;
-        //foreach (GameObject x in Liste)
-        //{
-        //    if (x.tag == "ZoneC")
-        //    {
-        //        x.GetComponent<BoxCollider>().enabled = true;
-        //    }
-        //}
+       
         foreach (BoxCollider x in Liste)
         {
             if (x.transform.tag == "ZoneC")
@@ -286,8 +206,6 @@ public class ContrôleBallonV2 : NetworkBehaviour
                 x.enabled = true;
             }
         }
-        //Balle.GetComponent<Rigidbody>().isKinematic = false;
-        
-        //ZoneC.GetComponent<BoxCollider>().enabled = true;
+      
     }
 }
