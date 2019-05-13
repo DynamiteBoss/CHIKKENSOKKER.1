@@ -125,7 +125,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint8
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -247,7 +247,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint3
   m_TagString: B
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -945,7 +945,6 @@ GameObject:
   - component: {fileID: 282840820}
   - component: {fileID: 282840819}
   - component: {fileID: 282840821}
-  - component: {fileID: 282840822}
   m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1326,19 +1325,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &282840822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282840810}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c46a5fdd4a5ab745be1cd99dc594233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: eb47b9af337bea14fb9fe1b918df66e1, type: 2}
 --- !u!1 &334911856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,7 +1696,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb642fad5c0ae7b46833035e24234892, type: 2}
+  - {fileID: 2100000, guid: 2f53b26c87c5b024bb91dbce7b5d1fee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1751,7 +1737,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint9
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2009,7 +1995,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb642fad5c0ae7b46833035e24234892, type: 2}
+  - {fileID: 2100000, guid: 2f53b26c87c5b024bb91dbce7b5d1fee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2050,7 +2036,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint4
   m_TagString: B
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2093,7 +2079,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint5
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2228,7 +2214,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint7
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2375,7 +2361,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint2
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2468,7 +2454,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb642fad5c0ae7b46833035e24234892, type: 2}
+  - {fileID: 2100000, guid: 2f53b26c87c5b024bb91dbce7b5d1fee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2651,7 +2637,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cb642fad5c0ae7b46833035e24234892, type: 2}
+  - {fileID: 2100000, guid: 2f53b26c87c5b024bb91dbce7b5d1fee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2796,7 +2782,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint6
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2964,7 +2950,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint1
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3560,7 +3546,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint0
   m_TagString: A
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3694,7 +3680,6 @@ GameObject:
   - component: {fileID: 2053858970}
   - component: {fileID: 2053858969}
   - component: {fileID: 2053858972}
-  - component: {fileID: 2053858973}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -3862,19 +3847,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2053858973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053858968}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 9d172ce05ef41fe46a57b6f412ed4ac5, type: 2}
 --- !u!1 &2129370573
 GameObject:
   m_ObjectHideFlags: 0
