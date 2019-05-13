@@ -84,8 +84,8 @@ public class GérerProbabilitéArrêt : NetworkBehaviour
         Vector3 distBB = (balle.transform.position - (balle.GetComponent<PlacerBalle>().positionJouer));
         float angle = Vector3.Angle(distGJ, distBB);
 
-        float probabilité;
-        Debug.Log(angle);
+       
+        
         if (angle >= 25)
         {
             

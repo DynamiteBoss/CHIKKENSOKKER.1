@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EstEnModeNuit: 0
-  ModeTest: 0
+  ModeTest: 1
   FrequenceObjetMax: 1200
   FrequenceObjetMin: 180
   "chronom\xE8tre": '3 : 00'
